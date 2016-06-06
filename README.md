@@ -30,3 +30,9 @@ Please take some time to read and understand the following information before co
 * [SwiftDDP](https://github.com/siegesmund/swiftddp) - an iOS DDP client library, use it on iOS front-end application
 
 ... more on the way
+
+
+Facebook Graphi api, 
+* [getting list of events from page](https://developers.facebook.com/docs/graph-api/reference/page/events/) -->
+* [Events Details ](https://developers.facebook.com/docs/graph-api/reference/event/) -->
+
