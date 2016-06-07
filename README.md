@@ -4,6 +4,12 @@ Project name is subject to change.
 
 Somebody edit this README.
 
+## API Playground
+
+[DEMO](http://get-high.herokuapp.com) can be used to test and explore some of the APIs.
+
+[Logger](http://get-high.herokuapp.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*
+
 ## Code Style and Conventions
 
 Please follow the [Git commit message conventions](http://chris.beams.io/posts/git-commit/) for better unified developing experiences.
