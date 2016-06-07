@@ -21,11 +21,21 @@ aldeed:simple-schema
 aldeed:collection2
 dburles:collection-helpers
 
+kadira:flow-router
+kadira:blaze-layout
+
+accounts-base
+accounts-ui
 accounts-password
 accounts-google
 accounts-facebook
+service-configuration
 
-yogiben:admin
+http
+percolate:google-api
+jaredmartin:future
 
 coffeescript
 mquandalle:jade
+
+

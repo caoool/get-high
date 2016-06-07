@@ -1,0 +1,12 @@
+template(name='apiPlayground')
+	img(src="#{currentUser.services.google.picture}")
+	if currentUser
+		p #{currentUser.services.google.given_name}
+		button#logout Logout
+	else
+		button#google-login Login with Google
+	br
+	button#connectionTestButton DDP Connection Test
+	br
+	button#getCalendarListButton Get Calendar List
+	

@@ -1,0 +1,315 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Users\\caooo\\AppData\\Local\\.meteor\\packages\\meteor-tool\\1.3.2_4\\mt-os.windows.x86_32\\dev_bundle\\bin\\\\node.exe',
+1 verbose cli   'C:\\Users\\caooo\\AppData\\Local\\.meteor\\packages\\meteor-tool\\1.3.2_4\\mt-os.windows.x86_32\\dev_bundle\\lib\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'fibers' ]
+2 info using npm@2.14.22
+3 info using node@v0.10.43
+4 verbose install initial load of C:\Users\caooo\Devs\Projects\get-high\package.json
+5 verbose readDependencies loading dependencies from C:\Users\caooo\Devs\Projects\get-high\package.json
+6 silly cache add args [ 'fibers', null ]
+7 verbose cache add spec fibers
+8 silly cache add parsed spec { raw: 'fibers',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'fibers',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: 'latest',
+8 silly cache add   type: 'tag' }
+9 silly addNamed fibers@latest
+10 verbose addNamed "latest" is being treated as a dist-tag for fibers
+11 info addNameTag [ 'fibers', 'latest' ]
+12 silly mapToRegistry name fibers
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/fibers
+16 verbose addNameTag registry:https://registry.npmjs.org/fibers not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/fibers
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 03:44:51
+20 verbose request id 61571b64afcffd54
+21 http request GET https://registry.npmjs.org/fibers
+22 http 200 https://registry.npmjs.org/fibers
+23 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 verbose headers   etag: '"B1HLOX4BPCTKAK6BSCUUYM7GU"',
+23 verbose headers   'content-type': 'application/json',
+23 verbose headers   'content-encoding': 'gzip',
+23 verbose headers   'cache-control': 'max-age=300',
+23 verbose headers   'content-length': '12866',
+23 verbose headers   'accept-ranges': 'bytes',
+23 verbose headers   date: 'Tue, 07 Jun 2016 10:45:03 GMT',
+23 verbose headers   via: '1.1 varnish',
+23 verbose headers   age: '0',
+23 verbose headers   connection: 'keep-alive',
+23 verbose headers   'x-served-by': 'cache-sjc3123-SJC',
+23 verbose headers   'x-cache': 'HIT',
+23 verbose headers   'x-cache-hits': '1',
+23 verbose headers   'x-timer': 'S1465296303.308760,VS0,VE135',
+23 verbose headers   vary: 'Accept-Encoding' }
+24 silly get cb [ 200,
+24 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly get     etag: '"B1HLOX4BPCTKAK6BSCUUYM7GU"',
+24 silly get     'content-type': 'application/json',
+24 silly get     'content-encoding': 'gzip',
+24 silly get     'cache-control': 'max-age=300',
+24 silly get     'content-length': '12866',
+24 silly get     'accept-ranges': 'bytes',
+24 silly get     date: 'Tue, 07 Jun 2016 10:45:03 GMT',
+24 silly get     via: '1.1 varnish',
+24 silly get     age: '0',
+24 silly get     connection: 'keep-alive',
+24 silly get     'x-served-by': 'cache-sjc3123-SJC',
+24 silly get     'x-cache': 'HIT',
+24 silly get     'x-cache-hits': '1',
+24 silly get     'x-timer': 'S1465296303.308760,VS0,VE135',
+24 silly get     vary: 'Accept-Encoding' } ]
+25 verbose get saving fibers to C:\Users\caooo\AppData\Roaming\npm-cache\registry.npmjs.org\fibers\.cache.json
+26 verbose correctMkdir C:\Users\caooo\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+27 silly addNameTag next cb for fibers with tag latest
+28 silly addNamed fibers@1.0.13
+29 verbose addNamed "1.0.13" is a plain semver version for fibers
+30 silly mapToRegistry name fibers
+31 silly mapToRegistry using default registry
+32 silly mapToRegistry registry https://registry.npmjs.org/
+33 silly mapToRegistry uri https://registry.npmjs.org/fibers
+34 verbose addRemoteTarball https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz not in flight; adding
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz',
+35 verbose addRemoteTarball   '35e0aba17ad9f8cea35f712ef8cc445470f0740d' ]
+36 info retry fetch attempt 1 at 03:44:51
+37 info attempt registry request try #1 at 03:44:51
+38 http fetch GET https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz
+39 http fetch 200 https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz
+40 silly fetchAndShaCheck shasum 35e0aba17ad9f8cea35f712ef8cc445470f0740d
+41 verbose addTmpTarball C:\Users\caooo\AppData\Local\Temp\npm-18180-153fcdba\registry.npmjs.org\fibers\-\fibers-1.0.13.tgz not in flight; adding
+42 verbose addTmpTarball already have metadata; skipping unpack for fibers@1.0.13
+43 verbose correctMkdir C:\Users\caooo\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+44 silly cache afterAdd fibers@1.0.13
+45 verbose afterAdd C:\Users\caooo\AppData\Roaming\npm-cache\fibers\1.0.13\package\package.json not in flight; writing
+46 verbose correctMkdir C:\Users\caooo\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+47 verbose afterAdd C:\Users\caooo\AppData\Roaming\npm-cache\fibers\1.0.13\package\package.json written
+48 silly install resolved [ { name: 'fibers',
+48 silly install resolved     version: '1.0.13',
+48 silly install resolved     description: 'Cooperative multi-tasking for Javascript',
+48 silly install resolved     keywords:
+48 silly install resolved      [ 'fiber',
+48 silly install resolved        'fibers',
+48 silly install resolved        'coroutine',
+48 silly install resolved        'thread',
+48 silly install resolved        'async',
+48 silly install resolved        'parallel',
+48 silly install resolved        'worker',
+48 silly install resolved        'future',
+48 silly install resolved        'promise' ],
+48 silly install resolved     homepage: 'https://github.com/laverdet/node-fibers',
+48 silly install resolved     author:
+48 silly install resolved      { name: 'Marcel Laverdet',
+48 silly install resolved        email: 'marcel@laverdet.com',
+48 silly install resolved        url: 'https://github.com/laverdet/' },
+48 silly install resolved     main: 'fibers',
+48 silly install resolved     scripts:
+48 silly install resolved      { install: 'node build.js || nodejs build.js',
+48 silly install resolved        test: 'node test.js || nodejs test.js' },
+48 silly install resolved     repository:
+48 silly install resolved      { type: 'git',
+48 silly install resolved        url: 'git://github.com/laverdet/node-fibers.git' },
+48 silly install resolved     license: 'MIT',
+48 silly install resolved     engines: { node: '>=0.5.2' },
+48 silly install resolved     gitHead: 'dfb51692edc6f93787c602ede6c08067f9ce7bf3',
+48 silly install resolved     bugs: { url: 'https://github.com/laverdet/node-fibers/issues' },
+48 silly install resolved     _id: 'fibers@1.0.13',
+48 silly install resolved     _shasum: '35e0aba17ad9f8cea35f712ef8cc445470f0740d',
+48 silly install resolved     _from: 'fibers@latest',
+48 silly install resolved     _npmVersion: '3.8.6',
+48 silly install resolved     _nodeVersion: '6.0.0',
+48 silly install resolved     _npmUser: { name: 'laverdet', email: 'marcel.npm@laverdet.com' },
+48 silly install resolved     maintainers: [ [Object] ],
+48 silly install resolved     dist:
+48 silly install resolved      { shasum: '35e0aba17ad9f8cea35f712ef8cc445470f0740d',
+48 silly install resolved        tarball: 'https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz' },
+48 silly install resolved     _npmOperationalInternal:
+48 silly install resolved      { host: 'packages-16-east.internal.npmjs.com',
+48 silly install resolved        tmp: 'tmp/fibers-1.0.13.tgz_1462729077451_0.3959117094054818' },
+48 silly install resolved     directories: {},
+48 silly install resolved     _resolved: 'https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz' } ]
+49 info install fibers@1.0.13 into C:\Users\caooo\Devs\Projects\get-high
+50 info installOne fibers@1.0.13
+51 verbose installOne of fibers to C:\Users\caooo\Devs\Projects\get-high not in flight; installing
+52 verbose correctMkdir C:\Users\caooo\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
+53 verbose lock using C:\Users\caooo\AppData\Roaming\npm-cache\_locks\fibers-141cc174d32cf19a.lock for C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+54 silly install write writing fibers 1.0.13 to C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+55 verbose unbuild node_modules\fibers
+56 silly gentlyRm C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers is being purged from base C:\Users\caooo\Devs\Projects\get-high
+57 verbose gentlyRm don't care about contents; nuking C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+58 verbose tar unpack C:\Users\caooo\AppData\Roaming\npm-cache\fibers\1.0.13\package.tgz
+59 verbose tar unpacking to C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+60 silly gentlyRm C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers is being purged
+61 verbose gentlyRm don't care about contents; nuking C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+62 silly gunzTarPerm modes [ '777', '666' ]
+63 silly gunzTarPerm extractEntry package.json
+64 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+65 silly gunzTarPerm extractEntry .npmignore
+66 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+67 silly gunzTarPerm extractEntry README.md
+68 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+69 silly gunzTarPerm extractEntry LICENSE
+70 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+71 silly gunzTarPerm extractEntry quick-test.js
+72 silly gunzTarPerm modified mode [ 'quick-test.js', 420, 438 ]
+73 silly gunzTarPerm extractEntry future.js
+74 silly gunzTarPerm modified mode [ 'future.js', 420, 438 ]
+75 silly gunzTarPerm extractEntry build.js
+76 silly gunzTarPerm modified mode [ 'build.js', 493, 511 ]
+77 silly gunzTarPerm extractEntry test.js
+78 silly gunzTarPerm modified mode [ 'test.js', 493, 511 ]
+79 silly gunzTarPerm extractEntry fibers.js
+80 silly gunzTarPerm modified mode [ 'fibers.js', 420, 438 ]
+81 silly gunzTarPerm extractEntry note.txt
+82 silly gunzTarPerm modified mode [ 'note.txt', 420, 438 ]
+83 silly gunzTarPerm extractEntry binding.gyp
+84 silly gunzTarPerm modified mode [ 'binding.gyp', 420, 438 ]
+85 silly gunzTarPerm extractEntry bin/.npmignore
+86 silly gunzTarPerm modified mode [ 'bin/.npmignore', 420, 438 ]
+87 silly gunzTarPerm extractEntry bin/win32-x64-v8-5.0/fibers.node
+88 silly gunzTarPerm modified mode [ 'bin/win32-x64-v8-5.0/fibers.node', 420, 438 ]
+89 silly gunzTarPerm extractEntry bin/darwin-ia32-v8-4.6/fibers.node
+90 silly gunzTarPerm modified mode [ 'bin/darwin-ia32-v8-4.6/fibers.node', 493, 511 ]
+91 silly gunzTarPerm extractEntry bin/darwin-ia32-v8-5.0/fibers.node
+92 silly gunzTarPerm modified mode [ 'bin/darwin-ia32-v8-5.0/fibers.node', 493, 511 ]
+93 silly gunzTarPerm extractEntry bin/darwin-x64-v8-4.5/fibers.node
+94 silly gunzTarPerm modified mode [ 'bin/darwin-x64-v8-4.5/fibers.node', 493, 511 ]
+95 silly gunzTarPerm extractEntry bin/darwin-x64-v8-4.6/fibers.node
+96 silly gunzTarPerm modified mode [ 'bin/darwin-x64-v8-4.6/fibers.node', 493, 511 ]
+97 silly gunzTarPerm extractEntry bin/darwin-x64-v8-5.0/fibers.node
+98 silly gunzTarPerm modified mode [ 'bin/darwin-x64-v8-5.0/fibers.node', 493, 511 ]
+99 silly gunzTarPerm extractEntry bin/linux-ia32-v8-4.5/fibers.node
+100 silly gunzTarPerm modified mode [ 'bin/linux-ia32-v8-4.5/fibers.node', 493, 511 ]
+101 silly gunzTarPerm extractEntry bin/linux-ia32-v8-4.6/fibers.node
+102 silly gunzTarPerm modified mode [ 'bin/linux-ia32-v8-4.6/fibers.node', 493, 511 ]
+103 silly gunzTarPerm extractEntry bin/linux-ia32-v8-5.0/fibers.node
+104 silly gunzTarPerm modified mode [ 'bin/linux-ia32-v8-5.0/fibers.node', 420, 438 ]
+105 silly gunzTarPerm extractEntry bin/darwin-ia32-v8-4.5/fibers.node
+106 silly gunzTarPerm modified mode [ 'bin/darwin-ia32-v8-4.5/fibers.node', 493, 511 ]
+107 silly gunzTarPerm extractEntry bin/linux-x64-v8-4.6/fibers.node
+108 silly gunzTarPerm modified mode [ 'bin/linux-x64-v8-4.6/fibers.node', 493, 511 ]
+109 silly gunzTarPerm extractEntry bin/linux-x64-v8-5.0/fibers.node
+110 silly gunzTarPerm modified mode [ 'bin/linux-x64-v8-5.0/fibers.node', 420, 438 ]
+111 silly gunzTarPerm extractEntry bin/repl
+112 silly gunzTarPerm modified mode [ 'bin/repl', 493, 511 ]
+113 silly gunzTarPerm extractEntry bin/win32-ia32-v8-4.5/fibers.node
+114 silly gunzTarPerm modified mode [ 'bin/win32-ia32-v8-4.5/fibers.node', 420, 438 ]
+115 silly gunzTarPerm extractEntry bin/win32-ia32-v8-4.6/fibers.node
+116 silly gunzTarPerm modified mode [ 'bin/win32-ia32-v8-4.6/fibers.node', 420, 438 ]
+117 silly gunzTarPerm extractEntry bin/win32-ia32-v8-5.0/fibers.node
+118 silly gunzTarPerm modified mode [ 'bin/win32-ia32-v8-5.0/fibers.node', 420, 438 ]
+119 silly gunzTarPerm extractEntry bin/win32-x64-v8-4.5/fibers.node
+120 silly gunzTarPerm modified mode [ 'bin/win32-x64-v8-4.5/fibers.node', 420, 438 ]
+121 silly gunzTarPerm extractEntry bin/win32-x64-v8-4.6/fibers.node
+122 silly gunzTarPerm modified mode [ 'bin/win32-x64-v8-4.6/fibers.node', 420, 438 ]
+123 silly gunzTarPerm extractEntry bin/linux-x64-v8-4.5/fibers.node
+124 silly gunzTarPerm modified mode [ 'bin/linux-x64-v8-4.5/fibers.node', 493, 511 ]
+125 silly gunzTarPerm extractEntry src/coroutine.cc
+126 silly gunzTarPerm modified mode [ 'src/coroutine.cc', 420, 438 ]
+127 silly gunzTarPerm extractEntry src/coroutine.h
+128 silly gunzTarPerm modified mode [ 'src/coroutine.h', 420, 438 ]
+129 silly gunzTarPerm extractEntry src/fibers.cc
+130 silly gunzTarPerm modified mode [ 'src/fibers.cc', 420, 438 ]
+131 silly gunzTarPerm extractEntry src/libcoro/README
+132 silly gunzTarPerm modified mode [ 'src/libcoro/README', 420, 438 ]
+133 silly gunzTarPerm extractEntry src/libcoro/LICENSE
+134 silly gunzTarPerm modified mode [ 'src/libcoro/LICENSE', 420, 438 ]
+135 silly gunzTarPerm extractEntry src/libcoro/conftest.c
+136 silly gunzTarPerm modified mode [ 'src/libcoro/conftest.c', 420, 438 ]
+137 silly gunzTarPerm extractEntry src/libcoro/coro.c
+138 silly gunzTarPerm modified mode [ 'src/libcoro/coro.c', 420, 438 ]
+139 silly gunzTarPerm extractEntry src/libcoro/coro.h
+140 silly gunzTarPerm modified mode [ 'src/libcoro/coro.h', 420, 438 ]
+141 silly gunzTarPerm extractEntry test/already-running.js
+142 silly gunzTarPerm modified mode [ 'test/already-running.js', 420, 438 ]
+143 silly gunzTarPerm extractEntry test/exit.js
+144 silly gunzTarPerm modified mode [ 'test/exit.js', 420, 438 ]
+145 silly gunzTarPerm extractEntry test/fibonacci.js
+146 silly gunzTarPerm modified mode [ 'test/fibonacci.js', 420, 438 ]
+147 silly gunzTarPerm extractEntry test/finish-multiple.js
+148 silly gunzTarPerm modified mode [ 'test/finish-multiple.js', 420, 438 ]
+149 silly gunzTarPerm extractEntry test/future-exception.js
+150 silly gunzTarPerm modified mode [ 'test/future-exception.js', 420, 438 ]
+151 silly gunzTarPerm extractEntry test/exec.js
+152 silly gunzTarPerm modified mode [ 'test/exec.js', 420, 438 ]
+153 silly gunzTarPerm extractEntry test/illegal-yield.js
+154 silly gunzTarPerm modified mode [ 'test/illegal-yield.js', 420, 438 ]
+155 silly gunzTarPerm extractEntry test/pool.js
+156 silly gunzTarPerm modified mode [ 'test/pool.js', 420, 438 ]
+157 silly gunzTarPerm extractEntry test/process-title.js
+158 silly gunzTarPerm modified mode [ 'test/process-title.js', 420, 438 ]
+159 silly gunzTarPerm extractEntry test/stack-overflow.js
+160 silly gunzTarPerm modified mode [ 'test/stack-overflow.js', 420, 438 ]
+161 silly gunzTarPerm extractEntry test/stack-overflow2.js
+162 silly gunzTarPerm modified mode [ 'test/stack-overflow2.js', 493, 511 ]
+163 silly gunzTarPerm extractEntry test/current.js
+164 silly gunzTarPerm modified mode [ 'test/current.js', 420, 438 ]
+165 silly gunzTarPerm extractEntry test/stack-overflow3.js
+166 silly gunzTarPerm modified mode [ 'test/stack-overflow3.js', 420, 438 ]
+167 silly gunzTarPerm extractEntry test/child-process.js
+168 silly gunzTarPerm modified mode [ 'test/child-process.js', 420, 438 ]
+169 silly gunzTarPerm extractEntry test/started.js
+170 silly gunzTarPerm modified mode [ 'test/started.js', 420, 438 ]
+171 silly gunzTarPerm extractEntry test/bad-context.js
+172 silly gunzTarPerm modified mode [ 'test/bad-context.js', 420, 438 ]
+173 silly gunzTarPerm extractEntry test/unwind.js
+174 silly gunzTarPerm modified mode [ 'test/unwind.js', 420, 438 ]
+175 silly gunzTarPerm extractEntry test/future.js
+176 silly gunzTarPerm modified mode [ 'test/future.js', 420, 438 ]
+177 verbose write writing to C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers\package.json
+178 info preinstall fibers@1.0.13
+179 verbose readDependencies loading dependencies from C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers\package.json
+180 verbose readDependencies loading dependencies from C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers\package.json
+181 silly install resolved []
+182 verbose about to build C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+183 info build C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+184 info linkStuff fibers@1.0.13
+185 silly linkStuff fibers@1.0.13 has C:\Users\caooo\Devs\Projects\get-high\node_modules as its parent node_modules
+186 verbose linkBins fibers@1.0.13
+187 verbose linkMans fibers@1.0.13
+188 verbose rebuildBundles fibers@1.0.13
+189 info install fibers@1.0.13
+190 verbose unsafe-perm in lifecycle true
+191 info fibers@1.0.13 Failed to exec install script
+192 verbose unlock done using C:\Users\caooo\AppData\Roaming\npm-cache\_locks\fibers-141cc174d32cf19a.lock for C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+193 verbose stack Error: fibers@1.0.13 install: `node build.js || nodejs build.js`
+193 verbose stack Exit status 1
+193 verbose stack     at EventEmitter.<anonymous> (C:\Users\caooo\AppData\Local\.meteor\packages\meteor-tool\1.3.2_4\mt-os.windows.x86_32\dev_bundle\lib\node_modules\npm\lib\utils\lifecycle.js:217:16)
+193 verbose stack     at EventEmitter.emit (events.js:98:17)
+193 verbose stack     at ChildProcess.<anonymous> (C:\Users\caooo\AppData\Local\.meteor\packages\meteor-tool\1.3.2_4\mt-os.windows.x86_32\dev_bundle\lib\node_modules\npm\lib\utils\spawn.js:24:14)
+193 verbose stack     at ChildProcess.emit (events.js:98:17)
+193 verbose stack     at maybeClose (child_process.js:766:16)
+193 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:833:5)
+194 verbose pkgid fibers@1.0.13
+195 verbose cwd C:\Users\caooo\Devs\Projects\get-high
+196 error Windows_NT 10.0.10586
+197 error argv "C:\\Users\\caooo\\AppData\\Local\\.meteor\\packages\\meteor-tool\\1.3.2_4\\mt-os.windows.x86_32\\dev_bundle\\bin\\\\node.exe" "C:\\Users\\caooo\\AppData\\Local\\.meteor\\packages\\meteor-tool\\1.3.2_4\\mt-os.windows.x86_32\\dev_bundle\\lib\\node_modules\\npm\\bin\\npm-cli.js" "install" "fibers"
+198 error node v0.10.43
+199 error npm  v2.14.22
+200 error code ELIFECYCLE
+201 error fibers@1.0.13 install: `node build.js || nodejs build.js`
+201 error Exit status 1
+202 error Failed at the fibers@1.0.13 install script 'node build.js || nodejs build.js'.
+202 error This is most likely a problem with the fibers package,
+202 error not with npm itself.
+202 error Tell the author that this fails on your system:
+202 error     node build.js || nodejs build.js
+202 error You can get information on how to open an issue for this project with:
+202 error     npm bugs fibers
+202 error Or if that isn't available, you can get their info via:
+202 error
+202 error     npm owner ls fibers
+202 error There is likely additional logging output above.
+203 verbose exit [ 1, true ]
+204 verbose unbuild node_modules\fibers
+205 info preuninstall fibers@1.0.13
+206 info uninstall fibers@1.0.13
+207 verbose unbuild rmStuff fibers@1.0.13 from C:\Users\caooo\Devs\Projects\get-high\node_modules
+208 info postuninstall fibers@1.0.13
+209 silly gentlyRm C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers is being purged from base C:\Users\caooo\Devs\Projects\get-high
+210 verbose gentlyRm don't care about contents; nuking C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+211 silly vacuum-fs purging C:\Users\caooo\Devs\Projects\get-high\node_modules\fibers
+212 silly vacuum-fs removing C:\Users\caooo\Devs\Projects\get-high\node_modules
+213 silly vacuum-fs finished vacuuming up to C:\Users\caooo\Devs\Projects\get-high
