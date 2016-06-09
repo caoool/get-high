@@ -40,6 +40,7 @@ email@1.0.12
 es5-shim@4.5.10
 facebook@1.2.6
 fastclick@1.0.11
+force-ssl@1.0.11
 geojson-utils@1.0.8
 google@1.1.11
 hot-code-push@1.0.4
@@ -59,6 +60,7 @@ logging@1.0.12
 mdg:validation-error@0.2.0
 meteor@1.1.14
 meteor-base@1.0.4
+meteorhacks:picker@1.0.3
 minifier-css@1.1.11
 minifier-js@1.1.11
 minifiers@1.1.7

@@ -5,3 +5,4 @@ FlowRouter.route '/',
 FlowRouter.route '/logger',
 	action: ->
 		BlazeLayout.render 'logger'
+

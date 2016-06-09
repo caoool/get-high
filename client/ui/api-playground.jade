@@ -5,8 +5,16 @@ template(name='apiPlayground')
 		button#logout Logout
 	else
 		button#google-login Login with Google
-	br
 	button#connectionTestButton DDP Connection Test
 	br
 	button#getCalendarListButton Get Calendar List
+	br
+	input#calendarId(placeholder='Calendar ID')
+	button#initCalendarButton Init Calendar
+	br
+	input#calendar_id(placeholder='Calendar unique id (_id)')
+	button#syncCalendarButton Sync Calendar
+	br
+	//- button#watchCalendarButton Watch Calendar
+	//- button#stopWatchCalendarButton Stop Watch Calendar
 	

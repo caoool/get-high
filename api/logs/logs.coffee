@@ -28,3 +28,5 @@ Logs.log = (message) ->
 	if Meteor.isServer
 		Logs.insert message: message, ->
 			console.log "#{message} (logged)"
+	else
+		console.log "#{message}"

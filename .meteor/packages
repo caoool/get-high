@@ -20,6 +20,7 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 aldeed:simple-schema
 aldeed:collection2
 dburles:collection-helpers
+jaredmartin:future
 
 kadira:flow-router
 kadira:blaze-layout
@@ -32,8 +33,10 @@ accounts-facebook
 service-configuration
 
 http
+meteorhacks:picker
+force-ssl
+
 percolate:google-api
-jaredmartin:future
 
 coffeescript
 mquandalle:jade
