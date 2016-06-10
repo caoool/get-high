@@ -45,7 +45,6 @@ Template.apiPlayground.events
 	'click #syncCalendarButton': ->
 		Meteor.call 'calendars.sync',
 			$('#calendarId').val(),
-			$('#calendar_id').val(),
 			(error, result) ->
 				if error
 					console.log error

@@ -45,6 +45,7 @@ Meteor.methods
 
 	# !!!
 	# 	WIPE! ONLY INIT ON CREATION OR BROKEN!
+	# 	USING 'primary' AS 'calendarId' IS RISTRICTED
 	# DESCRIPTION:
 	# 	Init will wipe the current calendar stored in
 	# 	our database and clear all the events belongs
@@ -63,21 +64,21 @@ Meteor.methods
 					future.return throwError error
 				else
 					result.id = calendarId
-					Calendars.insert result,
-						(error, calendar_id) ->
+					Calendars.insert result, result.items,
+						(error) ->
 							if error
 								Logs.log '...END...ERROR:: calendar insertion failed'
 								future.return throwError error
 							else
 								Logs.log '...END...SUCCESS:: calendar initialized'
-								future.return "#{calendar_id} #{result}"
+								future.return result
 		future.wait()
 
 	# DESCRIPTION:
 	# 	
-	'calendars.sync': (calendarId, calendar_id) ->
+	'calendars.sync': (calendarId) ->
 		future = new Future()
-		calendar = Calendars.findOne _id: calendar_id
+		calendar = Calendars.findOne id: calendarId
 		if calendar?
 			url = "/calendar/v3/calendars/#{calendarId}/events"
 			options = params:
@@ -100,7 +101,7 @@ Meteor.methods
 									future.return throwError error
 								else
 									Logs.log '...END...SUCCESS:: found changes, calendar updated'
-									future.return "found changes, calendar updated"
+									future.return result
 		else
 			future.return 'Calendar not found, please check your input or init first'
 		future.wait()
