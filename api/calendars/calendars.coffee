@@ -4,14 +4,16 @@ class CalendarsCollection extends Mongo.Collection
 	# 	and associated event in database. If duplicates
 	# 	are found, remove them before inserting.
 	insert: (calendar, events, callback) ->
-		_calendar = Calendars.findOne id: calendar.id
-		if _calendar? and calendar.id == _calendar.id
-			Calendars.remove _calendar._id
-			Events.remove calendarId: calendar.id
-			Logs.log '...CALLING...METHOD:: calendars.init >>> calendar and associated events removed'
+		Calendars.remove id: calendar.id
+		Events.remove calendarId: calendar.id
+		Logs.log '...CALLING...METHOD:: calendars.init >>> calendar and associated events removed'
 		Events.init calendar.id, events
 		Logs.log '...CALLING...METHOD:: calendars.init >>> calendar and associated events inserted'
 		super calendar, callback
+
+	update: (selector, modifier, events, callback) ->
+		Events.sync selector.id, events
+		super selector, modifier, callback
 
 @Calendars = new CalendarsCollection 'calendars'
 

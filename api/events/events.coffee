@@ -1,8 +1,16 @@
 class EventsCollection extends Mongo.Collection
 	# DESCRIPTION:
 	insert: (event, callback) ->
-		Logs.log '...CALLING...METHOD:: calendars.init >>> event inserted'
+		Logs.log '...CALLING...METHOD:: calendars.sync >>> event inserting'
 		super event, callback
+
+	update: (selector, modifier, callback) ->
+		Logs.log '...CALLING...METHOD:: calendars.sync >>> event updating'
+		super selector, modifier, callback
+
+	remove: (selector, callback) ->
+		Logs.log '...CALLING...METHOD:: calendars.sync >>> event deleting'
+		super selector, callback
 
 @Events = new EventsCollection 'events'
 
@@ -19,6 +27,7 @@ Events.schema = new SimpleSchema
 		type: String
 	summary:
 		type: String
+		optional: true
 	description:
 		type: String
 		optional: true
@@ -63,15 +72,30 @@ Events.schema = new SimpleSchema
 
 Events.attachSchema Events.schema
 
-Events.init = (calendar_id, items) ->
+Events.parseDate = (item) ->
+	if item? and item.start? and item.start.date?
+		item.start = item.start.date
+	else if item? and item.start? and item.start.dateTime?
+		item.start = item.start.dateTime
+	if item? and item.end? and item.end.date?
+		item.end = item.end.date
+	else if item? and item.start? and item.end.dateTime?
+		item.end = item.end.dateTime
+	item
+
+Events.init = (calendarId, items) ->
 	for item in items
-		item.calendarId = calendar_id
-		if item.start.date?
-			item.start = item.start.date
-		else if item.start.dateTime?
-			item.start = item.start.dateTime
-		if item.end.date?
-			item.end = item.end.date
-		else if item.end.dateTime?
-			item.end = item.end.dateTime
+		item.calendarId = calendarId
+		item = Events.parseDate item
 		Events.insert item
+
+Events.sync = (calendarId, items) ->
+	for item in items
+		item.calendarId = calendarId
+		item = Events.parseDate item
+		if item.status == 'cancelled'
+			Events.remove id: item.id
+		else if item.status == 'confirmed'
+			if Events.findOne(id: item.id)?
+				Events.update {id: item.id}, $set: item
+			else Events.insert item
