@@ -1,15 +1,12 @@
 class EventsCollection extends Mongo.Collection
 	# DESCRIPTION:
 	insert: (event, callback) ->
-		Logs.log '...CALLING...METHOD:: calendars.sync >>> event inserting'
 		super event, callback
 
 	update: (selector, modifier, callback) ->
-		Logs.log '...CALLING...METHOD:: calendars.sync >>> event updating'
 		super selector, modifier, callback
 
 	remove: (selector, callback) ->
-		Logs.log '...CALLING...METHOD:: calendars.sync >>> event deleting'
 		super selector, callback
 
 @Events = new EventsCollection 'events'

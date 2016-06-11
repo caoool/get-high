@@ -19,14 +19,22 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 aldeed:simple-schema
 aldeed:collection2
+aldeed:autoform
 dburles:collection-helpers
 jaredmartin:future
 
 meteorhacks:kadira
 kadira:debug
-kadira:flow-router
-kadira:blaze-layout
 
+iron:router
+fortawesome:fontawesome
+twbs:bootstrap
+coffeescript
+mquandalle:jade
+# admin package is not working
+# yogiben:admin
+
+alanning:roles
 accounts-base
 accounts-ui
 accounts-password
@@ -39,6 +47,3 @@ meteorhacks:picker
 force-ssl
 
 percolate:google-api
-
-coffeescript
-mquandalle:jade

@@ -1,8 +1,7 @@
-FlowRouter.route '/',
-  action: ->
-    BlazeLayout.render 'apiPlayground'
+Router.route '/', ->
+	@render 'apiPlayground'
+	return
 
-FlowRouter.route '/logger',
-	action: ->
-		BlazeLayout.render 'logger'
-
+Router.route '/logger', ->
+	@render 'logger'
+	return

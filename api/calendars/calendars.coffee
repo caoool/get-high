@@ -6,9 +6,7 @@ class CalendarsCollection extends Mongo.Collection
 	insert: (calendar, events, callback) ->
 		Calendars.remove id: calendar.id
 		Events.remove calendarId: calendar.id
-		Logs.log '...CALLING...METHOD:: calendars.init >>> calendar and associated events removed'
 		Events.init calendar.id, events
-		Logs.log '...CALLING...METHOD:: calendars.init >>> calendar and associated events inserted'
 		super calendar, callback
 
 	update: (selector, modifier, events, callback) ->

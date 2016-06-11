@@ -67,21 +67,17 @@ Meteor.methods
 		future = new Future()
 		url = "/calendar/v3/calendars/#{calendarId}/events"
 		options = params: fields: fields
-		Logs.log "...CALLING...METHOD:: calendars.init >>> Google API:: GET #{url}"
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
-					Logs.log '...END...ERROR:: call failed'
 					future.return throwError error
 				else
 					result.id = calendarId
 					Calendars.insert result, result.items,
 						(error) ->
 							if error
-								Logs.log '...END...ERROR:: calendar insertion failed'
 								future.return throwError error
 							else
-								Logs.log '...END...SUCCESS:: calendar initialized'
 								future.return result
 		future.wait()
 
@@ -106,23 +102,18 @@ Meteor.methods
 			options = params:
 				syncToken: calendar.nextSyncToken
 				fields: fields
-			Logs.log "...CALLING...METHOD:: calendars.sync >>> Google API:: GET #{url}"
 			GoogleApi.get url, options,
 				(error, result) ->
 					if error
-						Logs.log '...END...ERROR:: call failed'
 						future.return throwError()
 					else if result.etag == calendar.etag
-						Logs.log '...END...SUCCESS:: no changes have been made to calendar'
 						future.return "no changes since last sync"
 					else
 						Calendars.update {id: calendarId}, {$set: result}, result.items,
 							(error) ->
 								if error
-									Logs.log '...END...ERROR:: calendar update failed'
 									future.return throwError error
 								else
-									Logs.log '...END...SUCCESS:: found changes, calendar updated'
 									future.return result
 		else
 			future.return 'Calendar not found, please check your input or init first'

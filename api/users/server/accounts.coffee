@@ -6,5 +6,5 @@ Accounts.onLogin ->
 # 	-> Check user google scope
 # 	-> Check google offlineToken
 Accounts.onCreateUser (options, user) ->
-	Logs.log 'Creating new user'
+	# Logs.log 'Creating new user'
 	user

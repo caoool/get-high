@@ -2,6 +2,14 @@ Template.apiPlayground.onCreated ->
 	@subscribe 'users.current', Meteor.userId()
 
 Template.apiPlayground.events
+	'click #addUserButton': ->
+		Accounts.createUser
+			email: $('#username').val()
+			password: $('#password').val()
+
+	'click #loginUserButton': ->
+		Meteor.loginWithPassword $('#username').val(), $('#password').val()
+
 	'click #logout': ->
 		Meteor.logout (error) ->
 			if error then throw new (Meteor.Error)('Logout failed')
