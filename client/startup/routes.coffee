@@ -5,3 +5,11 @@ Router.route '/', ->
 Router.route '/logger', ->
 	@render 'logger'
 	return
+
+Router.route '/calendars', ->
+	@render 'calendars'
+	return
+
+Router.route '/events', ->
+	@render 'events'
+	return

@@ -5,7 +5,6 @@ class CalendarsCollection extends Mongo.Collection
 	# 	are found, remove them before inserting.
 	insert: (calendar, events, callback) ->
 		Calendars.remove id: calendar.id
-		Events.remove calendarId: calendar.id
 		Events.init calendar.id, events
 		super calendar, callback
 

@@ -1,0 +1,12 @@
+template(name='calendars')
+	h1 Calendars created by user
+	table(style='width:100%')
+		tr
+			th id
+			th summary
+			th description
+		each calendars
+			tr
+				td {{id}}
+				td {{summary}}
+				td {{description}}

@@ -13,6 +13,9 @@ template(name='apiPlayground')
 	button#initCalendarButton Init Calendar
 	button#syncCalendarButton Sync Calendar
 	br
+	a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
+	br
+	a(href="{{pathFor 'events'}}", target='_blank') List Events
 	//- button#watchCalendarButton Watch Calendar
 	//- button#stopWatchCalendarButton Stop Watch Calendar
 	

@@ -81,6 +81,7 @@ Events.parseDate = (item) ->
 	item
 
 Events.init = (calendarId, items) ->
+	Events.remove calendarId: calendarId
 	for item in items
 		item.calendarId = calendarId
 		item = Events.parseDate item

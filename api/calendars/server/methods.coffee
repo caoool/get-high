@@ -36,6 +36,7 @@ Meteor.methods
 	# 	items: []
 	# 	-> id, summary, description
 	'calendars.list': ->
+		return if !Meteor.userId()?
 		future = new Future()
 		url = '/calendar/v3/users/me/calendarList'
 		options = params: fields: 'items(id,summary,description)'
@@ -64,6 +65,7 @@ Meteor.methods
 	# 	to 2500, but still future implementation is
 	# 	required to avoid error.
 	'calendars.init': (calendarId) ->
+		return if !calendarId? or calendarId == ''
 		future = new Future()
 		url = "/calendar/v3/calendars/#{calendarId}/events"
 		options = params: fields: fields
@@ -95,6 +97,7 @@ Meteor.methods
 	# RETURN:
 	#   Does not matter
 	'calendars.sync': (calendarId) ->
+		return if !calendarId? or calendarId == ''
 		future = new Future()
 		calendar = Calendars.findOne id: calendarId
 		if calendar?
