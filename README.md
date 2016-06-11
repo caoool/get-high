@@ -6,9 +6,16 @@ Somebody edit this README.
 
 ## API Playground
 
-[API Playground (Document)](https://loopcowstudio.com) can be used to test and explore some of the APIs.
+###[API Playground (Document)](https://loopcowstudio.com)
+Can be used to test and explore some of the APIs.
 
-[Logger](https://loopcowstudio.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*
+~~[Logger](https://loopcowstudio.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*~~
+
+###[Kadira online debugger](https://ui.kadira.io/apps/WjerWJuJ9dn7Atjb4/dashboard/overview)
+We are using [kadira](https://ui.kadira.io/) services to deal with logging and real time debugging. Follow the instructions on how to use it, and it can be really helpful.
+> Please be sure to ask me to add you as a collaborator or you will not be able to see.
+> My email address: caooolu@outlook.com
+*I am paying 50 bucks / month for it right now (lowest rate)*
 
 ## Code Style and Conventions
 
@@ -26,7 +33,7 @@ Please follow the [Git commit message conventions](http://chris.beams.io/posts/g
 
 ## Tutorials and Docs to read
 
-Please take some time to read and understand the following information before contributing.
+###Please take some time to read and understand the following information before contributing.
 
 ~~[AngularJS](http://www.w3schools.com/angular/default.asp) - angular tutorial on w3cshools~~
 
@@ -64,8 +71,10 @@ Please take some time to read and understand the following information before co
 
 ### Google
 
-Scope (Permission) - list can be found [here](https://developers.google.com/identity/protocols/googlescopes)
+####Scope (Permission)
+List can be found [here](https://developers.google.com/identity/protocols/googlescopes)
 * CalenderAPI
 * offlineToken
 
-Client Credentials - need to be obtained before using google apis, credentials can be added [here](https://console.developers.google.com/apis/credentials?project=get-high) *additional app owner can be added upon requests*
+####Client Credentials
+Need to be obtained before using google apis, credentials can be added [here](https://console.developers.google.com/apis/credentials?project=get-high) *additional app owner can be added upon requests*

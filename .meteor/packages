@@ -22,6 +22,8 @@ aldeed:collection2
 dburles:collection-helpers
 jaredmartin:future
 
+meteorhacks:kadira
+kadira:debug
 kadira:flow-router
 kadira:blaze-layout
 
@@ -40,5 +42,3 @@ percolate:google-api
 
 coffeescript
 mquandalle:jade
-
-

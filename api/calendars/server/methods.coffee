@@ -86,7 +86,18 @@ Meteor.methods
 		future.wait()
 
 	# DESCRIPTION:
-	# 	
+	# 	Sync will use the existing nextSyncToken
+	# 	(syncToken) stored with the calendar to
+	# 	call Google events API.
+	# 	In our database, calendar's nextSyncToken
+	# 	will be updated for next sync, events that
+	# 	has changed will also apply to our events
+	# 	associated with the calendar.
+	# 	Types of event update:
+	# 	-> status: cancelled (deletion)
+	# 	-> status: confirmed (update or insertion)
+	# RETURN:
+	#   Does not matter
 	'calendars.sync': (calendarId) ->
 		future = new Future()
 		calendar = Calendars.findOne id: calendarId

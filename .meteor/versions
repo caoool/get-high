@@ -51,7 +51,9 @@ id-map@1.0.7
 jaredmartin:future@0.0.3
 jquery@1.11.8
 kadira:blaze-layout@2.3.0
+kadira:debug@3.2.2
 kadira:flow-router@2.12.1
+kadira:runtime-dev@0.0.1
 launch-screen@1.0.11
 less@2.6.0
 livedata@1.0.18
@@ -60,6 +62,8 @@ logging@1.0.12
 mdg:validation-error@0.2.0
 meteor@1.1.14
 meteor-base@1.0.4
+meteorhacks:kadira@2.28.7
+meteorhacks:meteorx@1.4.1
 meteorhacks:picker@1.0.3
 minifier-css@1.1.11
 minifier-js@1.1.11
@@ -71,6 +75,7 @@ modules@0.6.1
 modules-runtime@0.6.3
 mongo@1.1.7
 mongo-id@1.0.4
+mongo-livedata@1.0.12
 mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
 mrt:q@1.0.1
