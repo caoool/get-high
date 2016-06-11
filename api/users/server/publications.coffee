@@ -1,5 +1,6 @@
-Meteor.publish 'users.current', (id) ->
-	Meteor.users.find id,
+Meteor.publish 'users.current', (user_id) ->
+	Meteor.users.find user_id,
+		profile: 1
 		fields:
 			'services.google.given_name': 1
 			'services.google.picture': 1

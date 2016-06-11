@@ -33,6 +33,16 @@ Template.apiPlayground.events
 				else
 					console.log 'DDP connected'
 
+	'click #setSchoolNameButton': ->
+		Meteor.call 'users.setSchool',
+			Meteor.userId(),
+			$('#schoolName').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #getCalendarListButton': ->
 		Meteor.call 'calendars.list',
 			(error, result) ->
