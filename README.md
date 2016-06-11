@@ -6,7 +6,7 @@ Somebody edit this README.
 
 ## API Playground
 
-[DEMO](https://loopcowstudio.com) can be used to test and explore some of the APIs.
+[API Playground (Document)](https://loopcowstudio.com) can be used to test and explore some of the APIs.
 
 [Logger](https://loopcowstudio.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*
 
