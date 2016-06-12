@@ -1,8 +1,7 @@
 # get-high
 
-Project name is subject to change.
-
-Somebody edit this README.
+Project name is subject to change.  
+Somebody edit this README.  
 
 ## API Playground
 
@@ -12,10 +11,12 @@ Can be used to test and explore some of the APIs.
 ~~[Logger](https://loopcowstudio.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*~~
 
 ###[Kadira online debugger](https://ui.kadira.io/apps/WjerWJuJ9dn7Atjb4/dashboard/overview)
-We are using [kadira](https://ui.kadira.io/) services to deal with logging and real time debugging. Follow the instructions on how to use it, and it can be really helpful.
-> Please be sure to ask me to add you as a collaborator or you will not be able to see.
-> My email address: caooolu@outlook.com
-*I am paying 50 bucks / month for it right now (lowest rate)*
+We are using [kadira](https://ui.kadira.io/) services to deal with logging and real time debugging. Follow the instructions on how to use it, and it can be really helpful.  
+> Please be sure to ask me to add you as a collaborator or you will not be able to see.  
+> My email address: caooolu@outlook.com  
+*I am paying 50 bucks / month for it right now (lowest rate)*  
+> Debug connect *https://www.loopcowstudio.com*  
+> Debug Auth Key *gethighdebugbughighgetbuggethighohhahahasooooohighhigh*  
 
 ## Code Style and Conventions
 
@@ -68,6 +69,9 @@ Please follow the [Git commit message conventions](http://chris.beams.io/posts/g
 ## Configurations
 
 **CRITICAL** configurations need to be established before clients can be connected!!
+
+SERVER ADDRESS: wss://www.loopcowstudio.com  
+SSL: true  
 
 ### Google
 
