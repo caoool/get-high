@@ -36,7 +36,7 @@ Calendars.schema = new SimpleSchema
 	# school:
 	# 	type: String
 	# 	label: 'The school name of the calendar belongs to.'
-	createBy:
+	createdBy:
 		type: String
 		autoValue: ->
 			if @isInsert

@@ -50,7 +50,7 @@ Events.schema = new SimpleSchema
 	# From us
 	calendarId:
 		type: String
-	createBy:
+	createdBy:
 		type: String
 		autoValue: ->
 			if @isInsert

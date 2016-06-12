@@ -1,5 +1,6 @@
 Meteor.publish 'calendars.admin', ->
-		Calendars.find()
+	Calendars.find()
 
-Meteor.publish 'calendars.user', (userId) ->
-		Calendars.find createdBy: userId
+Meteor.publish 'calendars.user', ->
+	return @ready() if !@userId?
+	Calendars.find createdBy: @userId
