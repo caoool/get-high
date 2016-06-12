@@ -69,7 +69,7 @@ Events.schema = new SimpleSchema
 
 Events.attachSchema Events.schema
 
-Events.parseDate = (item) ->
+Events.parse = (item) ->
 	if item? and item.start? and item.start.date?
 		item.start = item.start.date
 	else if item? and item.start? and item.start.dateTime?
@@ -84,13 +84,13 @@ Events.init = (calendarId, items) ->
 	Events.remove calendarId: calendarId
 	for item in items
 		item.calendarId = calendarId
-		item = Events.parseDate item
+		item = Events.parse item
 		Events.insert item
 
 Events.sync = (calendarId, items) ->
 	for item in items
 		item.calendarId = calendarId
-		item = Events.parseDate item
+		item = Events.parse item
 		if item.status == 'cancelled'
 			Events.remove id: item.id
 		else if item.status == 'confirmed'

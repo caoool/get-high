@@ -20,7 +20,7 @@ Calendars.deny
 	remove: -> true
 
 Calendars.schema = new SimpleSchema
-	# From Google
+	### From Google ###
 	id:
 		type: String
 	etag:
@@ -54,3 +54,12 @@ Calendars.schema = new SimpleSchema
 			else @unset()
 
 Calendars.attachSchema Calendars.schema
+
+###*
+ * Filter our calendars with accessRole: reader (not owned by user)
+ * and only keeps the ones with accessRole: owner.
+ * @param  {JSON} calendars List of all calendars
+ * @return {Array}					Filtered list of calendars
+###
+Calendars.filter = (calendars) ->
+	calendars.filter (calendar) -> calendar.accessRole == 'owner'

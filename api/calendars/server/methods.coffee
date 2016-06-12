@@ -39,13 +39,13 @@ Meteor.methods
 		return if !Meteor.userId()?
 		future = new Future()
 		url = '/calendar/v3/users/me/calendarList'
-		options = params: fields: 'items(id,summary,description)'
+		options = params: fields: 'items(id,summary,description,accessRole)'
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
 					future.return throwError()
 				else
-					future.return result
+					future.return Calendars.filter result.items
 		future.wait()
 
 	# !!!
