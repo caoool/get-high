@@ -1,24 +1,128 @@
 template(name='apiPlayground')
-	img(src="#{currentUser.services.google.picture}")
-	if currentUser
-		p #{currentUser.services.google.given_name}
-		button#logout Logout
-	else
-		button#google-login Login with Google
-	button#connectionTestButton DDP Connection Test
-	br
-	input#schoolName(placeholder='School name')
-	button#setSchoolNameButton Set School 
-	br
-	button#getCalendarListButton Get Calendar List
-	br
-	input#calendarId(placeholder='Calendar ID')
-	button#initCalendarButton Init Calendar
-	button#syncCalendarButton Sync Calendar
-	br
-	a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
-	br
-	a(href="{{pathFor 'events'}}", target='_blank') List Events
+	h1 get-high API Playground
+	p The order of the doc structured can also be use for the order of procedure on a client
+	hr
+	hr
+	div#connection 
+		h2 Connection
+		hr
+		h3 Connection test
+		button#connectionTestButton DDP Connection Test
+		dl
+			dt Configurations:
+			dd 
+				| Need to set up basic url and ssl configurations  
+				| For https use wss://, for http use ws://  
+				| No login or authentication required for this test  
+			dt Method Name:
+			dd
+				code conn.test
+			dt Parameters:
+			dd None
+			dt Return:
+			dd
+				| If connected, a string confirmation will be returned
+				| Anything else indicates a failure
+	div#authentication
+		h2 Authentication
+		hr
+		h3 Google
+		p If user is logged on show its name and portrait. Clients should have specific login with Google servises comes from DDP library 
+		img(src="#{currentUser.services.google.picture}")
+		if currentUser
+			p #{currentUser.services.google.given_name}
+			button#logout Logout
+		else
+			button#google-login Login with Google
+		dl
+			dt Configurations:
+			dd
+				ul
+					li Need to request permissoin for calendar 'https://www.googleapis.com/auth/calendar'
+					li Need to request offline token
+					li Need to force approval prompt
+	div#school
+		h2 School
+		hr
+		h3 Set user school
+		p After use first register, that sould come after the login or register phase when the user get to choose a school name.
+		input#schoolName(placeholder='School name')
+		button#setSchoolNameButton Set School
+		dl
+			dt Configurations:
+			dd Can only operator when there is a logged in user, can be checked through DDP APIs 
+			dt Method Name:
+			dd
+				code user.setSchool
+			dt Parameters:
+			dd {String} userId
+			dt Return:
+			dd If no error are returned, should be receiving a 0 for not updated or 1 for updated
+	div#Calendars
+		h2 Calendars
+		hr
+		h3 Calendar list
+		p Get the calendar list of current user
+		button#getCalendarListButton Get Calendar List
+		dl
+			dt Configurations:
+			dd Notice that calendars have accessRole 'reader' or 'owner', only 'owner' type will be returned
+			dt Method Name:
+			dd
+				code calendars.list
+			dt Parameters:
+			dd None
+			dt Return:
+			dd {Object} calendar {id, summary, description, accessRole}
+		h3 Init Calendar
+		p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
+		input#calendarId(placeholder='Calendar ID')
+		button#initCalendarButton Init Calendar
+		dl
+			dt Configurations:
+			dd CRITICAL!!!
+				ul
+					li WIPE! ONLY INIT ON CREATION OR BROKEN!
+					li USING 'primary' AS 'calendarId' IS RISTRICTED
+			dt Method Name:
+			dd
+				code calendars.init
+			dt Parameters:
+			dd {Stirng} calendarId
+			dt Return:
+			dd {Object} calendar
+				small does not matter
+		h3 Init Calendar
+		p Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API. In our database, calendar's nextSyncToken will be updated for next sync, events that has changed will also apply to our events associated with the calendar.
+		button#syncCalendarButton Sync Calendar
+		dl
+			dt Configurations:
+			dd Types of update
+				ul
+					li status: cancelled (deletion)
+					li status: confirmed (update or insertion)
+			dt Method Name:
+			dd
+				code calendars.sync
+			dt Parameters:
+			dd {Stirng} calendarId
+			dt Return:
+			dd {Object} calendar
+				small does not matter
+		h3 Subscription
+		p Following 2 links will take you to the page displaying all calendars and events owned by the current user.
+		dl
+			dt
+				a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
+			dd Subscribe
+				code calendars.user
+			dt
+				a(href="{{pathFor 'events'}}", target='_blank') List Events
+			dd Subscribe
+				code events.user
+			dt Configurations:
+			dd No need to input user Id, logged in user is automatically identified by the server
+		
 	//- button#watchCalendarButton Watch Calendar
 	//- button#stopWatchCalendarButton Stop Watch Calendar
 	
