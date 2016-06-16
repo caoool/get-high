@@ -5,11 +5,14 @@ class CalendarsCollection extends Mongo.Collection
 	# 	are found, remove them before inserting.
 	insert: (calendar, events, callback) ->
 		Calendars.remove id: calendar.id
-		Events.init calendar.id, events
+		Events.init calendar, events
 		super calendar, callback
 
-	update: (selector, modifier, events, callback) ->
-		Events.sync selector.id, events
+	# DESCRIPTION
+	# 	Only applies to 'calendar.sync' with events passing
+	# 	as a parameter
+	update: (selector, modifier, events=null, callback) ->
+		Events.sync selector.id, events if events?
 		super selector, modifier, callback
 
 @Calendars = new CalendarsCollection 'calendars'
@@ -33,9 +36,25 @@ Calendars.schema = new SimpleSchema
 	nextSyncToken:
 		type: String
 	# From us
-	# school:
-	# 	type: String
-	# 	label: 'The school name of the calendar belongs to.'
+	school:
+		type: String
+		autoValue: ->
+			if @isInsert
+				Meteor.user().profile.school
+			else if @isUpsert
+				$setOnInsert: Meteor.user().profile.school
+			else @insert
+	###*
+	 * Store's the name of the club.
+	 * Automatically pulled from summary from google.
+	 * Can be manually updated later.
+	 * @type {String}
+	###
+	club:
+		type: String
+	tags:
+		type: [String]
+		optional: true
 	createdBy:
 		type: String
 		autoValue: ->

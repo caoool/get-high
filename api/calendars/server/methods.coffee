@@ -33,8 +33,7 @@ Meteor.methods
 	# 	list will not be saved in our database, so make
 	# 	this method call to present calendar list.
 	# RETURN:
-	# 	items: []
-	# 	-> id, summary, description
+	# 	{[Object]} -> id, summary, description
 	'calendars.list': ->
 		return if !Meteor.userId()?
 		future = new Future()
@@ -64,7 +63,7 @@ Meteor.methods
 	# 	250. Limit of this number can be increased
 	# 	to 2500, but still future implementation is
 	# 	required to avoid error.
-	'calendars.init': (calendarId) ->
+	'calendars.init': (calendarId, tags=null) ->
 		return if !calendarId? or calendarId == ''
 		future = new Future()
 		url = "/calendar/v3/calendars/#{calendarId}/events"
@@ -75,6 +74,8 @@ Meteor.methods
 					future.return throwError error
 				else
 					result.id = calendarId
+					result.club = result.summary
+					result.tags = tags
 					Calendars.insert result, result.items,
 						(error) ->
 							if error

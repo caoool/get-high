@@ -50,6 +50,11 @@ Events.schema = new SimpleSchema
 	# From us
 	calendarId:
 		type: String
+	club:
+		type: String
+	tags:
+		type: [String]
+		optional: true
 	createdBy:
 		type: String
 		autoValue: ->
@@ -80,16 +85,21 @@ Events.parse = (item) ->
 		item.end = item.end.dateTime
 	item
 
-Events.init = (calendarId, items) ->
-	Events.remove calendarId: calendarId
+Events.init = (calendar, items) ->
+	Events.remove calendarId: calendar.id
 	for item in items
-		item.calendarId = calendarId
+		item.calendarId = calendar.id
+		item.club = calendar.club
+		item.tags = calendar.tags
 		item = Events.parse item
 		Events.insert item
 
 Events.sync = (calendarId, items) ->
 	for item in items
 		item.calendarId = calendarId
+		calendar = Calendars.findOne id: calendarId
+		item.club = calendar.club
+		item.tags = calendar.tags
 		item = Events.parse item
 		if item.status == 'cancelled'
 			Events.remove id: item.id

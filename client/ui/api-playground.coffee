@@ -54,6 +54,7 @@ Template.apiPlayground.events
 	'click #initCalendarButton': ->
 		Meteor.call 'calendars.init',
 			$('#calendarId').val(),
+			$('#calendarInitTags').val().split(','),
 			(error, result) ->
 				if error
 					console.log error
@@ -62,24 +63,44 @@ Template.apiPlayground.events
 
 	'click #syncCalendarButton': ->
 		Meteor.call 'calendars.sync',
-			$('#calendarId').val(),
+			$('#calendarSyncId').val(),
 			(error, result) ->
 				if error
 					console.log error
 				else
 					console.log result
 
-	'click #watchCalendarButton':->
-		url = "/calendar/v3/calendars/#{$('#calendarId').val()}/events/watch"
-		data = 
-			id: '01234567-89ab-cdef-0123456789ab',
-			type: 'web_hook',
-			address: 'https://loopcowstudio.com/notifications'
-		GoogleApi.post url, {data: data},
+	# 'click #watchCalendarButton':->
+	# 	url = "/calendar/v3/calendars/#{$('#calendarId').val()}/events/watch"
+	# 	data = 
+	# 		id: '01234567-89ab-cdef-0123456789ab',
+	# 		type: 'web_hook',
+	# 		address: 'https://loopcowstudio.com/notifications'
+	# 	GoogleApi.post url, {data: data},
+	# 		(error, result) ->
+	# 			if error
+	# 				console.log error
+	# 			else
+	# 				console.log result
+
+	# 'click #stopWatchCalendarButton': ->
+
+	'click #calendarTagsButton': ->
+		Meteor.call 'calendars.setTags',
+			$('#calendarIdSetTags').val(),
+			$('#calendarTags').val().split(','),
 			(error, result) ->
 				if error
 					console.log error
 				else
 					console.log result
 
-	'click #stopWatchCalendarButton': ->
+	'click #eventTagsButton': ->
+		Meteor.call 'events.setTags',
+			$('#eventIdSetTags').val(),
+			$('#eventTags').val().split(','),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result

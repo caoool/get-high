@@ -77,6 +77,7 @@ template(name='apiPlayground')
 		h3 Init Calendar
 		p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
 		input#calendarId(placeholder='Calendar ID')
+		input#calendarInitTags(placeholder='Default calendar tags')
 		button#initCalendarButton Init Calendar
 		dl
 			dt Configurations:
@@ -84,16 +85,19 @@ template(name='apiPlayground')
 				ul
 					li WIPE! ONLY INIT ON CREATION OR BROKEN!
 					li USING 'primary' AS 'calendarId' IS RISTRICTED
+					li USER 'school' MUST BE ASSIGNED
 			dt Method Name:
 			dd
 				code calendars.init
 			dt Parameters:
 			dd {Stirng} calendarId
+			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
 			dt Return:
 			dd {Object} calendar
 				small does not matter
-		h3 Init Calendar
+		h3 Sync Calendar
 		p Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API. In our database, calendar's nextSyncToken will be updated for next sync, events that has changed will also apply to our events associated with the calendar.
+		input#calendarSyncId(placeholder='Calendar ID')
 		button#syncCalendarButton Sync Calendar
 		dl
 			dt Configurations:
@@ -122,6 +126,43 @@ template(name='apiPlayground')
 				code events.user
 			dt Configurations:
 			dd No need to input user Id, logged in user is automatically identified by the server
+	#tags
+		h2 Tags
+		hr
+		h3 Calendar set tags
+		p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar
+		input#calendarIdSetTags(placeholder='Calendar Id')
+		input#calendarTags(placeholder='Tags seperated by ","')
+		button#calendarTagsButton Set Tags
+		dl
+			dt Configurations:
+			dd Calendar must be already initialized
+			dt Method Name:
+			dd
+				code calendars.setTags
+			dt Parameters:
+			dd {Stirng} calendarId
+			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
+			dt Return:
+			dd {Integer} 0 or 1
+
+		h3 Event set tags
+		p Event will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the event.
+		input#eventIdSetTags(placeholder='Event Id')
+		input#eventTags(placeholder='Tags seperated by ","')
+		button#eventTagsButton Set Tags
+		dl
+			dt Configurations:
+			dd Event must be already in our database
+			dt Method Name:
+			dd
+				code events.setTags
+			dt Parameters:
+			dd {Stirng} eventId
+			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
+			dt Return:
+			dd {Integer} 0 or 1
+		
 		
 	//- button#watchCalendarButton Watch Calendar
 	//- button#stopWatchCalendarButton Stop Watch Calendar
