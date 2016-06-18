@@ -35,7 +35,6 @@ Template.apiPlayground.events
 
 	'click #setSchoolNameButton': ->
 		Meteor.call 'users.setSchool',
-			Meteor.userId(),
 			$('#schoolName').val(),
 			(error, result) ->
 				if error
@@ -99,6 +98,24 @@ Template.apiPlayground.events
 		Meteor.call 'events.setTags',
 			$('#eventIdSetTags').val(),
 			$('#eventTags').val().split(','),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #userTagsButton': ->
+		Meteor.call 'users.setTags',
+			$('#userTags').val().split(','),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #userClubsButton': ->
+		Meteor.call 'users.setExcludedClubs',
+			$('#userClubs').val().split(','),
 			(error, result) ->
 				if error
 					console.log error

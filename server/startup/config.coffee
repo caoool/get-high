@@ -11,3 +11,4 @@ Meteor.startup ->
 		service: 'google'
 		clientId: GOOGLE_CLIENT_ID
 		secret: GOOGLE_SECRET
+		loginStyle: 'redirect'

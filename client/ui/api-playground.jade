@@ -142,7 +142,8 @@ template(name='apiPlayground')
 				code calendars.setTags
 			dt Parameters:
 			dd {Stirng} calendarId
-			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
+			dd {[String]} array of string containing all tags, not accumulative
+			dd tags for demostration, seperate tags by ',' in the above input, no space
 			dt Return:
 			dd {Integer} 0 or 1
 
@@ -159,7 +160,40 @@ template(name='apiPlayground')
 				code events.setTags
 			dt Parameters:
 			dd {Stirng} eventId
-			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
+			dd {[String]} array of string containing all tags, not accumulative
+			dd tags for demostration, seperate tags by ',' in the above input, no space
+			dt Return:
+			dd {Integer} 0 or 1
+
+		h3 User set tags
+		p Set user tag subsription, so feeds to user will be filtered.
+		input#userTags(placeholder='Tags seperated by ","')
+		button#userTagsButton Set Tags
+		dl
+			dt Configurations:
+			dd Must have a logged in user
+			dt Method Name:
+			dd
+				code users.setTags
+			dt Parameters:
+			dd {[String]} array of string containing all tags, not accumulative
+			dd tags for demostration, seperate tags by ',' in the above input, no space
+			dt Return:
+			dd {Integer} 0 or 1
+
+		h3 User set excluded
+		p Default following all clubs, only clubs in the list are excluded. Calendar ID passed instead of actuall club name because that is subject to change.
+		input#userClubs(placeholder='Calendar Ids seperated by ","')
+		button#userClubsButton Set Tags
+		dl
+			dt Configurations:
+			dd Must have a logged in user
+			dt Method Name:
+			dd
+				code users.setExcludedClubs
+			dt Parameters:
+			dd {[String]} clubs 'calendarId's
+			dd tags for demostration, seperate tags by ',' in the above input, no space
 			dt Return:
 			dd {Integer} 0 or 1
 		
