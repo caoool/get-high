@@ -1,5 +1,5 @@
 Template.calendars.onCreated ->
-	@subscribe 'calendars.user'
+	@subscribe 'calendars.owner'
 
 Template.calendars.helpers
 	calendars: ->

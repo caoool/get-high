@@ -1,0 +1,12 @@
+template(name='calendarsFeeds')
+	h1 Calendars feed to user
+	table(style='width:100%')
+		tr
+			th id
+			th summary
+			th description
+		each calendars
+			tr
+				td {{id}}
+				td {{summary}}
+				td {{description}}

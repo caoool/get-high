@@ -38,12 +38,6 @@ Calendars.schema = new SimpleSchema
 	# From us
 	school:
 		type: String
-		autoValue: ->
-			if @isInsert
-				Meteor.user().profile.school
-			else if @isUpsert
-				$setOnInsert: Meteor.user().profile.school
-			else @insert
 	###*
 	 * Store's the name of the club.
 	 * Automatically pulled from summary from google.

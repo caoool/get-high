@@ -124,6 +124,13 @@ template(name='apiPlayground')
 				a(href="{{pathFor 'events'}}", target='_blank') List Events
 			dd Subscribe
 				code events.user
+			dt List all calendars (clubs) withing school's scope
+			dd Subscribe
+				code calendars.school
+			dt List all events withing school's scope
+			dd Subscribe
+				code events.school
+			dd Return all events within school's scope, including private events, use with caution
 			dt Configurations:
 			dd No need to input user Id, logged in user is automatically identified by the server
 	#tags
@@ -181,10 +188,10 @@ template(name='apiPlayground')
 			dt Return:
 			dd {Integer} 0 or 1
 
-		h3 User set excluded
+		h3 User set excluded clubs
 		p Default following all clubs, only clubs in the list are excluded. Calendar ID passed instead of actuall club name because that is subject to change.
 		input#userClubs(placeholder='Calendar Ids seperated by ","')
-		button#userClubsButton Set Tags
+		button#userClubsButton Set Excluded Clubs
 		dl
 			dt Configurations:
 			dd Must have a logged in user
@@ -197,6 +204,21 @@ template(name='apiPlayground')
 			dt Return:
 			dd {Integer} 0 or 1
 		
+		h3 Subscription
+		p Following 2 links will take you to the page displaying calendars and events feed to the current user.
+		dl
+			dt
+				a(href="{{pathFor 'calendarsFeeds'}}", target='_blank') List Calendars Feeds
+			dd Subscribe
+				code calendars.feeds
+			dt
+				a(href="{{pathFor 'eventsFeeds'}}", target='_blank') List Events Feeds
+			dd Subscribe
+				code events.feeds
+			dd Event feeds are sorted by starting date in descending order
+			dt Configurations:
+			dd No need to input user Id, logged in user is automatically identified by the server
+			dd Feeds can be configured by the above tags and excluded clubs list
 		
 	//- button#watchCalendarButton Watch Calendar
 	//- button#stopWatchCalendarButton Stop Watch Calendar

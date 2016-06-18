@@ -13,3 +13,11 @@ Router.route '/calendars', ->
 Router.route '/events', ->
 	@render 'events'
 	return
+
+Router.route '/calendarsFeeds', ->
+	@render 'calendarsFeeds'
+	return
+
+Router.route '/eventsFeeds', ->
+	@render 'eventsFeeds'
+	return

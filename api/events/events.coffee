@@ -50,6 +50,8 @@ Events.schema = new SimpleSchema
 	# From us
 	calendarId:
 		type: String
+	school:
+		type: String
 	club:
 		type: String
 	tags:
@@ -89,6 +91,7 @@ Events.init = (calendar, items) ->
 	Events.remove calendarId: calendar.id
 	for item in items
 		item.calendarId = calendar.id
+		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
 		item = Events.parse item
@@ -98,6 +101,7 @@ Events.sync = (calendarId, items) ->
 	for item in items
 		item.calendarId = calendarId
 		calendar = Calendars.findOne id: calendarId
+		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
 		item = Events.parse item

@@ -1,5 +1,5 @@
 Template.events.onCreated ->
-	@subscribe 'events.user'
+	@subscribe 'events.owner'
 
 Template.events.helpers
 	events: ->

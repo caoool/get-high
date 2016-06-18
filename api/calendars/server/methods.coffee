@@ -74,6 +74,7 @@ Meteor.methods
 					future.return throwError error
 				else
 					result.id = calendarId
+					result.school = Meteor.user().profile.school
 					result.club = result.summary
 					result.tags = tags
 					Calendars.insert result, result.items,
