@@ -2,19 +2,23 @@ Template.apiPlayground.onCreated ->
 	@subscribe 'users.current', Meteor.userId()
 
 Template.apiPlayground.events
-	'click #addUserButton': ->
+	'click #addUserButton': (e) ->
+		e.preventDefault()
 		Accounts.createUser
 			email: $('#username').val()
 			password: $('#password').val()
 
-	'click #loginUserButton': ->
+	'click #loginUserButton': (e) ->
+		e.preventDefault()
 		Meteor.loginWithPassword $('#username').val(), $('#password').val()
 
-	'click #logout': ->
+	'click #logout': (e) ->
+		e.preventDefault()
 		Meteor.logout (error) ->
 			if error then throw new (Meteor.Error)('Logout failed')
 
-	'click #google-login': ->
+	'click #google-login': (e) ->
+		e.preventDefault()
 		Meteor.loginWithGoogle 
 			forceApprovalPrompt: true
 			requestPermissions: ['https://www.googleapis.com/auth/calendar']
@@ -25,7 +29,8 @@ Template.apiPlayground.events
 			else
 				console.log 'logged in'
 
-	'click #connectionTestButton': ->
+	'click #connectionTestButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'conn.test',
 			(error, result) ->
 				if error
@@ -33,7 +38,8 @@ Template.apiPlayground.events
 				else
 					console.log 'DDP connected'
 
-	'click #setSchoolNameButton': ->
+	'click #setSchoolNameButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'users.setSchool',
 			$('#schoolName').val(),
 			(error, result) ->
@@ -42,7 +48,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #likeEventButton': ->
+	'click #likeEventButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'users.like',
 			$('#likeEvent').val(),
 			(error, result) ->
@@ -51,7 +58,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #unlikeEventButton': ->
+	'click #unlikeEventButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'users.unlike',
 			$('#unlikeEvent').val(),
 			(error, result) ->
@@ -60,7 +68,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #getCalendarListButton': ->
+	'click #getCalendarListButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'calendars.list',
 			(error, result) ->
 				if error
@@ -68,7 +77,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #initCalendarButton': ->
+	'click #initCalendarButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'calendars.init',
 			$('#calendarId').val(),
 			$('#calendarInitTags').val().split(','),
@@ -78,7 +88,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #syncCalendarButton': ->
+	'click #syncCalendarButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'calendars.sync',
 			$('#calendarSyncId').val(),
 			(error, result) ->
@@ -87,7 +98,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #setEventVisibilityButton': ->
+	'click #setEventVisibilityButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'events.setVisibility',
 			$('#setEventVisibilityId').val(),
 			$('#setEventVisibilityType').val(),
@@ -112,7 +124,8 @@ Template.apiPlayground.events
 
 	# 'click #stopWatchCalendarButton': ->
 
-	'click #calendarTagsButton': ->
+	'click #calendarTagsButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'calendars.setTags',
 			$('#calendarIdSetTags').val(),
 			$('#calendarTags').val().split(','),
@@ -122,7 +135,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #eventTagsButton': ->
+	'click #eventTagsButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'events.setTags',
 			$('#eventIdSetTags').val(),
 			$('#eventTags').val().split(','),
@@ -132,7 +146,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #userTagsButton': ->
+	'click #userTagsButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'users.setTags',
 			$('#userTags').val().split(','),
 			(error, result) ->
@@ -141,7 +156,8 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #userClubsButton': ->
+	'click #userClubsButton': (e) ->
+		e.preventDefault()
 		Meteor.call 'users.setExcludedClubs',
 			$('#userClubs').val().split(','),
 			(error, result) ->

@@ -1,280 +1,341 @@
 template(name='apiPlayground')
-	h1 get-high API Playground
-	p The order of the doc structured can also be use for the order of procedure on a client
-	hr
-	hr
-	div#connection 
-		h2 Connection
-		hr
-		h3 Connection test
-		button#connectionTestButton DDP Connection Test
-		dl
-			dt Configurations:
-			dd 
-				| Need to set up basic url and ssl configurations  
-				| For https use wss://, for http use ws://  
-				| No login or authentication required for this test  
-			dt Method Name:
-			dd
-				code conn.test
-			dt Parameters:
-			dd None
-			dt Return:
-			dd
-				| If connected, a string confirmation will be returned
-				| Anything else indicates a failure
-	div#authentication
-		h2 Authentication
-		hr
-		h3 Google
-		p If user is logged on show its name and portrait. Clients should have specific login with Google servises comes from DDP library 
-		img(src="#{currentUser.services.google.picture}")
-		if currentUser
-			p #{currentUser.services.google.given_name}
-			button#logout Logout
-		else
-			button#google-login Login with Google
-		dl
-			dt Configurations:
-			dd
-				ul
-					li Need to request permissoin for calendar 'https://www.googleapis.com/auth/calendar'
-					li Need to request offline token
-					li Need to force approval prompt
-	#users
-		h2 School
-		hr
-		h3 Set user school
-		p After use first register, that sould come after the login or register phase when the user get to choose a school name.
-		input#schoolName(placeholder='School name')
-		button#setSchoolNameButton Set School
-		dl
-			dt Configurations:
-			dd Can only operator when there is a logged in user, can be checked through DDP APIs 
-			dt Method Name:
-			dd
-				code user.setSchool
-			dt Parameters:
-			dd {String} userId
-			dt Return:
-			dd If no error are returned, should be receiving a 0 for not updated or 1 for updated
-		h2 Likes
-		hr
-		h3 Like an event
-		p A user can like an event with its unique id (eventId: id in event collection).
-		input#likeEvent(placeholder='Event Id')
-		button#likeEventButton Like event
-		dl
-			dt Configurations:
-			dd Can only operator when there is a logged in user, can be checked through DDP APIs 
-			dt Method Name:
-			dd
-				code users.like
-			dt Parameters:
-			dd {String} eventId
-			dt Return:
-			dd 0 or 1 (false or true)
-		h3 Unlike an event
-		p A user can unlike an event with its unique id (eventId: id in event collection).
-		input#unlikeEvent(placeholder='Event Id')
-		button#unlikeEventButton Unlike event
-		dl
-			dt Configurations:
-			dd Can only operator when there is a logged in user, can be checked through DDP APIs.
-			dt Method Name:
-			dd
-				code users.unlike
-			dt Parameters:
-			dd {String} eventId
-			dt Return:
-			dd 0 or 1 (false or true)
-	#calendars
-		h2 Calendars
-		hr
-		h3 Calendar list
-		p Get the calendar list of current user
-		button#getCalendarListButton Get Calendar List
-		dl
-			dt Configurations:
-			dd Notice that calendars have accessRole 'reader' or 'owner', only 'owner' type will be returned
-			dt Method Name:
-			dd
-				code calendars.list
-			dt Parameters:
-			dd None
-			dt Return:
-			dd {Object} calendar {id, summary, description, accessRole}
-		h3 Init Calendar
-		p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
-		input#calendarId(placeholder='Calendar ID')
-		input#calendarInitTags(placeholder='Default calendar tags')
-		button#initCalendarButton Init Calendar
-		dl
-			dt Configurations:
-			dd CRITICAL!!!
-				ul
-					li WIPE! ONLY INIT ON CREATION OR BROKEN!
-					li USING 'primary' AS 'calendarId' IS RISTRICTED
-					li USER 'school' MUST BE ASSIGNED
-			dt Method Name:
-			dd
-				code calendars.init
-			dt Parameters:
-			dd {Stirng} calendarId
-			dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
-			dt Return:
-			dd {Object} calendar
-				small does not matter
-		h3 Sync Calendar
-		p Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API. In our database, calendar's nextSyncToken will be updated for next sync, events that has changed will also apply to our events associated with the calendar.
-		input#calendarSyncId(placeholder='Calendar ID')
-		button#syncCalendarButton Sync Calendar
-		dl
-			dt Configurations:
-			dd Types of update
-				ul
-					li status: cancelled (deletion)
-					li status: confirmed (update or insertion)
-			dt Method Name:
-			dd
-				code calendars.sync
-			dt Parameters:
-			dd {Stirng} calendarId
-			dt Return:
-			dd {Object} calendar
-				small does not matter
-		h3 Event Set Visibility
-		p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.
-		input#setEventVisibilityId(placeholder='Event ID')
-		select#setEventVisibilityType
-			option(value='public') public
-			option(value='private') private
-			option(value='confidential') confidential
-		button#setEventVisibilityButton Set Visibility
-		dl
-			dt Configurations:
-			dd Logged in user
-			dt !!!
-			dd Only string in ['public', 'private', 'confidential'] can be passed
-			dt Method Name:
-			dd
-				code events.setVisibility
-			dt Parameters:
-			dd {Stirng} eventId
-			dd {String} visibility ['public', 'private', 'confidential']
-			dt Return:
-			dd
-				small does not matter
-		h3 Subscription
-		p Following 2 links will take you to the page displaying all calendars and events owned by the current user.
-		dl
-			dt
-				a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
-			dd Subscribe
-				code calendars.user
-			dt
-				a(href="{{pathFor 'events'}}", target='_blank') List Events
-			dd Subscribe
-				code events.user
-			dt List all calendars (clubs) withing school's scope
-			dd Subscribe
-				code calendars.school
-			dt List all events withing school's scope
-			dd Subscribe
-				code events.school
-			dd Return all events within school's scope, including private events, use with caution
-			dt List events liked by the current user
-			dd Subscribe
-				code events.likes
-			dt Configurations:
-			dd No need to input user Id, logged in user is automatically identified by the server
-	#tags
-		h2 Tags
-		hr
-		h3 Calendar set tags
-		p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar
-		input#calendarIdSetTags(placeholder='Calendar Id')
-		input#calendarTags(placeholder='Tags seperated by ","')
-		button#calendarTagsButton Set Tags
-		dl
-			dt Configurations:
-			dd Calendar must be already initialized
-			dt Method Name:
-			dd
-				code calendars.setTags
-			dt Parameters:
-			dd {Stirng} calendarId
-			dd {[String]} array of string containing all tags, not accumulative
-			dd tags for demostration, seperate tags by ',' in the above input, no space
-			dt Return:
-			dd {Integer} 0 or 1
 
-		h3 Event set tags
-		p Event will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the event.
-		input#eventIdSetTags(placeholder='Event Id')
-		input#eventTags(placeholder='Tags seperated by ","')
-		button#eventTagsButton Set Tags
-		dl
-			dt Configurations:
-			dd Event must be already in our database
-			dt Method Name:
-			dd
-				code events.setTags
-			dt Parameters:
-			dd {Stirng} eventId
-			dd {[String]} array of string containing all tags, not accumulative
-			dd tags for demostration, seperate tags by ',' in the above input, no space
-			dt Return:
-			dd {Integer} 0 or 1
+	.api.container-fluid
 
-		h3 User set tags
-		p Set user tag subsription, so feeds to user will be filtered.
-		input#userTags(placeholder='Tags seperated by ","')
-		button#userTagsButton Set Tags
-		dl
-			dt Configurations:
-			dd Must have a logged in user
-			dt Method Name:
-			dd
-				code users.setTags
-			dt Parameters:
-			dd {[String]} array of string containing all tags, not accumulative
-			dd tags for demostration, seperate tags by ',' in the above input, no space
-			dt Return:
-			dd {Integer} 0 or 1
+		#nav
 
-		h3 User set excluded clubs
-		p Default following all clubs, only clubs in the list are excluded. Calendar ID passed instead of actuall club name because that is subject to change.
-		input#userClubs(placeholder='Calendar Ids seperated by ","')
-		button#userClubsButton Set Excluded Clubs
-		dl
-			dt Configurations:
-			dd Must have a logged in user
-			dt Method Name:
-			dd
-				code users.setExcludedClubs
-			dt Parameters:
-			dd {[String]} clubs 'calendarId's
-			dd tags for demostration, seperate tags by ',' in the above input, no space
-			dt Return:
-			dd {Integer} 0 or 1
-		
-		h3 Subscription
-		p Following 2 links will take you to the page displaying calendars and events feed to the current user.
-		dl
-			dt
-				a(href="{{pathFor 'calendarsFeeds'}}", target='_blank') List Calendars Feeds
-			dd Subscribe
-				code calendars.feeds
-			dt
-				a(href="{{pathFor 'eventsFeeds'}}", target='_blank') List Events Feeds
-			dd Subscribe
-				code events.feeds
-			dd Event feeds are sorted by starting date in descending order
-			dt Configurations:
-			dd No need to input user Id, logged in user is automatically identified by the server
-			dd Feeds can be configured by the above tags and excluded clubs list
-		
-	//- button#watchCalendarButton Watch Calendar
-	//- button#stopWatchCalendarButton Stop Watch Calendar
-	
+			ul.nav.nav-pills.nav-stacked
+				li
+					a(href='#top') Home
+				li
+					a(href='#connection') Connection
+				li
+					a(href='#users') Users
+
+		#doc
+
+			.jumbotron#top
+				h1 get-high
+					br
+					small API playground
+				em The order of the doc structured can also be use for the order of procedure on a client.
+
+			.cat#connection
+				h2
+					span.label.label-default Connection
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Test DDP connectio
+						.panel-body
+							p Make sure client server connection is established before proceed.
+							ul
+								li Need to set up basic url and ssl configurations
+								li For https use wss://, for http use ws://
+								li No login or authentication required for this test
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code conn.test
+									td
+								tr
+									th Params
+									td 
+										code
+									td None
+								tr
+									th Return
+									td
+										code
+									td Print connection result to console
+					button.btn.btn-default#connectionTestButton DDP Connection Test
+
+			.cat#users
+				h2
+					span.label.label-default Users
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Login with google
+						.panel-body
+							p Login user with google accounts. Clients should have specific login methods with Google servises comes from DDP library.
+							ul
+								li Client_id for backend is used here
+						table.table
+							tbody
+								tr
+									th Method
+									td Depending on clients
+								tr
+									th Params
+									td Depending on clients
+								tr
+									th Return
+									td See results below
+					img(src="#{currentUser.services.google.picture}")
+					if currentUser
+						span #{currentUser.services.google.given_name}
+						br
+						button.btn.btn-default#logout Logout
+					else
+						button.btn.btn-default#google-login Login with Google
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set user school
+						.panel-body
+							p After use first register, that sould come after the login or register phase when the user get to choose a school name.
+							ul
+								li !!! USER MUST HAVE SELECTED SCHOOL BEFORE USING CALENDARS AND EVENTS !!!
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setSchool
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td School name
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						.input-group
+							input.form-control#schoolName(placeholder='School name')
+							.input-group-btn
+								button.btn.btn-default#setSchoolNameButton Set School
+				p After use first register, that sould come after the login or register phase when the user get to choose a school name.
+
+				h2 Likes
+				hr
+				h3 Like an event
+				p A user can like an event with its unique id (eventId: id in event collection).
+				input#likeEvent(placeholder='Event Id')
+				button#likeEventButton Like event
+				dl
+					dt Configurations:
+					dd Can only operator when there is a logged in user, can be checked through DDP APIs 
+					dt Method Name:
+					dd
+						code users.like
+					dt Parameters:
+					dd {String} eventId
+					dt Return:
+					dd 0 or 1 (false or true)
+				h3 Unlike an event
+				p A user can unlike an event with its unique id (eventId: id in event collection).
+				input#unlikeEvent(placeholder='Event Id')
+				button#unlikeEventButton Unlike event
+				dl
+					dt Configurations:
+					dd Can only operator when there is a logged in user, can be checked through DDP APIs.
+					dt Method Name:
+					dd
+						code users.unlike
+					dt Parameters:
+					dd {String} eventId
+					dt Return:
+					dd 0 or 1 (false or true)
+			#calendars
+				h2 Calendars
+				hr
+				h3 Calendar list
+				p Get the calendar list of current user
+				button#getCalendarListButton Get Calendar List
+				dl
+					dt Configurations:
+					dd Notice that calendars have accessRole 'reader' or 'owner', only 'owner' type will be returned
+					dt Method Name:
+					dd
+						code calendars.list
+					dt Parameters:
+					dd None
+					dt Return:
+					dd {Object} calendar {id, summary, description, accessRole}
+				h3 Init Calendar
+				p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
+				input#calendarId(placeholder='Calendar ID')
+				input#calendarInitTags(placeholder='Default calendar tags')
+				button#initCalendarButton Init Calendar
+				dl
+					dt Configurations:
+					dd CRITICAL!!!
+						ul
+							li WIPE! ONLY INIT ON CREATION OR BROKEN!
+							li USING 'primary' AS 'calendarId' IS RISTRICTED
+							li USER 'school' MUST BE ASSIGNED
+					dt Method Name:
+					dd
+						code calendars.init
+					dt Parameters:
+					dd {Stirng} calendarId
+					dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
+					dt Return:
+					dd {Object} calendar
+						small does not matter
+				h3 Sync Calendar
+				p Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API. In our database, calendar's nextSyncToken will be updated for next sync, events that has changed will also apply to our events associated with the calendar.
+				input#calendarSyncId(placeholder='Calendar ID')
+				button#syncCalendarButton Sync Calendar
+				dl
+					dt Configurations:
+					dd Types of update
+						ul
+							li status: cancelled (deletion)
+							li status: confirmed (update or insertion)
+					dt Method Name:
+					dd
+						code calendars.sync
+					dt Parameters:
+					dd {Stirng} calendarId
+					dt Return:
+					dd {Object} calendar
+						small does not matter
+				h3 Event Set Visibility
+				p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.
+				p A calenders.sync call is automatically executed after a success update.
+				input#setEventVisibilityId(placeholder='Event ID')
+				select#setEventVisibilityType
+					option(value='public') public
+					option(value='private') private
+					option(value='confidential') confidential
+				button#setEventVisibilityButton Set Visibility
+				dl
+					dt Configurations:
+					dd Logged in user
+					dt !!!
+					dd Only string in ['public', 'private', 'confidential'] can be passed
+					dt Method Name:
+					dd
+						code events.setVisibility
+					dt Parameters:
+					dd {Stirng} eventId
+					dd {String} visibility ['public', 'private', 'confidential']
+					dt Return:
+					dd
+						small does not matter
+				h3 Subscription
+				p Following 2 links will take you to the page displaying all calendars and events owned by the current user.
+				dl
+					dt
+						a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
+					dd Subscribe
+						code calendars.user
+					dt
+						a(href="{{pathFor 'events'}}", target='_blank') List Events
+					dd Subscribe
+						code events.user
+					dt List all calendars (clubs) withing school's scope
+					dd Subscribe
+						code calendars.school
+					dt List all events withing school's scope
+					dd Subscribe
+						code events.school
+					dd Return all events within school's scope, including private events, use with caution
+					dt List events liked by the current user
+					dd Subscribe
+						code events.likes
+					dt Configurations:
+					dd No need to input user Id, logged in user is automatically identified by the server
+			#tags
+				h2 Tags
+				hr
+				h3 Calendar set tags
+				p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar
+				input#calendarIdSetTags(placeholder='Calendar Id')
+				input#calendarTags(placeholder='Tags seperated by ","')
+				button#calendarTagsButton Set Tags
+				dl
+					dt Configurations:
+					dd Calendar must be already initialized
+					dt Method Name:
+					dd
+						code calendars.setTags
+					dt Parameters:
+					dd {Stirng} calendarId
+					dd {[String]} array of string containing all tags, not accumulative
+					dd tags for demostration, seperate tags by ',' in the above input, no space
+					dt Return:
+					dd {Integer} 0 or 1
+
+				h3 Event set tags
+				p Event will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the event.
+				input#eventIdSetTags(placeholder='Event Id')
+				input#eventTags(placeholder='Tags seperated by ","')
+				button#eventTagsButton Set Tags
+				dl
+					dt Configurations:
+					dd Event must be already in our database
+					dt Method Name:
+					dd
+						code events.setTags
+					dt Parameters:
+					dd {Stirng} eventId
+					dd {[String]} array of string containing all tags, not accumulative
+					dd tags for demostration, seperate tags by ',' in the above input, no space
+					dt Return:
+					dd {Integer} 0 or 1
+
+				h3 User set tags
+				p Set user tag subsription, so feeds to user will be filtered.
+				input#userTags(placeholder='Tags seperated by ","')
+				button#userTagsButton Set Tags
+				dl
+					dt Configurations:
+					dd Must have a logged in user
+					dt Method Name:
+					dd
+						code users.setTags
+					dt Parameters:
+					dd {[String]} array of string containing all tags, not accumulative
+					dd tags for demostration, seperate tags by ',' in the above input, no space
+					dt Return:
+					dd {Integer} 0 or 1
+
+				h3 User set excluded clubs
+				p Default following all clubs, only clubs in the list are excluded. Calendar ID passed instead of actuall club name because that is subject to change.
+				input#userClubs(placeholder='Calendar Ids seperated by ","')
+				button#userClubsButton Set Excluded Clubs
+				dl
+					dt Configurations:
+					dd Must have a logged in user
+					dt Method Name:
+					dd
+						code users.setExcludedClubs
+					dt Parameters:
+					dd {[String]} clubs 'calendarId's
+					dd tags for demostration, seperate tags by ',' in the above input, no space
+					dt Return:
+					dd {Integer} 0 or 1
+				
+				h3 Subscription
+				p Following 2 links will take you to the page displaying calendars and events feed to the current user.
+				dl
+					dt
+						a(href="{{pathFor 'calendarsFeeds'}}", target='_blank') List Calendars Feeds
+					dd Subscribe
+						code calendars.feeds
+					dt
+						a(href="{{pathFor 'eventsFeeds'}}", target='_blank') List Events Feeds
+					dd Subscribe
+						code events.feeds
+					dd Event feeds are sorted by starting date in descending order
+					dt Configurations:
+					dd No need to input user Id, logged in user is automatically identified by the server
+					dd Feeds can be configured by the above tags and excluded clubs list
+				
+			//- button#watchCalendarButton Watch Calendar
+			//- button#stopWatchCalendarButton Stop Watch Calendar
+			
