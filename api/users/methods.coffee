@@ -15,3 +15,9 @@ Meteor.methods
 
 	'users.setTags': (tags) ->
 		Meteor.users.update @userId, $set: 'profile.tags': tags if @userId
+
+	'users.like': (eventId) ->
+		Meteor.users.update @userId, $push: 'profile.likes': eventId if @userId
+
+	'users.unlike': (eventId) ->
+		Meteor.users.update @userId, $pull: 'profile.likes': eventId if @userId

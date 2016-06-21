@@ -16,7 +16,7 @@ Meteor.publish 'events.school', ->
 #   Return only events that intersect the user's
 #   tags and visibility is public or default.
 # RETURN
-#   {Object} quilified events in descending order
+#   {Object} qualified events in descending order
 # REVIEW
 #   'default' visibility can be hidden by default
 #   due to future requirements.
@@ -29,4 +29,15 @@ Meteor.publish 'events.feeds', ->
 			tags: $in: user.profile.tags
 			visibility: $in: ['public', 'default']
 		]},
+		$sort: start: -1
+
+# DESCRIPTION
+# 	Return only user liked events.
+# RETURN
+# 	{Object} qualified events in descending order
+Meteor.publish 'events.likes', ->
+	return @ready() if !@userId?
+	user = Meteor.users.findOne @userId
+	Events.find
+		id: $in: user.profile.likes,
 		$sort: start: -1

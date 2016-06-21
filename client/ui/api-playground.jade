@@ -41,7 +41,7 @@ template(name='apiPlayground')
 					li Need to request permissoin for calendar 'https://www.googleapis.com/auth/calendar'
 					li Need to request offline token
 					li Need to force approval prompt
-	div#school
+	#users
 		h2 School
 		hr
 		h3 Set user school
@@ -58,7 +58,37 @@ template(name='apiPlayground')
 			dd {String} userId
 			dt Return:
 			dd If no error are returned, should be receiving a 0 for not updated or 1 for updated
-	div#Calendars
+		h2 Likes
+		hr
+		h3 Like an event
+		p A user can like an event with its unique id (eventId: id in event collection).
+		input#likeEvent(placeholder='Event Id')
+		button#likeEventButton Like event
+		dl
+			dt Configurations:
+			dd Can only operator when there is a logged in user, can be checked through DDP APIs 
+			dt Method Name:
+			dd
+				code users.like
+			dt Parameters:
+			dd {String} eventId
+			dt Return:
+			dd 0 or 1 (false or true)
+		h3 Unlike an event
+		p A user can unlike an event with its unique id (eventId: id in event collection).
+		input#unlikeEvent(placeholder='Event Id')
+		button#unlikeEventButton Unlike event
+		dl
+			dt Configurations:
+			dd Can only operator when there is a logged in user, can be checked through DDP APIs.
+			dt Method Name:
+			dd
+				code users.unlike
+			dt Parameters:
+			dd {String} eventId
+			dt Return:
+			dd 0 or 1 (false or true)
+	#calendars
 		h2 Calendars
 		hr
 		h3 Calendar list
@@ -131,6 +161,9 @@ template(name='apiPlayground')
 			dd Subscribe
 				code events.school
 			dd Return all events within school's scope, including private events, use with caution
+			dt List events liked by the current user
+			dd Subscribe
+				code events.likes
 			dt Configurations:
 			dd No need to input user Id, logged in user is automatically identified by the server
 	#tags

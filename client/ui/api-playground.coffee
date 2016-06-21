@@ -42,6 +42,24 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #likeEventButton': ->
+		Meteor.call 'users.like',
+			$('#likeEvent').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #unlikeEventButton': ->
+		Meteor.call 'users.unlike',
+			$('#unlikeEvent').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #getCalendarListButton': ->
 		Meteor.call 'calendars.list',
 			(error, result) ->
