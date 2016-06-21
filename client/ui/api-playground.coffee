@@ -87,6 +87,16 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #setEventVisibilityButton': ->
+		Meteor.call 'events.setVisibility',
+			$('#setEventVisibilityId').val(),
+			$('#setEventVisibilityType').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	# 'click #watchCalendarButton':->
 	# 	url = "/calendar/v3/calendars/#{$('#calendarId').val()}/events/watch"
 	# 	data = 

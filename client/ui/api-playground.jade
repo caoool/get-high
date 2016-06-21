@@ -143,6 +143,28 @@ template(name='apiPlayground')
 			dt Return:
 			dd {Object} calendar
 				small does not matter
+		h3 Event Set Visibility
+		p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.
+		input#setEventVisibilityId(placeholder='Event ID')
+		select#setEventVisibilityType
+			option(value='public') public
+			option(value='private') private
+			option(value='confidential') confidential
+		button#setEventVisibilityButton Set Visibility
+		dl
+			dt Configurations:
+			dd Logged in user
+			dt !!!
+			dd Only string in ['public', 'private', 'confidential'] can be passed
+			dt Method Name:
+			dd
+				code events.setVisibility
+			dt Parameters:
+			dd {Stirng} eventId
+			dd {String} visibility ['public', 'private', 'confidential']
+			dt Return:
+			dd
+				small does not matter
 		h3 Subscription
 		p Following 2 links will take you to the page displaying all calendars and events owned by the current user.
 		dl
