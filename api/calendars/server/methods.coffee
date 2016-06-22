@@ -35,7 +35,7 @@ Meteor.methods
 	# RETURN:
 	# 	{[Object]} -> id, summary, description
 	'calendars.list': ->
-		return if !Meteor.userId()?
+		return 'not logged in' if !Meteor.userId()?
 		future = new Future()
 		url = '/calendar/v3/users/me/calendarList'
 		options = params: fields: 'items(id,summary,description,accessRole)'

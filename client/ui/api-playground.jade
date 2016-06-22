@@ -89,6 +89,30 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Current user
+						.panel-body
+							p Get the current logged in user on the server.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.currentUser
+									td
+								tr
+									th Params
+									td
+									td None
+								tr
+									th Return
+									td
+										code {Object}
+									td Current user object (user collection)
+					button.btn.btn-default#checkLoggedInButton Get Current User
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Set user school
 						.panel-body
 							p After use first register, that sould come after the login or register phase when the user get to choose a school name.

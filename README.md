@@ -82,3 +82,9 @@ List can be found [here](https://developers.google.com/identity/protocols/google
 
 ####Client Credentials
 Need to be obtained before using google apis, credentials can be added [here](https://console.developers.google.com/apis/credentials?project=get-high) *additional app owner can be added upon requests*
+
+###Clients Demos
+
+####iOS
+iOS client is implemented with SwiftDDP installed through cocoapods including some fixes and modification specific for our application.  
+[Please refer to his repository](https://github.com/caoool/DDPTest)

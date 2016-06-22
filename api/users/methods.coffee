@@ -1,4 +1,8 @@
 Meteor.methods
+
+	'users.currentUser': ->
+		Meteor.users.findOne @userId
+
 	'users.setSchool': (school) ->
 		Meteor.users.update @userId, $set: 'profile.school': school if @userId
 

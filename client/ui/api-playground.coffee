@@ -19,7 +19,7 @@ Template.apiPlayground.events
 
 	'click #google-login': (e) ->
 		e.preventDefault()
-		Meteor.loginWithGoogle 
+		Meteor.loginWithGoogle()
 			forceApprovalPrompt: true
 			requestPermissions: ['https://www.googleapis.com/auth/calendar']
 			requestOfflineToken: true
@@ -28,6 +28,15 @@ Template.apiPlayground.events
 				console.log error
 			else
 				console.log 'logged in'
+
+	'click #checkLoggedInButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'users.currentUser',
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
 
 	'click #connectionTestButton': (e) ->
 		e.preventDefault()
