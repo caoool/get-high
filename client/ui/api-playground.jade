@@ -11,6 +11,14 @@ template(name='apiPlayground')
 					a(href='#connection') Connection
 				li
 					a(href='#users') Users
+				li
+					a(href='#calendars') Calendars & Events
+				li
+					a(href='#tags') Tags
+				li
+					a(href='#likes') Likes
+				li
+					a(href='#subscriptions') Subscriptions
 
 		#doc
 
@@ -136,229 +144,414 @@ template(name='apiPlayground')
 										code {Integer}
 									td 0 or 1
 					form.form-inline
-						.input-group
-							input.form-control#schoolName(placeholder='School name')
-							.input-group-btn
-								button.btn.btn-default#setSchoolNameButton Set School
-				p After use first register, that sould come after the login or register phase when the user get to choose a school name.
+						input.form-control#schoolName(placeholder='School name')
+						button.btn.btn-default#setSchoolNameButton Set School
 
-				h2 Likes
+			.cat#calendars
+				h2
+					span.label.label-default Calendars & Events
 				hr
-				h3 Like an event
-				p A user can like an event with its unique id (eventId: id in event collection).
-				input#likeEvent(placeholder='Event Id')
-				button#likeEventButton Like event
-				dl
-					dt Configurations:
-					dd Can only operator when there is a logged in user, can be checked through DDP APIs 
-					dt Method Name:
-					dd
-						code users.like
-					dt Parameters:
-					dd {String} eventId
-					dt Return:
-					dd 0 or 1 (false or true)
-				h3 Unlike an event
-				p A user can unlike an event with its unique id (eventId: id in event collection).
-				input#unlikeEvent(placeholder='Event Id')
-				button#unlikeEventButton Unlike event
-				dl
-					dt Configurations:
-					dd Can only operator when there is a logged in user, can be checked through DDP APIs.
-					dt Method Name:
-					dd
-						code users.unlike
-					dt Parameters:
-					dd {String} eventId
-					dt Return:
-					dd 0 or 1 (false or true)
-			#calendars
-				h2 Calendars
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Get calendar list
+						.panel-body
+							p Get a list of all calendars {owned} by the current user. When doing init calendars and sync calendars, calendar Id is required returned from this function.
+							ul
+								li Only calendars owned by user will be returned, that is no editor or other types.
+								li In returned objects, id is the one used to identify calendar by google, we will use this id as our unique id in our database.
+								li !!! DO NOT USE ID 'primary' ANY TIME BECAUSE IT WILL RUIN OTHER CALENDAR SINCE IT IS NOT UNIQUE !!!
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.list
+									td
+								tr
+									th Params
+									td
+										code
+									td None
+								tr
+									th Return
+									td
+										code {[Object]}
+									td An array of calendars with id and other information returned from google
+					button.btn.btn-default#getCalendarListButton Get Calendar List
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Init calendar
+						.panel-body
+							p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
+							ul
+								li !!! WIPE! ONLY INIT ON CREATION CREATION FIRST TIME OR BROKEN !!!
+								li !!! USING 'primary' AS 'calendarId' IS RISTRICTED !!!
+								li !!! USER SCHOOL MUST BE ASSIGNED BEFORE MAKING THIS CALL !!!
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.init
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Calendar Id from google, NO 'primary'
+								tr
+									td
+										code {[String]}
+									td Array of tags which will be the default tags assigned to all associated event initially
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#calendarId(placeholder='Calendar ID')
+						input.form-control#calendarInitTags(placeholder='Default calendar tags')
+						button.btn.btn-default#initCalendarButton Init Calendar
+					em For testing purpose with this API Playground, seperate tags by ',' in the above input, no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Sync Calendar
+						.panel-body
+							p Sync calendar and update all associated events.
+							ul
+								li Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API.
+								li Calendar's nextSyncToken will be updated for next sync.
+								li Events associated with the calendar that has changed will be updated.
+								li Events' visibility and tags will NOT be overwritten.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.sync
+									td
+								tr
+									thParams
+									td
+										code {Stirng}
+									td Calendar Id
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#calendarSyncId(placeholder='Calendar ID')
+						button.btn.btn-default#syncCalendarButton Sync Calendar
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set event's visibility
+						.panel-body
+							p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.
+							ul
+								li Default can't be set by us neither the user, only first time on creation without assign a visibility.
+								li Only string in ['public', 'private', 'confidential'] can be passed.
+								li A calenders.sync call is automatically executed after a success update, so calendar in our database will catch the update.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.setVisibility
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Event Id (not _id)
+								tr
+									td
+										code {String}
+									td Visibility ['public', 'private', 'confidential']
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#setEventVisibilityId(placeholder='Event ID')
+						select.form-control#setEventVisibilityType
+							option(value='public') public
+							option(value='private') private
+							option(value='confidential') confidential
+						button.btn.btn-default#setEventVisibilityButton Set Visibility
+
+			.cat#tags
+				h2
+					span.label.label-default Tags & Clubs
 				hr
-				h3 Calendar list
-				p Get the calendar list of current user
-				button#getCalendarListButton Get Calendar List
-				dl
-					dt Configurations:
-					dd Notice that calendars have accessRole 'reader' or 'owner', only 'owner' type will be returned
-					dt Method Name:
-					dd
-						code calendars.list
-					dt Parameters:
-					dd None
-					dt Return:
-					dd {Object} calendar {id, summary, description, accessRole}
-				h3 Init Calendar
-				p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.
-				input#calendarId(placeholder='Calendar ID')
-				input#calendarInitTags(placeholder='Default calendar tags')
-				button#initCalendarButton Init Calendar
-				dl
-					dt Configurations:
-					dd CRITICAL!!!
-						ul
-							li WIPE! ONLY INIT ON CREATION OR BROKEN!
-							li USING 'primary' AS 'calendarId' IS RISTRICTED
-							li USER 'school' MUST BE ASSIGNED
-					dt Method Name:
-					dd
-						code calendars.init
-					dt Parameters:
-					dd {Stirng} calendarId
-					dd {[String]} tags for demostration, seperate tags by ',' in the above input, no space
-					dt Return:
-					dd {Object} calendar
-						small does not matter
-				h3 Sync Calendar
-				p Sync will use the existing nextSyncToken (syncToken) stored with the calendar to call Google events API. In our database, calendar's nextSyncToken will be updated for next sync, events that has changed will also apply to our events associated with the calendar.
-				input#calendarSyncId(placeholder='Calendar ID')
-				button#syncCalendarButton Sync Calendar
-				dl
-					dt Configurations:
-					dd Types of update
-						ul
-							li status: cancelled (deletion)
-							li status: confirmed (update or insertion)
-					dt Method Name:
-					dd
-						code calendars.sync
-					dt Parameters:
-					dd {Stirng} calendarId
-					dt Return:
-					dd {Object} calendar
-						small does not matter
-				h3 Event Set Visibility
-				p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.
-				p A calenders.sync call is automatically executed after a success update.
-				input#setEventVisibilityId(placeholder='Event ID')
-				select#setEventVisibilityType
-					option(value='public') public
-					option(value='private') private
-					option(value='confidential') confidential
-				button#setEventVisibilityButton Set Visibility
-				dl
-					dt Configurations:
-					dd Logged in user
-					dt !!!
-					dd Only string in ['public', 'private', 'confidential'] can be passed
-					dt Method Name:
-					dd
-						code events.setVisibility
-					dt Parameters:
-					dd {Stirng} eventId
-					dd {String} visibility ['public', 'private', 'confidential']
-					dt Return:
-					dd
-						small does not matter
-				h3 Subscription
-				p Following 2 links will take you to the page displaying all calendars and events owned by the current user.
-				dl
-					dt
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set calendar tags
+						.panel-body
+							p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar.
+							ul
+								li !!! CALENDAR MUST BE INITIALIZED BEFORE THIS METHOD CALL !!!
+								li Only new events associated with the calendar will have the new default tags.
+								li Previous events will not be updated.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.setTags
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Calendar Id
+								tr
+									td
+										code {[String]}
+									td Array of string containing all tags, not accumulative
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#calendarIdSetTags(placeholder='Calendar Id')
+						input.form-control#calendarTags(placeholder='Tags seperated by ","')
+						button.btn.btn-default#calendarTagsButton Set Tags
+					em For testing purpose with this API Playground, seperate tags by ',' in the above input, no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set event tags
+						.panel-body
+							p Event will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.setTags
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Event Id
+								tr
+									td
+										code {[String]}
+									td Array of string containing all tags, not accumulative
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#eventIdSetTags(placeholder='Event Id')
+						input.form-control#eventTags(placeholder='Tags seperated by ","')
+						button.btn.btn-default#eventTagsButton Set Tags
+					em For testing purpose with this API Playground, seperate tags by ',' in the above input, no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set user tags
+						.panel-body
+							p Set user tag subsription, so feeds to user will be filtered.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setTags
+									td
+								tr
+									th Params
+									td
+										code {[String]}
+									td Array of string containing all tags, not accumulative
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#userTags(placeholder='Tags seperated by ","')
+						button.btn.btn-default#userTagsButton Set Tags
+					em For testing purpose with this API Playground, seperate tags by ',' in the above input, no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set user excluded clubs
+						.panel-body
+							p Default following all clubs, only clubs in the list are excluded. 
+							ul
+								li Calendar ID passed instead of actuall club name because that is subject to change.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setExcludedClubs
+									td
+								tr
+									th Params
+									td
+										code {[String]}
+									td An array of calendar ids
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#userClubs(placeholder='Ids seperated by ","')
+						button.btn.btn-default#userClubsButton Set Excluded Clubs
+					em For testing purpose with this API Playground, seperate ids by ',' in the above input, no space.
+
+			.cat#likes
+				h2
+					span.label.label-default Likes
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Like an event
+						.panel-body
+							p A user can like an event, so there will be a subscription of only the events the user liked.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.like
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event Id
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#likeEvent(placeholder='Event Id')
+						button.btn.btn-default#likeEventButton Like event
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Unlike an event
+						.panel-body
+							p A user can unlike an event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.unlike
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event Id
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#unlikeEvent(placeholder='Event Id')
+						button.btn.btn-default#unlikeEventButton Unli
+			
+			.cat#subscriptions
+				h2
+					span.label.label-default Subscriptions
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title All calendars by user
+						.panel-body
+							p Get all calendars init by the user.
+							code calendars.user
+					em Demo - 
 						a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
-					dd Subscribe
-						code calendars.user
-					dt
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title All events by user
+						.panel-body
+							p Get all events created by the user.
+							code events.user
+					em Demo - 
 						a(href="{{pathFor 'events'}}", target='_blank') List Events
-					dd Subscribe
-						code events.user
-					dt List all calendars (clubs) withing school's scope
-					dd Subscribe
-						code calendars.school
-					dt List all events withing school's scope
-					dd Subscribe
-						code events.school
-					dd Return all events within school's scope, including private events, use with caution
-					dt List events liked by the current user
-					dd Subscribe
-						code events.likes
-					dt Configurations:
-					dd No need to input user Id, logged in user is automatically identified by the server
-			#tags
-				h2 Tags
-				hr
-				h3 Calendar set tags
-				p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar
-				input#calendarIdSetTags(placeholder='Calendar Id')
-				input#calendarTags(placeholder='Tags seperated by ","')
-				button#calendarTagsButton Set Tags
-				dl
-					dt Configurations:
-					dd Calendar must be already initialized
-					dt Method Name:
-					dd
-						code calendars.setTags
-					dt Parameters:
-					dd {Stirng} calendarId
-					dd {[String]} array of string containing all tags, not accumulative
-					dd tags for demostration, seperate tags by ',' in the above input, no space
-					dt Return:
-					dd {Integer} 0 or 1
 
-				h3 Event set tags
-				p Event will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the event.
-				input#eventIdSetTags(placeholder='Event Id')
-				input#eventTags(placeholder='Tags seperated by ","')
-				button#eventTagsButton Set Tags
-				dl
-					dt Configurations:
-					dd Event must be already in our database
-					dt Method Name:
-					dd
-						code events.setTags
-					dt Parameters:
-					dd {Stirng} eventId
-					dd {[String]} array of string containing all tags, not accumulative
-					dd tags for demostration, seperate tags by ',' in the above input, no space
-					dt Return:
-					dd {Integer} 0 or 1
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title All calendars by school
+						.panel-body
+							p Get all calendars (clubs) within school's scope
+							code calendars.school
 
-				h3 User set tags
-				p Set user tag subsription, so feeds to user will be filtered.
-				input#userTags(placeholder='Tags seperated by ","')
-				button#userTagsButton Set Tags
-				dl
-					dt Configurations:
-					dd Must have a logged in user
-					dt Method Name:
-					dd
-						code users.setTags
-					dt Parameters:
-					dd {[String]} array of string containing all tags, not accumulative
-					dd tags for demostration, seperate tags by ',' in the above input, no space
-					dt Return:
-					dd {Integer} 0 or 1
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title All events by school
+						.panel-body
+							p Get all events withing school's scope
+							code events.school
 
-				h3 User set excluded clubs
-				p Default following all clubs, only clubs in the list are excluded. Calendar ID passed instead of actuall club name because that is subject to change.
-				input#userClubs(placeholder='Calendar Ids seperated by ","')
-				button#userClubsButton Set Excluded Clubs
-				dl
-					dt Configurations:
-					dd Must have a logged in user
-					dt Method Name:
-					dd
-						code users.setExcludedClubs
-					dt Parameters:
-					dd {[String]} clubs 'calendarId's
-					dd tags for demostration, seperate tags by ',' in the above input, no space
-					dt Return:
-					dd {Integer} 0 or 1
-				
-				h3 Subscription
-				p Following 2 links will take you to the page displaying calendars and events feed to the current user.
-				dl
-					dt
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Calendars for user
+						.panel-body
+							p Get the calendars the user is following, exluding excluded clubs.
+							code calendars.feeds
+					em Demo - 
 						a(href="{{pathFor 'calendarsFeeds'}}", target='_blank') List Calendars Feeds
-					dd Subscribe
-						code calendars.feeds
-					dt
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Events for user
+						.panel-body
+							p Get the events from calendars followed by user and with matching tags.
+							ul
+								li Event feeds are sorted by starting date in descending order.
+								li Feeds can be configured by the above tags and excluded clubs list.
+							code events.feeds
+					em Demo - 
 						a(href="{{pathFor 'eventsFeeds'}}", target='_blank') List Events Feeds
-					dd Subscribe
-						code events.feeds
-					dd Event feeds are sorted by starting date in descending order
-					dt Configurations:
-					dd No need to input user Id, logged in user is automatically identified by the server
-					dd Feeds can be configured by the above tags and excluded clubs list
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Liked events by user
+						.panel-body
+							p Get all events liked by the current user
+							code events.likes
 				
 			//- button#watchCalendarButton Watch Calendar
 			//- button#stopWatchCalendarButton Stop Watch Calendar
