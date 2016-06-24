@@ -75,16 +75,132 @@ SSL: true
 
 ### Google
 
-####Scope (Permission)
+#### Scope (Permission)
 List can be found [here](https://developers.google.com/identity/protocols/googlescopes)
+* email
 * CalenderAPI
 * offlineToken
+*Demostration of how to configure can be found under demo project iOS below.*
 
-####Client Credentials
-Need to be obtained before using google apis, credentials can be added [here](https://console.developers.google.com/apis/credentials?project=get-high) *additional app owner can be added upon requests*
+#### Client Credentials
+> CLIENT_ID ~> '22026107675-jfeoijhr5qlpvds0v0dtlvpsv8njsioq.apps.googleusercontent.com'
 
-###Clients Demos
+### Clients Demos
 
-####iOS
+#### iOS
 iOS client is implemented with SwiftDDP installed through cocoapods including some fixes and modification specific for our application.  
 [Please refer to his repository](https://github.com/caoool/DDPTest)
+
+### Login Guide
+Here I will brief explain the abstract login process on mobile native clients as well as providing some sample codes to follow.  
+Please read carefully and understand the process or it will always causes trouble later on.  
+
+#### Procedures:
+1. Aquire google oauth token and secret following [GOOGLE::OAuth2.0](https://developers.google.com/identity/protocols/OAuth2).  
+2. Signin on our server by calling 'login' methods with aquired token and secret.  
+3. Save the token returned from callback result of above function.  
+4. Use this token to log the user in next time (app startup) such like app relaunch and so on.  
+
+#### Detail:
+> For actual implemenetation [Please refer to his repository](https://github.com/caoool/DDPTest)
+
+1. Aquire google oauth token and secret following [GOOGLE::OAuth2.0](https://developers.google.com/identity/protocols/OAuth2).  
+	1. Follow the common OAuth guide and establish a webview redirecting to google oauth url.
+	2. Inject JS code and if getElementById('config') is found, check if 'credentialSecret' and 'credentialToken' exist as String.
+	3. Be sure to include calendar and email scope as well as offline token.
+	4. Sample Code (Swift)
+	~>
+	```Swift
+	public static func google(clientId: String) -> String {
+
+      let token = randomBase64String()
+      let httpUrl = MeteorOAuth.httpUrl
+      let redirect = "\(httpUrl)/_oauth/google"
+      let state = MeteorOAuth.stateParam(token, redirectUrl: redirect)
+
+      // Added by Lu
+      let scope = "email+https://www.googleapis.com/auth/calendar"
+      // End
+
+      var url = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=\(clientId)"
+
+      // Added by Lu
+      url += "&approval_prompt=force"
+      url += "&access_type=offline"
+      // End
+
+      url += "&redirect_uri=\(redirect)"
+      url += "&scope=\(scope)"
+      url += "&state=\(state)"
+
+      return url
+  }
+  ```
+  * This will be used to generate the OAuth url *
+
+2. Signin on our server by calling 'login' methods with aquired token and secret.  
+	1. If found the above 2 values, save it and use it to login to our server (also close the webview).
+	2. Sample Code (Swift)
+	~> SwiftDDP/MeteorOAuthViewController.swift
+	```Swift
+	webView.evaluateJavaScript("JSON.parse(document.getElementById('config').innerHTML)",
+      completionHandler: { (html: AnyObject?, error: NSError?) in
+          if let json = html {
+              if let secret = json["credentialSecret"] as? String,
+                  token = json["credentialToken"] as? String {
+                      webView.stopLoading() // Is there a possible race condition here?
+                      self.signIn(token, secret: secret)
+              }
+          } else {
+              print("There was no json here")
+          }
+          
+          // TODO: What if there's an error?, if the login fails
+  })
+	```
+
+3. Save the token returned from callback result of above function.  
+	1. ```self.signIn``` here is just calling method 'login'.
+	2. Be sure to save the token inside the result of the above method call's callback, we will use it to login the next time **BYPASS GOOGLE API**.
+	3. Sample Code (Swift)
+	~> SwiftDDP/MeteorOAuthViewController.swift
+	```Swift
+	func signIn(token: String, secret: String) {
+      let params = ["oauth":["credentialToken": token, "credentialSecret": secret]]
+      // This is just making 'login' method call
+      Meteor.client.login(params) { result, error in
+          print("Meteor login attempt \(result), \(error)")
+          self.close()
+      }
+  }
+
+  // Meteor.client.login
+  public func login(params: NSDictionary, callback: ((result: AnyObject?, error: DDPError?) -> ())?) {
+    method("login", params: NSArray(arrayLiteral: params)) { result, error in
+    // ...
+    }
+  }
+  ```
+
+4. Use this token to log the user in next time (app startup) such like app relaunch and so on.  
+	1. Token will be returned in the above method call Meteor.client.login, save it locally persistently.
+	2. On app startup or relaunch, login the user use this token and 'login' method with ```params: "resume": token```.
+	3. Sample Code (Swift)  
+	~> SwiftDDP/DDPExtensions.swift
+	```Swift
+	public func loginWithToken(callback: DDPMethodCallback?) -> Bool {
+      if let token = userData.stringForKey(DDP_TOKEN),
+          let tokenDate = userData.objectForKey(DDP_TOKEN_EXPIRES) {
+              print("Found token & token expires \(token), \(tokenDate)")
+              if (tokenDate.compare(NSDate()) == NSComparisonResult.OrderedDescending) {
+                  let params = ["resume":token] as NSDictionary
+
+                  // This login here is the same as above Meteor.client.login
+                  login(params, callback:callback)
+                  return true
+              }
+      }
+      return false
+  }
+	```
+

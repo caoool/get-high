@@ -1,4 +1,6 @@
 Meteor.methods
+	'users.loginWithToken': (token) ->
+		Meteor.loginWithToken token
 
 	'users.currentUser': ->
 		Meteor.users.findOne @userId

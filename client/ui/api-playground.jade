@@ -97,6 +97,39 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Login with token
+						.panel-body
+							p Login user with last token to restore previous session.
+							ul
+								li !!! TOKEN IS NOT HASHED TOKEN FOUND IN USER OBJECT !!!
+								li !!! TOKEN WILL BE RETURNED ON LOGIN WITH CLIENTS !!!
+								li Token is not what google api returned but on our server.
+								li Token is set to never expire.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.loginWithToken
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Token (hashedToken)
+								tr
+									th Return
+									td See results below
+									td
+					form.form-inline
+						input.form-control#token(placeholder='Token')
+						button.btn.btn-default#loginWithTokenButton Token
+					em If you get the token from a mobile client, and use it to login on the API Playground, you will be able to restore the same session on the mobile clients. But be sure not to logout before using the token or it will tell you user not logged in.
+
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Current user
 						.panel-body
 							p Get the current logged in user on the server.
