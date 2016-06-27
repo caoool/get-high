@@ -2,6 +2,7 @@ Template.apiPlayground.onCreated ->
 	@subscribe 'users.current', Meteor.userId()
 
 Template.apiPlayground.events
+
 	'click #addUserButton': (e) ->
 		e.preventDefault()
 		Accounts.createUser
@@ -116,6 +117,26 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #calendarWatchButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'calendars.watch',
+			$('#calendarWatchId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #calendarUnwatchButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'calendars.unwatch',
+			$('#calendarUnwatchId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #setEventVisibilityButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'events.setVisibility',
@@ -126,21 +147,6 @@ Template.apiPlayground.events
 					console.log error
 				else
 					console.log result
-
-	# 'click #watchCalendarButton':->
-	# 	url = "/calendar/v3/calendars/#{$('#calendarId').val()}/events/watch"
-	# 	data = 
-	# 		id: '01234567-89ab-cdef-0123456789ab',
-	# 		type: 'web_hook',
-	# 		address: 'https://loopcowstudio.com/notifications'
-	# 	GoogleApi.post url, {data: data},
-	# 		(error, result) ->
-	# 			if error
-	# 				console.log error
-	# 			else
-	# 				console.log result
-
-	# 'click #stopWatchCalendarButton': ->
 
 	'click #calendarTagsButton': (e) ->
 		e.preventDefault()

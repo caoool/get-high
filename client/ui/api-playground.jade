@@ -286,6 +286,66 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Watch calendar
+						.panel-body
+							p Watch calendar will establish a notification channel between google and our server. Whenever there is a event change, our sever will be notified and execute a calendar.sync.
+							ul
+								li !!! DON'T CALL THIS ON CLIENT !!!
+								li !!! ALWAYS UNWATCH AFTER DONE TESTING !!!
+								li Only for api demonstration, should not be called by clients since it will be execute along with calendar initiations.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.watch
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Calendar Id from google, NO 'primary'
+								tr
+									th Return
+									td
+										code {Object}
+									td HTTP res from google
+					form.form-inline
+						input.form-control#calendarWatchId(placeholder='Calendar ID')
+						button.btn.btn-default#calendarWatchButton Watch Calendar
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Unwatch calendar
+						.panel-body
+							p Unwatch a calendar. Stop receiving notifications on events changes from google notification channel.
+							ul
+								li Only for api demonstration, should not be called by clients since it will be execute along with calendar initiations.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code calendars.unwatch
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Calendar Id from google, NO 'primary'
+								tr
+									th Return
+									td
+										code {Object}
+									td HTTP res from google
+					form.form-inline
+						input.form-control#calendarUnwatchId(placeholder='Calendar ID')
+						button.btn.btn-default#calendarUnwatchButton Unwatch Calendar
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Set event's visibility
 						.panel-body
 							p Change event's visibility through google api as well as updating in our own server. Users will get events feeds that are public or default.

@@ -35,6 +35,13 @@ Calendars.schema = new SimpleSchema
 		optional: true
 	nextSyncToken:
 		type: String
+	###*
+	 * Unique Id that defines google notification channel.
+	 * @type {String}
+	###
+	resourceId:
+		type: String
+		optional: true
 	# From us
 	school:
 		type: String

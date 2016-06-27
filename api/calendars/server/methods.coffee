@@ -82,7 +82,12 @@ Meteor.methods
 							if error
 								future.return throwError error
 							else
-								future.return result
+								Meteor.call 'calendars.watch', calendarId,
+									(error) ->
+										if error
+											future.return throwError error
+										else
+											future.return result
 		future.wait()
 
 	# DESCRIPTION:
@@ -122,4 +127,74 @@ Meteor.methods
 									future.return result
 		else
 			future.return 'Calendar not found, please check your input or init first'
+		future.wait()
+
+	# !!!
+	# 	SHOULD NOT BE CALLED MANUALLY! 
+	# 	IT WILL AUTOMATICALLY EXECUTES ON INITIATION.
+	# DESCRIPTION
+	# 	Watch change for a given calendar, establish
+	# 	a notification channel between google and our
+	# 	server. Whenever a change on a event belongs
+	# 	to this calendar occurs, Picker url
+	# 	(url: '$BASTURL/notifications') will receive
+	# 	a post request from google.
+	# RETURN
+	# 	Result of making HTTP POST request to google
+	# 	establish the channel, should not matter.
+	# 	'result.resourceId' is saved to our database
+	# 	for unwatch purpose used in re init or wipe.
+	'calendars.watch': (calendarId) ->
+		future = new Future()
+		calendar = Calendars.findOne id: calendarId
+		Meteor.call 'calendars.unwatch', calendarId if calendar.resourceId?
+		data = 
+			id: calendar._id
+			address: 'https://www.loopcowstudio.com/notifications'
+			type: 'web_hook'
+		url = "/calendar/v3/calendars/#{calendarId}/events/watch"
+		GoogleApi.post url, data: data,
+			(error, result) ->
+				if error
+					future.return throwError error
+				else
+					Calendars.update id: calendarId,
+						$set: resourceId: result.resourceId,
+						null,
+						(error) ->
+							if error
+								future.return throwError error
+							else
+								future.return result
+		future.wait()
+
+	# !!!
+	# 	SHOULD NOT BE CALLED MANUALLY!
+	# 	IT WILL AUTOMATICALLY EXECUTES ON WATCH 
+	# 	TO MAKE SURE NO DUPICATIONS (NOT GOING
+	# 	TO SUCCEED ANYWAY).
+	# DESCRIPTION
+	# 	Unwatch a calendar which means drop the
+	# 	channel between our server and google so
+	# 	we will not receive post notification from
+	# 	google whenever there is a change on events
+	# 	associated with this calendarId.
+	# RETURN
+	# 	Result of making HTTP POST request to google
+	# 	establish the channel, should not matter.
+	# 	If successfully stopped watching a calendar,
+	# 	null should be returned.
+	'calendars.unwatch': (calendarId) ->
+		future = new Future()
+		calendar = Calendars.findOne id: calendarId
+		data = 
+			id: calendar._id
+			resourceId: calendar.resourceId
+		url = '/calendar/v3/channels/stop'
+		GoogleApi.post url, data: data,
+			(error, result) ->
+				if error
+					future.return throwError error
+				else
+					future.return result
 		future.wait()
