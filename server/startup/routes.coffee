@@ -1,10 +1,25 @@
 postRoutes = Picker.filter (req, res) ->
 	req.method == 'POST'
 
-Picker.route '/notifications',
+# DESCRIPTION
+# 	Sync calendar when receive update notification
+# 	from google notification channel. Parse the
+# 	result and get channel id which is just the
+# 	_id of the calendar in our database, and use
+# 	that id to sync corresponding calendar for the
+# 	owner.
+postRoutes.route '/notifications',
 	(params, req, res, next) ->
-		Logs.log "Google calendar notifications retrieved"
-		Logs.log params
-		Logs.log req
-		res.writeHead 200, 'Content-Type': 'Text/plain'
-		res.end 'ok'
+		if req.headers['x-goog-channel-id']?
+			Logs.log '...PICKER...POST:: /notifications >> Notification received from google (events updated)'
+			Logs.log '...PICKER...POST:: /notifications >> ' + req.headers['x-goog-channel-id']
+			calendar = Calendars.findOne req.headers['x-goog-channel-id']
+			if calendar?
+				Meteor.call 'calendars.sync',
+					calendar.id,
+					calendar.createdBy
+			res.writeHead 200, 'Content-Type': 'Text/plain'
+			res.end 'ok'
+		else
+			res.writeHead 200, 'Content-Type': 'Text/plain'
+			res.end '...PICKER...POST:: /notifications >> Not from google notification channels'

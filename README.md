@@ -10,6 +10,9 @@ Can be used to test and explore some of the APIs.
 
 ~~[Logger](https://loopcowstudio.com/logger) can be used to track server connections in real time for a better testing purpose. *more logs can ben added upon requests*~~
 
+###[Logs](https://github.com/arunoda/meteor-up#access-logs) by [Meteor up](https://github.com/arunoda/meteor-up)
+Logs can be accessed by running ```mupx logs -f``` in the terminal within the working folder.
+
 ###[Kadira online debugger](https://ui.kadira.io/apps/WjerWJuJ9dn7Atjb4/dashboard/overview)
 We are using [kadira](https://ui.kadira.io/) services to deal with logging and real time debugging. Follow the instructions on how to use it, and it can be really helpful.  
 > Please be sure to ask me to add you as a collaborator or you will not be able to see.  

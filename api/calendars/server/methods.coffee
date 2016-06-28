@@ -103,7 +103,7 @@ Meteor.methods
 	# 	-> status: confirmed (update or insertion)
 	# RETURN:
 	#   Does not matter
-	'calendars.sync': (calendarId) ->
+	'calendars.sync': (calendarId, userId=null) ->
 		return if !calendarId? or calendarId == ''
 		future = new Future()
 		calendar = Calendars.findOne id: calendarId
@@ -112,18 +112,20 @@ Meteor.methods
 			options = params:
 				syncToken: calendar.nextSyncToken
 				fields: fields
+			options.user = Meteor.users.findOne userId if userId
 			GoogleApi.get url, options,
 				(error, result) ->
 					if error
 						future.return throwError()
 					else if result.etag == calendar.etag
-						future.return "no changes since last sync"
+						future.return 'No changes since last sync'
 					else
 						Calendars.update {id: calendarId}, {$set: result}, result.items,
 							(error) ->
 								if error
 									future.return throwError error
 								else
+									Logs.log "...DDP...METHOD:: calendars.sync >> Calendar #{calendar.id} updated"
 									future.return result
 		else
 			future.return 'Calendar not found, please check your input or init first'
@@ -194,7 +196,7 @@ Meteor.methods
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.return error
 				else
 					future.return result
 		future.wait()

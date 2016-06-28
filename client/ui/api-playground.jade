@@ -281,7 +281,9 @@ template(name='apiPlayground')
 									td Does not matter
 					form.form-inline
 						input.form-control#calendarSyncId(placeholder='Calendar ID')
+						input.form-control#calendarSyncUserId(placeholder='User ID')
 						button.btn.btn-default#syncCalendarButton Sync Calendar
+					em For clients just leave userId blank (calling without passing userId) because it is automatically configured.
 
 				.subcat
 					.panel.panel-default

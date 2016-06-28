@@ -111,6 +111,7 @@ Template.apiPlayground.events
 		e.preventDefault()
 		Meteor.call 'calendars.sync',
 			$('#calendarSyncId').val(),
+			$('#calendarSyncUserId').val(),
 			(error, result) ->
 				if error
 					console.log error
