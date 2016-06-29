@@ -12,3 +12,5 @@ Meteor.startup ->
 		clientId: GOOGLE_CLIENT_ID
 		secret: GOOGLE_SECRET
 		loginStyle: 'redirect'
+
+	Temps.insert summary: '123'

@@ -589,7 +589,7 @@ template(name='apiPlayground')
 							h3.panel-title All calendars by user
 						.panel-body
 							p Get all calendars init by the user.
-							code calendars.user
+							code calendars.owner
 					em Demo - 
 						a(href="{{pathFor 'calendars'}}", target='_blank') List Calendars
 
@@ -599,7 +599,7 @@ template(name='apiPlayground')
 							h3.panel-title All events by user
 						.panel-body
 							p Get all events created by the user.
-							code events.user
+							code events.owner
 					em Demo - 
 						a(href="{{pathFor 'events'}}", target='_blank') List Events
 

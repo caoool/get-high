@@ -1,9 +1,21 @@
+# !!!
+# If validate new user, user with only
+# Services (Google, Facebook) without
+# username or email will not be created.
+# So I disabled all these schema.
+
 # @Users = {}
 
 # Users.profileSchema = new SimpleSchema
 # 	school:
 # 		type: String
 # 		optional: true
+# 	tags:
+# 		type: [String]
+# 		defaultValue: []
+# 	excludedClubs:
+# 		type: [String]
+# 		defaultValue: []
 
 # Users.schema = new SimpleSchema
 # 	username:

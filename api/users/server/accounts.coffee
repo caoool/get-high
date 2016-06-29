@@ -3,8 +3,9 @@ Accounts.onLogin ->
 
 # TODO:
 # 	Implement new user validation
-# 	-> Check user google scope
-# 	-> Check google offlineToken
 Accounts.onCreateUser (options, user) ->
-	# Logs.log 'Creating new user'
+	Logs.log 'Creating new user'
+	user.profile =
+		tags: []
+		excludedClubs: []
 	user
