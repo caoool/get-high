@@ -149,6 +149,37 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #tagsDefineButton': (e) ->
+		e.preventDefault()
+		tags = [
+			{
+				category: 'a'
+				tags: ['a', 'b', 'c', 'd']
+			},
+			{
+				category: 'c'
+				tags: ['e', 'f', 'g', 'j']
+			}
+		]
+		Meteor.call 'tags.define',
+			'SCU',
+			tags,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #tagsSchoolButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'tags.school',
+			$('#tagsSchool').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #calendarTagsButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'calendars.setTags',

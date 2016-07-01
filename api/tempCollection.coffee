@@ -8,6 +8,7 @@ Temps.schema = new SimpleSchema
 
 Temps.attachSchema Temps.schema
 
-Meteor.publish 'temps', ->
-	Logs.log '...DDP...SUB:: temps >> subscribing'
-	Temps.find()
+if Meteor.isServer
+	Meteor.publish 'temps', ->
+		Logs.log '...DDP...SUB:: temps >> subscribing'
+		Temps.find()

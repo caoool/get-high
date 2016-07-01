@@ -394,6 +394,36 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Get School Tag List
+						.panel-body
+							p Get the tag list of a certain school that contains all categories and tags.
+							ul
+								li One school on tag list.
+								li Can not and should not be modified by clients.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code tags.school
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td School name
+								tr
+									th Return
+									td
+										code {Object}
+									td The actual Tag list as a JSON/JS object
+					form.form-inline
+						button.btn.btn-default#tagsDefineButton Define Tags
+						button.btn.btn-default#tagsSchoolButton Get Tags
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Set calendar tags
 						.panel-body
 							p Calendar will have tags already set during initialization, this method is used when the user is willing to modify the default tags of the calendar.
