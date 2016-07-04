@@ -12,7 +12,9 @@ template(name='apiPlayground')
 				li
 					a(href='#users') Users
 				li
-					a(href='#calendars') Calendars & Events
+					a(href='#calendars') Calendars
+				li
+					a(href='#events') Events
 				li
 					a(href='#tags') Tags
 				li
@@ -182,7 +184,7 @@ template(name='apiPlayground')
 
 			.cat#calendars
 				h2
-					span.label.label-default Calendars & Events
+					span.label.label-default Calendars
 				hr
 
 				.subcat
@@ -346,6 +348,91 @@ template(name='apiPlayground')
 					form.form-inline
 						input.form-control#calendarUnwatchId(placeholder='Calendar ID', disabled)
 						button.btn.btn-default#calendarUnwatchButton(disabled) Unwatch Calendar
+
+			.cat#events
+				h2
+					span.label.label-default Events
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Insert event
+						.panel-body
+							p Insert a event to selected calendar.
+							ul
+								li A 'calendar.sync' is excuted by the server after a successful insertion
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.insert
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Calendar Id (not _id)
+								tr
+									td
+										code {Object}
+									td event
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					pre
+						code.
+							{
+								summary: {String},
+								description: {String}?,
+								start: {
+									dateTime: {Date} # format RFC3399
+								},
+								end: {
+									dateTime: {Date} # format RFC3399
+								},
+								location: {String}?,
+								visibility: {String}?
+							}
+					form.form-inline
+						input.form-control#insertEventCalendarId(placeholder='Calendar ID')
+						input.form-control#insertEventSummary(placeholder='Summary')
+						input.form-control#insertEventStart(placeholder='Start')
+						input.form-control#insertEventEnd(placeholder='End')
+						button.btn.btn-default#insertEventButton Insert Event
+					em In client methods calls, please provide more attributes of the event object.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Delete event
+						.panel-body
+							p Delete a event from its associated calendar.
+							ul
+								li A 'calendar.sync' is excuted by the server after a successful insertion
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.delete
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Event Id (not _id)
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#deleteEventId(placeholder='Event ID')
+						button.btn.btn-default#deleteEventButton Delete Event
 
 				.subcat
 					.panel.panel-default

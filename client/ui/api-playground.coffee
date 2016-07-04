@@ -138,6 +138,33 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #insertEventButton': (e) ->
+		e.preventDefault()
+		event =
+			summary: $('#insertEventSummary').val()
+			start:
+				dateTime: $('#insertEventStart').val()
+			end:
+				dateTime: $('#insertEventStart').val()
+		Meteor.call 'events.insert',
+			$('#insertEventCalendarId').val(),
+			event,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #deleteEventButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'events.delete',
+			$('#deleteEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #setEventVisibilityButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'events.setVisibility',

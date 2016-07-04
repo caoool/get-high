@@ -28,14 +28,6 @@ Tags.schema = new SimpleSchema
 	'tags.$.tags':
 		type: [String]
 		optional: true
-	createdBy:
-		type: String
-		autoValue: ->
-			if @isInsert
-				@userId
-			else if @isUpsert
-				$setOnInsert: @userId
-			else @insert
 	createdAt:
 		type: Date
 		autoValue: ->
