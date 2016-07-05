@@ -91,6 +91,15 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #retrieveContactsButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'contacts.retrieve',
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+					
 	'click #getCalendarListButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'calendars.list',

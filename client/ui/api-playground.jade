@@ -12,6 +12,8 @@ template(name='apiPlayground')
 				li
 					a(href='#users') Users
 				li
+					a(href='#contacts') Contacts
+				li
 					a(href='#calendars') Calendars
 				li
 					a(href='#events') Events
@@ -181,6 +183,39 @@ template(name='apiPlayground')
 					form.form-inline
 						input.form-control#schoolName(placeholder='School name')
 						button.btn.btn-default#setSchoolNameButton Set School
+
+			.cat#contacts
+				h2
+					span.label.label-default Contacts
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Retrieve contacts
+						.panel-body
+							p Get contacts from google as well as updating contacts associated with current user in our database.
+							ul
+								li !!! WIPE! !!!
+								li Google does not support sync only updates, so every time this method being called will result in a wipe of all contacts associated with the user.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code contacts.retrieve
+									td
+								tr
+									th Params
+									td 
+										code
+									td None
+								tr
+									th Return
+									td
+										code
+									td Does not matter
+					button.btn.btn-default#retrieveContactsButton Retrieve Contacts
 
 			.cat#calendars
 				h2

@@ -48,3 +48,4 @@ meteorhacks:picker
 force-ssl
 
 percolate:google-api
+peerlibrary:xml2js

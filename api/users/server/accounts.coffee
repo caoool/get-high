@@ -15,5 +15,5 @@ Accounts.onCreateUser (options, user) ->
 		userId: user._id
 		picture: user.services.google.picture
 		googleEmail: user.services.google.email
-	usersList.insert usersListEntry
+	UsersList.insert usersListEntry
 	user
