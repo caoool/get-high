@@ -22,7 +22,11 @@ Template.apiPlayground.events
 		e.preventDefault()
 		Meteor.loginWithGoogle
 			forceApprovalPrompt: true
-			requestPermissions: ['email', 'https://www.googleapis.com/auth/calendar']
+			requestPermissions: [
+				'email'
+				'https://www.googleapis.com/auth/calendar'
+				'https://www.googleapis.com/auth/contacts.readonly'
+			]
 			requestOfflineToken: true
 		, (error, result) ->
 			if error

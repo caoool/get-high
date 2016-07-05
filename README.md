@@ -81,6 +81,7 @@ SSL: true
 #### Scope (Permission)
 List can be found [here](https://developers.google.com/identity/protocols/googlescopes)
 * email
+* contact
 * CalenderAPI
 * offlineToken
 *Demostration of how to configure can be found under demo project iOS below.*
