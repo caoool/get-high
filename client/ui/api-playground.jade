@@ -801,6 +801,15 @@ template(name='apiPlayground')
 						.panel-body
 							p Get all events liked by the current user
 							code events.likes
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Contacts of user
+							p Contact will come with an attribute called 'userId' which is used to track if the user is registered in our system. userId = Null if no user found.
+						.panel-body
+							p Get all contacts belong to a user
+							code contacts.owner
 				
 			//- button#watchCalendarButton Watch Calendar
 			//- button#stopWatchCalendarButton Stop Watch Calendar
