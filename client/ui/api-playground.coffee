@@ -99,7 +99,7 @@ Template.apiPlayground.events
 					console.log error
 				else
 					console.log result
-					
+
 	'click #getCalendarListButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'calendars.list',
@@ -213,7 +213,16 @@ Template.apiPlayground.events
 	'click #tagsSchoolButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'tags.school',
-			$('#tagsSchool').val(),
+			$('#tagsSchoolName').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #tagsUserButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'tags.user',
 			(error, result) ->
 				if error
 					console.log error

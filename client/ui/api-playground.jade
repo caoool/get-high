@@ -541,7 +541,34 @@ template(name='apiPlayground')
 									td The actual Tag list as a JSON/JS object
 					form.form-inline
 						button.btn.btn-default#tagsDefineButton Define Tags
+						input.form-control#tagsSchoolName(placeholder='School Name')
 						button.btn.btn-default#tagsSchoolButton Get Tags
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Get User's School Tag List
+						.panel-body
+							p Get the tag list that belongs to the school of the current logged in user.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code tags.user
+									td
+								tr
+									th Params
+									td
+										code 
+									td None
+								tr
+									th Return
+									td
+										code {Object}
+									td The actual Tag list as a JSON/JS object
+					form.form-inline
+						button.btn.btn-default#tagsUserButton Get Tags
 
 				.subcat
 					.panel.panel-default

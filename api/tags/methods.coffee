@@ -29,7 +29,22 @@ Meteor.methods
 	# 		{Object} tags
 	# 			{String} category
 	# 			{[String]} tags
-	'tags.school': ->
+	'tags.school': (school) ->
+		Tags.findOne school: school
+
+	# DESCRIPTION
+	# 	Get the tag list that belongs to the
+	# 	school of the current logged in user.
+	# RETURN
+	# 	{Object} tag
+	# 		{String} school
+	# 		{Object} tags
+	# 			{String} category
+	# 			{[String]} tags
+	'tags.user': ->
 		return 'not logged in' if !@userId?
 		user = Meteor.users.findOne @userId
 		Tags.findOne school: user.profile.school
+
+	
+
