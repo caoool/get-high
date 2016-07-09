@@ -18,6 +18,13 @@ postRoutes.route '/notifications',
 				Meteor.call 'calendars.sync',
 					calendar.id,
 					calendar.createdBy
+			else
+				data = 
+					id: req.headers['x-goog-channel-id']
+					resourceId: req.headers['x-goog-resource-id']
+				url = '/calendar/v3/channels/stop'
+				GoogleApi.post url, data: data
+				Log.log "...PICKER...POST:: /notifications >> Notification channel dismissed for #{req.headers['x-goog-channel-id']} because calendar does not exist (unwatch)"
 			res.writeHead 200, 'Content-Type': 'Text/plain'
 			res.end 'ok'
 		else
