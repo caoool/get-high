@@ -21,7 +21,7 @@ Meteor.methods
       headers: Authorization: Auth
       }, (error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					future.return Contacts.init user._id, result.content
 		future.wait()

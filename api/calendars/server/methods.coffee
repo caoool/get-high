@@ -42,7 +42,7 @@ Meteor.methods
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
-					future.return throwError()
+					future.throw parseError error
 				else
 					future.return Calendars.filter result.items
 		future.wait()
@@ -71,7 +71,7 @@ Meteor.methods
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					result.id = calendarId
 					result.school = Meteor.user().profile.school
@@ -80,12 +80,12 @@ Meteor.methods
 					Calendars.insert result, result.items,
 						(error) ->
 							if error
-								future.return throwError error
+								future.throw parseError error
 							else
 								Meteor.call 'calendars.watch', calendarId,
 									(error) ->
 										if error
-											future.return throwError error
+											future.throw parseError error
 										else
 											future.return result
 		future.wait()
@@ -116,14 +116,14 @@ Meteor.methods
 			GoogleApi.get url, options,
 				(error, result) ->
 					if error
-						future.return throwError()
+						future.throw parseError error
 					else if result.etag == calendar.etag
 						future.return 'No changes since last sync'
 					else
 						Calendars.update {id: calendarId}, {$set: result}, result.items,
 							(error) ->
 								if error
-									future.return throwError error
+									future.throw parseError error
 								else
 									Logs.log "...DDP...METHOD:: calendars.sync >> Calendar #{calendar.id} updated"
 									future.return result
@@ -158,14 +158,14 @@ Meteor.methods
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					Calendars.update id: calendarId,
 						$set: resourceId: result.resourceId,
 						null,
 						(error) ->
 							if error
-								future.return throwError error
+								future.throw parseError error
 							else
 								future.return result
 		future.wait()
@@ -196,7 +196,7 @@ Meteor.methods
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
-					future.return error
+					future.throw parseError error
 				else
 					future.return result
 		future.wait()

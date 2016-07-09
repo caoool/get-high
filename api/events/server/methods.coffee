@@ -19,12 +19,12 @@ Meteor.methods
 		GoogleApi.post url, data: event,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					Meteor.call 'calendars.sync', calendarId,
 						(error) ->
 							if error
-								future.return throwError error
+								future.throw parseError error
 							else
 								future.return result
 		future.wait()
@@ -43,12 +43,12 @@ Meteor.methods
 		GoogleApi.delete url,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					Meteor.call 'calendars.sync', event.calendarId,
 						(error) ->
 							if error
-								future.return throwError error
+								future.throw parseError error
 							else
 								future.return result
 		future.wait()
@@ -76,12 +76,12 @@ Meteor.methods
 		GoogleApi.put url, data: data,
 			(error, result) ->
 				if error
-					future.return throwError error
+					future.throw parseError error
 				else
 					Meteor.call 'calendars.sync', event.calendarId,
 						(error) ->
 							if error
-								future.return throwError error
+								future.throw parseError error
 							else
 								future.return result
 		future.wait()

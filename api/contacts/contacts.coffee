@@ -48,7 +48,7 @@ Contacts.parse = (content) ->
 	xml2js.parseString content,
 		(error, result) ->
 			if error
-				future.return throwError error
+				future.throw parseError error
 			else
 				future.return result
 	future.wait()
