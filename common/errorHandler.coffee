@@ -10,3 +10,6 @@
 		meteorError = new Meteor.Error 500, 'Undefined Error', 'Cannot parse error information.'
 	else
 		meteorError = new Meteor.Error error
+
+@credentialError = ->
+	meteorError = new Meteor.Error 401, 'Not logged in', 'User credential required.'

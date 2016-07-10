@@ -1,4 +1,6 @@
 Meteor.methods
+
+
 	# !!!
 	# 	THIS IS NOT FOR CLIENTS, DO NOT CALL
 	# 	THIS METHOD ON CLIENTS!!!
@@ -12,11 +14,28 @@ Meteor.methods
 	# 	{[Object]} tags
 	# 		{String} category
 	# 		{[String]} tags
+	# 		
 	'tags.define': (school, tags) ->
+
+		new SimpleSchema
+			school: type: String
+			tags:
+				type: [Object]
+				optional: true
+			'tags.$.category':
+				type: String
+			'tags.$.tags':
+				type: [String]
+				optional: true
+		.validate
+			school: school
+			tags: tags
+
 		Tags.upsert {school: school},
 			$set:
 				school: school
 				tags: tags
+
 
 	# DESCRIPTION
 	# 	Get the tag list that is defined for
@@ -29,8 +48,16 @@ Meteor.methods
 	# 		{Object} tags
 	# 			{String} category
 	# 			{[String]} tags
+	# 			
 	'tags.school': (school) ->
+
+		new SimpleSchema
+			school: type: String
+		.validate
+			school: school
+
 		Tags.findOne school: school
+
 
 	# DESCRIPTION
 	# 	Get the tag list that belongs to the
@@ -41,8 +68,11 @@ Meteor.methods
 	# 		{Object} tags
 	# 			{String} category
 	# 			{[String]} tags
+	# 			
 	'tags.user': ->
-		return 'not logged in' if !@userId?
+		
+		throwError credentialError if !@userId?
+
 		user = Meteor.users.findOne @userId
 		Tags.findOne school: user.profile.school
 

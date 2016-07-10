@@ -25,6 +25,7 @@ fields = '
 
 Meteor.methods
 
+
 	# DESCRIPTION:
 	# 	List will list all calendars asscociated with
 	# 	the current user. 'id' being retured is unique
@@ -34,18 +35,24 @@ Meteor.methods
 	# 	this method call to present calendar list.
 	# RETURN:
 	# 	{[Object]} -> id, summary, description
+	# 	
 	'calendars.list': ->
-		return 'not logged in' if !Meteor.userId()?
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		url = '/calendar/v3/users/me/calendarList'
 		options = params: fields: 'items(id,summary,description,accessRole)'
+
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
 					future.throw parseError error
 				else
 					future.return Calendars.filter result.items
+
 		future.wait()
+
 
 	# !!!
 	# 	WIPE! ONLY INIT ON CREATION OR BROKEN!
@@ -63,11 +70,22 @@ Meteor.methods
 	# 	250. Limit of this number can be increased
 	# 	to 2500, but still future implementation is
 	# 	required to avoid error.
+	# 	
 	'calendars.init': (calendarId, tags=null) ->
-		return if !calendarId? or calendarId == ''
+
+		new SimpleSchema
+			calendarId: type: String
+			tags: type: [String]
+		.validate
+			calendarId: calendarId
+			tags: tags
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		url = "/calendar/v3/calendars/#{calendarId}/events"
 		options = params: fields: fields
+
 		GoogleApi.get url, options,
 			(error, result) ->
 				if error
@@ -77,6 +95,7 @@ Meteor.methods
 					result.school = Meteor.user().profile.school
 					result.club = result.summary
 					result.tags = tags
+
 					Calendars.insert result, result.items,
 						(error) ->
 							if error
@@ -88,7 +107,9 @@ Meteor.methods
 											future.throw parseError error
 										else
 											future.return result
+
 		future.wait()
+
 
 	# DESCRIPTION:
 	# 	Sync will use the existing nextSyncToken
@@ -103,16 +124,29 @@ Meteor.methods
 	# 	-> status: confirmed (update or insertion)
 	# RETURN:
 	#   Does not matter
+	#   
 	'calendars.sync': (calendarId, userId=null) ->
-		return if !calendarId? or calendarId == ''
+
+		new SimpleSchema
+			calendarId: type: String
+			userId: type: String
+		.validate
+			calendarId: calendarId
+			userId: userId
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		calendar = Calendars.findOne id: calendarId
+
 		if calendar?
+
 			url = "/calendar/v3/calendars/#{calendarId}/events"
 			options = params:
 				syncToken: calendar.nextSyncToken
 				fields: fields
 			options.user = Meteor.users.findOne userId if userId
+
 			GoogleApi.get url, options,
 				(error, result) ->
 					if error
@@ -127,9 +161,12 @@ Meteor.methods
 								else
 									Logs.log "...DDP...METHOD:: calendars.sync >> Calendar #{calendar.id} updated"
 									future.return result
+
 		else
-			future.return 'Calendar not found, please check your input or init first'
+			future.throw 500, 'Calendar not found'
+
 		future.wait()
+
 
 	# !!!
 	# 	SHOULD NOT BE CALLED MANUALLY! 
@@ -146,15 +183,27 @@ Meteor.methods
 	# 	establish the channel, should not matter.
 	# 	'result.resourceId' is saved to our database
 	# 	for unwatch purpose used in re init or wipe.
+	# 	
 	'calendars.watch': (calendarId) ->
+
+		new SimpleSchema
+			calendarId: type: String
+		.validate
+			calendarId: calendarId
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		calendar = Calendars.findOne id: calendarId
+
 		Meteor.call 'calendars.unwatch', calendarId if calendar.resourceId?
+
 		data = 
 			id: calendar._id
 			address: 'https://www.loopcowstudio.com/notifications'
 			type: 'web_hook'
 		url = "/calendar/v3/calendars/#{calendarId}/events/watch"
+
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
@@ -168,7 +217,9 @@ Meteor.methods
 								future.throw parseError error
 							else
 								future.return result
+
 		future.wait()
+
 
 	# !!!
 	# 	SHOULD NOT BE CALLED MANUALLY!
@@ -186,17 +237,29 @@ Meteor.methods
 	# 	establish the channel, should not matter.
 	# 	If successfully stopped watching a calendar,
 	# 	null should be returned.
+	# 	
 	'calendars.unwatch': (calendarId) ->
+
+		new SimpleSchema
+			calendarId: type: String
+		.validate
+			calendarId: calendarId
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		calendar = Calendars.findOne id: calendarId
+
 		data = 
 			id: calendar._id
 			resourceId: calendar.resourceId
 		url = '/calendar/v3/channels/stop'
+
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
 					future.throw parseError error
 				else
 					future.return result
+					
 		future.wait()

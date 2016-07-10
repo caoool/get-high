@@ -1,4 +1,6 @@
 Meteor.methods
+
+
 	# DESCRIPTION
 	# 	Insert a event to selected calendar and sync
 	# 	after success.
@@ -13,9 +15,29 @@ Meteor.methods
 	# 		{String}? visibility
 	# RETURN
 	# 	Does not matter
+	# 	
 	'events.insert': (calendarId, event) ->
+
+		new SimpleSchema
+			summary: type: String
+			description:
+				type: String
+				optional: true
+			'start.dateTime': type: Date
+			'end.dateTime': type: Date
+			location:
+				type: String
+				optional: true
+			visibility:
+				type: String
+				optional: true
+		.validate event
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		url = "/calendar/v3/calendars/#{calendarId}/events"
+
 		GoogleApi.post url, data: event,
 			(error, result) ->
 				if error
@@ -27,7 +49,9 @@ Meteor.methods
 								future.throw parseError error
 							else
 								future.return result
+
 		future.wait()
+
 
 	# DESCRIPTION
 	# 	Delete a event to selected calendar and sync
@@ -36,10 +60,20 @@ Meteor.methods
 	# 	{String} eventId
 	# RETURN
 	# 	Does not matter
+	# 	
 	'events.delete': (eventId) ->
+
+		new SimpleSchema
+			eventId: type: String
+		.validate
+			eventId: eventId
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		event = Events.findOne id: eventId
 		url = "/calendar/v3/calendars/#{event.calendarId}/events/#{eventId}"
+
 		GoogleApi.delete url,
 			(error, result) ->
 				if error
@@ -51,7 +85,9 @@ Meteor.methods
 								future.throw parseError error
 							else
 								future.return result
+
 		future.wait()
+
 
 	# !!!
 	# 	ONLY ['public', 'private', 'confidential']
@@ -66,13 +102,31 @@ Meteor.methods
 	# RETURN:
 	#   Does not matter
 	'events.setVisibility': (eventId, visibility='default') ->
+
+		new SimpleSchema
+			eventId: type: String
+			visibility:
+				type: String
+				allowedValues: [
+					'default'
+					'public'
+					'private'
+					'confidential'
+				]
+		.validate
+			eventId: eventId
+			visibility: visibility
+
 		future = new Future()
+		future.throw credentialError if !@userId?
+
 		event = Events.findOne id: eventId
 		data = 
 			start: dateTime: event.start
 			end: dateTime: event.end
 			visibility: visibility
 		url = "/calendar/v3/calendars/#{event.calendarId}/events/#{eventId}"
+
 		GoogleApi.put url, data: data,
 			(error, result) ->
 				if error
@@ -84,4 +138,5 @@ Meteor.methods
 								future.throw parseError error
 							else
 								future.return result
+								
 		future.wait()
