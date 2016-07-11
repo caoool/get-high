@@ -23,13 +23,23 @@ Meteor.methods
 			description:
 				type: String
 				optional: true
-			'start.dateTime': type: Date
-			'end.dateTime': type: Date
+			###*
+			 * Both dateTime need to be in RFC3399 format
+			 * @type {String}
+			###
+			'start.dateTime': type: String
+			'end.dateTime': type: String
 			location:
 				type: String
 				optional: true
 			visibility:
 				type: String
+				allowedValues: [
+					'default'
+					'public'
+					'private'
+					'confidential'
+				]
 				optional: true
 		.validate event
 
@@ -43,7 +53,9 @@ Meteor.methods
 				if error
 					future.throw parseError error
 				else
-					Meteor.call 'calendars.sync', calendarId,
+					Meteor.call 'calendars.sync',
+						calendarId,
+						@userId,
 						(error) ->
 							if error
 								future.throw parseError error
