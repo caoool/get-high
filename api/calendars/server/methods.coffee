@@ -75,7 +75,9 @@ Meteor.methods
 
 		new SimpleSchema
 			calendarId: type: String
-			tags: type: [String]
+			tags:
+				type: [String]
+				optioanl: true
 		.validate
 			calendarId: calendarId
 			tags: tags
@@ -129,7 +131,9 @@ Meteor.methods
 
 		new SimpleSchema
 			calendarId: type: String
-			userId: type: String
+			userId:
+				type: String
+				optional: true
 		.validate
 			calendarId: calendarId
 			userId: userId
