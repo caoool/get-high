@@ -135,7 +135,6 @@ Meteor.methods
 			userId: userId
 
 		future = new Future()
-		future.throw credentialError if !@userId?
 
 		calendar = Calendars.findOne id: calendarId
 
@@ -192,7 +191,6 @@ Meteor.methods
 			calendarId: calendarId
 
 		future = new Future()
-		future.throw credentialError if !@userId?
 
 		calendar = Calendars.findOne id: calendarId
 
@@ -246,7 +244,6 @@ Meteor.methods
 			calendarId: calendarId
 
 		future = new Future()
-		future.throw credentialError if !@userId?
 
 		calendar = Calendars.findOne id: calendarId
 

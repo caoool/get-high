@@ -60,9 +60,10 @@ Calendars.schema = new SimpleSchema
 		type: String
 		autoValue: ->
 			if @isInsert
-				@userId
-			else if @isUpsert
-				$setOnInsert: @userId
+				if @userId?
+					@userId
+				else
+					@insert
 			else @insert
 	createdAt:
 		type: Date

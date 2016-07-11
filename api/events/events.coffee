@@ -59,12 +59,6 @@ Events.schema = new SimpleSchema
 		optional: true
 	createdBy:
 		type: String
-		autoValue: ->
-			if @isInsert
-				@userId
-			else if @isUpsert
-				$setOnInsert: @userId
-			else @insert
 	createdAt:
 		type: Date
 		autoValue: ->
@@ -94,6 +88,7 @@ Events.init = (calendar, items) ->
 		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
+		item.createdBy = calendar.createdBy
 		item = Events.parse item
 		Events.insert item
 
@@ -104,6 +99,7 @@ Events.sync = (calendarId, items) ->
 		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
+		item.createdBy = calendar.createdBy
 		item = Events.parse item
 		if item.status == 'cancelled'
 			Events.remove id: item.id
