@@ -77,7 +77,7 @@ Meteor.methods
 			calendarId: type: String
 			tags:
 				type: [String]
-				optioanl: true
+				optional: true
 		.validate
 			calendarId: calendarId
 			tags: tags
