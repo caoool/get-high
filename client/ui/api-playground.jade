@@ -381,8 +381,41 @@ template(name='apiPlayground')
 										code {Object}
 									td HTTP res from google
 					form.form-inline
-						input.form-control#calendarUnwatchId(placeholder='Calendar ID', disabled)
-						button.btn.btn-default#calendarUnwatchButton(disabled) Unwatch Calendar
+						input.form-control#calendarUnwatchId(placeholder='Calendar ID')
+						button.btn.btn-default#calendarUnwatchButton Unwatch Calendar
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Unwatch channel
+						.panel-body
+							p Unwatch a channel (calendar in this case).
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code channels.unwatch
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Channel ID (calendar's _id)
+								tr
+									td
+										code {String}
+									td Resource ID
+								tr
+									th Return
+									td
+										code {Object}
+									td HTTP res from google
+					form.form-inline
+						input.form-control#channelId(placeholder='Channel ID')
+						input.form-control#resourceId(placeholder='Resourse ID')
+						button.btn.btn-default#channelUnwatchButton Unwatch Calendar
+					em Channel ID is just Calendar's _id.
 
 			.cat#events
 				h2

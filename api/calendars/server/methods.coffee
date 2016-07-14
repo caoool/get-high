@@ -85,6 +85,9 @@ Meteor.methods
 		future = new Future()
 		future.throw credentialError if !@userId?
 
+		calendar = Calendars.findOne id: calendarId
+		Meteor.call 'calendars.unwatch', calendarId if calendar.resourceId?
+
 		url = "/calendar/v3/calendars/#{calendarId}/events"
 		options = params: fields: fields
 
@@ -198,8 +201,6 @@ Meteor.methods
 
 		calendar = Calendars.findOne id: calendarId
 
-		Meteor.call 'calendars.unwatch', calendarId if calendar.resourceId?
-
 		data = 
 			id: calendar._id
 			address: 'https://www.loopcowstudio.com/notifications'
@@ -257,6 +258,48 @@ Meteor.methods
 		url = '/calendar/v3/channels/stop'
 
 		GoogleApi.post url, data: data,
+			(error, result) ->
+				if error
+					future.throw parseError error
+				else
+					future.return result
+					
+		future.wait()
+
+	# DESCRIPTION
+	# 	Unwatch a calendar with its channel id and
+	# 	resource id, can be executed by none owner
+	# 	who are admins.
+	# RETURN
+	# 	Result of making HTTP POST request to google
+	# 	establish the channel, should not matter.
+	# 	If successfully stopped watching a calendar,
+	# 	null should be returned.
+	# 	
+	'channels.unwatch': (calendarId, resourceId=null) ->
+
+		new SimpleSchema
+			calendarId: type: String
+			resourceId:
+				type: String
+				optional: true
+		.validate
+			calendarId: calendarId
+			resourceId: resourceId
+
+		future = new Future()
+
+		calendar = Calendars.findOne id: calendarId
+		user = Meteor.users.findOne calendar.createdBy if calendar?
+
+		options = data:
+			id: calendarId
+			resourceId: resourceId
+		options.user = user if user?
+
+		url = "/calendar/v3/channels/stop"
+
+		GoogleApi.post url, options,
 			(error, result) ->
 				if error
 					future.throw parseError error

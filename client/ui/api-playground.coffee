@@ -151,6 +151,17 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #channelUnwatchButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'channels.unwatch',
+			$('#channelId').val(),
+			$('#resourceId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #insertEventButton': (e) ->
 		e.preventDefault()
 		event =
