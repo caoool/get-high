@@ -156,9 +156,9 @@ Template.apiPlayground.events
 		event =
 			summary: $('#insertEventSummary').val()
 			start:
-				dateTime: new Date $('#insertEventStart').val()
+				dateTime: $('#insertEventStart').val()
 			end:
-				dateTime: new Date $('#insertEventStart').val()
+				dateTime: $('#insertEventStart').val()
 		Meteor.call 'events.insert',
 			$('#insertEventCalendarId').val(),
 			event,

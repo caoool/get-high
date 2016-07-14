@@ -59,6 +59,13 @@ Events.schema = new SimpleSchema
 		optional: true
 	createdBy:
 		type: String
+		autoValue: ->
+			if @isInsert
+				if @userId?
+					@userId
+				else
+					@insert
+			else @insert
 	createdAt:
 		type: Date
 		autoValue: ->
@@ -88,7 +95,6 @@ Events.init = (calendar, items) ->
 		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
-		item.createdBy = calendar.createdBy
 		item = Events.parse item
 		Events.insert item
 
