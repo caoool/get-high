@@ -260,7 +260,7 @@ Meteor.methods
 		GoogleApi.post url, data: data,
 			(error, result) ->
 				if error
-					future.throw parseError error
+					future.return error
 				else
 					future.return result
 					
