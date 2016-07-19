@@ -476,6 +476,59 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Update event
+						.panel-body
+							p Update an event on google server with its id.
+							ul
+								li A 'calendar.sync' is excuted by the server after a successful update
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.update
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Event Id (not _id)
+								tr
+									td
+										code {Object}
+									td event
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					pre
+						code.
+							{
+								summary: {String}?,
+								description: {String}?,
+								start: {
+									dateTime: {Date}? # format RFC3399
+								},
+								end: {
+									dateTime: {Date}? # format RFC3399
+								},
+								location: {String}?,
+								visibility: {String}?
+							}
+					form.form-inline
+						input.form-control#updateEventId(placeholder='Event ID')
+						input.form-control#updateEventSummary(placeholder='Summary')
+						input.form-control#updateEventDescription(placeholder='Description')
+						input.form-control#updateEventLocation(placeholder='Location')
+						input.form-control#updateEventStart(placeholder='Start')
+						input.form-control#updateEventEnd(placeholder='End')
+						button.btn.btn-default#updateEventButton Update Event
+					em If above params are left blank, fileds will not change and remains the old value.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Delete event
 						.panel-body
 							p Delete a event from its associated calendar.

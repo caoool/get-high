@@ -179,6 +179,25 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #updateEventButton': (e) ->
+		e.preventDefault()
+		event = {}
+		event.summary = $('#updateEventSummary').val() if $('#updateEventSummary').val().length
+		event.description = $('#updateEventDescription').val() if $('#updateEventDescription').val().length
+		event.location = $('#updateEventLocation').val() if $('#updateEventLocation').val().length
+		event.start = {}
+		event.start.dateTime = $('#updateEventStart').val() if $('#updateEventStart').val().length
+		event.end = {}
+		event.end.dateTime = $('#updateEventEnd').val() if $('#updateEventEnd').val().length
+		Meteor.call 'events.update',
+			$('#updateEventId').val(),
+			event,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #deleteEventButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'events.delete',

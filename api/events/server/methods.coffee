@@ -65,6 +65,93 @@ Meteor.methods
 		future.wait()
 
 
+	# DESCRIPTION:
+	# 	Patch (update) an event. A sync is followed by method
+	# 	call to make sure local db is up to date.
+	# PARAMETERS:
+	# 	{String} eventId
+	# 	{Object} event
+	# 		{String} summary
+	# 		{String}? description
+	# 		{Date} start.dateTime (format RFC3399)
+	# 		{Date} end.dateTime (format RFC3399)
+	# 		{String}? location
+	# 		{String}? visibility
+	# RETURN:
+	#   Does not matter
+	'events.update': (eventId, event) ->
+
+		new SimpleSchema
+			summary:
+				type: String
+				optional: true
+			description:
+				type: String
+				optional: true
+			###*
+			 * Both dateTime need to be in RFC3399 format
+			 * @type {String}
+			###
+			'start.dateTime':
+				type: String
+				optional: true
+			'end.dateTime':
+				type: String
+				optional: true
+			location:
+				type: String
+				optional: true
+			visibility:
+				type: String
+				allowedValues: [
+					'default'
+					'public'
+					'private'
+					'confidential'
+				]
+				optional: true
+		.validate event
+
+		future = new Future()
+		future.throw credentialError if !@userId?
+
+		_event = Events.findOne id: eventId
+		future.throw notFoundError if !_event?
+
+		data = 
+			summary: _event.summary
+			start: dateTime: _event.start
+			end: dateTime: _event.end
+			visibility: _event.visibility
+		if event.summary? and event.summary?.length
+			data.summary = event.summary
+		if event.description?
+			data.description = event.description
+		if event.location?
+			data.location = event.location
+		if event.start? and event.start.dateTime? and event.start.dateTime?.length
+			data.start.dateTime = event.start.dateTime
+		if event.end? and event.end.dateTime? and event.end.dateTime?.length
+			data.end.dateTime = event.end.dateTime
+		if event.visibility?
+			data.visibility = event.visibility
+		url = "/calendar/v3/calendars/#{_event.calendarId}/events/#{eventId}"
+
+		GoogleApi.put url, data: data,
+			(error, result) ->
+				if error
+					future.throw parseError error
+				else
+					Meteor.call 'calendars.sync', _event.calendarId,
+						(error) ->
+							if error
+								future.throw parseError error
+							else
+								future.return result
+								
+		future.wait()
+
+
 	# DESCRIPTION
 	# 	Delete a event to selected calendar and sync
 	# 	after success.
