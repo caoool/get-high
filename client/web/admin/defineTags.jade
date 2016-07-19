@@ -1,0 +1,44 @@
+template(name='defineTags')
+	.container-fluid
+		h1 Define Tags List for 
+			if tag
+				label.label.label-default {{tag.school}}
+			else
+				label.label.label-default {{school}}
+		hr
+		if tag
+			em School found ->
+				strong update
+		else
+			em School not found -> 
+				strong insert
+		hr
+		strong Your uploaded JSON file should be in this format.
+		pre
+			code.
+				{
+					"tags": [
+						{
+							"category": "a",
+							"tags": ["a", "b", "c", "d"]
+						},
+						{
+							"category": "c",
+							"tags": ["e", "f", "g", "j"]
+						},
+						{
+							"category": "123",
+							"tags": ["x", "y", "z", "w"]
+						}
+					]
+				}
+		hr
+		em Upload you JSON definition by click 'Browse'.
+		br
+		label.btn.btn-default.btn-file Browse
+			input#newTags(type='file', style='display: none;', onchange="$('#upload-file-info').html($(this).val());")
+		span.label.label-info#upload-file-info
+		br
+		em Click Define tags for actual execution, make sure your JSON is in the correct format.
+		br
+		button.btn.btn-default#define Define Tags

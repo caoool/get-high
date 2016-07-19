@@ -21,3 +21,7 @@ Router.route '/calendarsFeeds', ->
 Router.route '/eventsFeeds', ->
 	@render 'eventsFeeds'
 	return
+
+Router.route '/tags/define/:school', ->
+	@render 'defineTags'
+	return
