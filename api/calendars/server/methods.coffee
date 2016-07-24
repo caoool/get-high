@@ -86,7 +86,7 @@ Meteor.methods
 		future.throw credentialError if !@userId?
 
 		calendar = Calendars.findOne id: calendarId
-		Meteor.call 'calendars.unwatch', calendarId if calendar.resourceId?
+		Meteor.call 'calendars.unwatch', calendarId if calendar? and calendar.resourceId?
 
 		url = "/calendar/v3/calendars/#{calendarId}/events"
 		options = params: fields: fields
