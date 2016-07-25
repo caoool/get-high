@@ -1,6 +1,10 @@
 Meteor.methods
 
 
+	# DESCRIPTION
+	# 	Return a preprocessed array of attendees of a certain
+	# 	event, including fields of userId and picture if the
+	# 	email address has registered our app before.
 	'attendees.get': (eventId) ->
 
 		new SimpleSchema

@@ -628,6 +628,20 @@ template(name='apiPlayground')
 									td
 										code {Object}
 									td The actual Tag list as a JSON/JS object
+					pre
+						code.
+							{
+								email: {String},
+								displayName: {String}?,
+								// responseStatus
+								// needsAction -> hasn't responsed yet
+								// declined
+								// tentative
+								// accepted
+								responseStatus: {String},
+								userId: {String}?,
+								picture: {String}?
+							}
 					form.form-inline
 						input.form-control#getAttendeesEventId(placeholder='Event ID')
 						button.btn.btn-default#getAttendees Get Attendees
