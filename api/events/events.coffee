@@ -36,6 +36,25 @@ Events.schema = new SimpleSchema
 	location:
 		type: String
 		optional: true
+	attendees:
+		type: [Object]
+		optional: true
+	'attendees.$.email':
+		type: String
+	'attendees.$.displayName':
+		type: String
+		optional: true
+	'attendees.$.organizer':
+		type: Boolean
+		optional: true
+	'attendees.$.responseStatus':
+		type: String
+		allowedValues: [
+			'needsAction'
+			'declined'
+			'tentative'
+			'accepted'
+		]
 	# DESCRIPTION:
 	# 	Visibiilty is used to decide whether or
 	# 	not this event will go public. It has 4
