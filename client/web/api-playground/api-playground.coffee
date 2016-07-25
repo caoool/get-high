@@ -219,6 +219,16 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #getAttendees': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.get',
+			$('#getAttendeesEventId').val()
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #tagsDefineButton': (e) ->
 		e.preventDefault()
 		tags = [

@@ -18,6 +18,8 @@ template(name='apiPlayground')
 				li
 					a(href='#events') Events
 				li
+					a(href='#attendees') Attendees
+				li
 					a(href='#tags') Tags
 				li
 					a(href='#likes') Likes
@@ -593,6 +595,42 @@ template(name='apiPlayground')
 							option(value='private') private
 							option(value='confidential') confidential
 						button.btn.btn-default#setEventVisibilityButton Set Visibility
+
+			.cat#attendees
+				h2
+					span.label.label-default Attendees & Invitations
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Get Attendees
+						.panel-body
+							p Get attendees of a certain event.
+							ul
+								li Preprcess attendees result.
+								li Will indicate response status.
+								li Will indicate whether the user has registered with our app.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.get
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Object}
+									td The actual Tag list as a JSON/JS object
+					form.form-inline
+						input.form-control#getAttendeesEventId(placeholder='Event ID')
+						button.btn.btn-default#getAttendees Get Attendees
 
 			.cat#tags
 				h2
