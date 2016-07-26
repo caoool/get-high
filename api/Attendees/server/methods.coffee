@@ -12,6 +12,8 @@ Meteor.methods
 	# 	{String} eventId
 	# 	{[Object]} attendees
 	# 		{String} email
+	# 		{String}? displayName
+	# 		{String}? responseStatus
 	# REVIEW
 	# 	Google API event.update can directly set an attendee's
 	# 	status to accepted or any, do we accept invitations for
@@ -60,5 +62,46 @@ Meteor.methods
 						found = true
 						break
 			data.attendees.push attendee if !found
+
+		Meteor.call 'events.update', eventId, data
+
+	# DESCRIPTION
+	# 	Remove attendees to an event.
+	# 	Similar to add.
+	# PARAMETERS
+	# 	{String} eventId
+	# 	{[Object]} attendees
+	# 		{String} email
+	# 	
+	'attendees.remove': (eventId, attendees) ->
+
+		new SimpleSchema
+			eventId: type: String
+			attendees:
+				type: [Object]
+			'attendees.$.email':
+				type: String
+		.validate
+			eventId: eventId
+			attendees: attendees
+
+		throwError credentialError if !@userId?
+
+		_event = Events.findOne id: eventId
+		throwError notFoundError if !_event?
+
+		return if !_event.attendees?
+
+		data =
+			start: dateTime: _event.start.toISOString()
+			end: dateTime: _event.end.toISOString()
+		data.attendees = []
+		for _attendee in _event.attendees
+			found = false
+			for attendee in attendees
+				if attendee.email == _attendee.email
+					found = true
+					break
+			data.attendees.push _attendee if !found
 
 		Meteor.call 'events.update', eventId, data

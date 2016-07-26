@@ -131,4 +131,6 @@ Events.sync = (calendarId, items) ->
 		else if item.status == 'confirmed'
 			if Events.findOne(id: item.id)?
 				Events.update {id: item.id}, $set: item
+				if !item.attendees?
+					Events.update {id: item.id}, $unset: attendees: 1
 			else Events.insert item

@@ -693,6 +693,45 @@ template(name='apiPlayground')
 						button.btn.btn-default#addAttendees Add Attendees
 					em For testing purpose with this API Playground, seperate emails by ',' in the above input, no space.
 
+
+			.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Remove Attendees
+						.panel-body
+							p Remove attendees of an event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.remove
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {String}
+									td Event ID
+								tr
+									td
+										code {[Object]}
+									td attendees
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					pre Param -> attendees
+						code.
+							[{
+								email: {String}
+							}, ...]
+					form.form-inline
+						input.form-control#removeAttendeesEventId(placeholder='Event ID')
+						input.form-control#removeAttendeesEmails(placeholder='Emails')
+						button.btn.btn-default#removeAttendees Remove Attendees
+					em For testing purpose with this API Playground, seperate emails by ',' in the above input, no space.
+
 			.cat#tags
 				h2
 					span.label.label-default Tags & Clubs
