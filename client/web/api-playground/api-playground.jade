@@ -646,6 +646,53 @@ template(name='apiPlayground')
 						input.form-control#getAttendeesEventId(placeholder='Event ID')
 						button.btn.btn-default#getAttendees Get Attendees
 
+			.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Add Attendees
+						.panel-body
+							p Add attendees to an event.
+							ul
+								li Method will preprcess attendees to avoid duplication.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.add
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {String}
+									td Event ID
+								tr
+									td
+										code {[Object]}
+									td attendees
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					pre Param -> attendees
+						code.
+							[{
+								email: {String},
+								displayName: {String}?,
+								// responseStatus
+								// needsAction -> hasn't responsed yet
+								// declined
+								// tentative
+								// accepted
+								responseStatus: {String}?
+							}, ...]
+					form.form-inline
+						input.form-control#addAttendeesEventId(placeholder='Event ID')
+						input.form-control#addAttendeesEmails(placeholder='Emails')
+						button.btn.btn-default#addAttendees Add Attendees
+					em For testing purpose with this API Playground, seperate emails by ',' in the above input, no space.
+
 			.cat#tags
 				h2
 					span.label.label-default Tags & Clubs

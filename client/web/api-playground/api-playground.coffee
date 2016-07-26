@@ -229,6 +229,21 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #addAttendees': (e) ->
+		e.preventDefault()
+		attendees = []
+		for email in $('#addAttendeesEmails').val().split(',')
+			attendee = email: email
+			attendees.push attendee 
+		Meteor.call 'attendees.add',
+			$('#addAttendeesEventId').val(),
+			attendees,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #tagsDefineButton': (e) ->
 		e.preventDefault()
 		tags = [

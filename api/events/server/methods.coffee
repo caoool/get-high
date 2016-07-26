@@ -66,7 +66,7 @@ Meteor.methods
 
 
 	# DESCRIPTION:
-	# 	Patch (update) an event. A sync is followed by method
+	# 	Update an event. A sync is followed by method
 	# 	call to make sure local db is up to date.
 	# PARAMETERS:
 	# 	{String} eventId
@@ -110,6 +110,23 @@ Meteor.methods
 					'confidential'
 				]
 				optional: true
+			attendees:
+				type: [Object]
+				optional: true
+			'attendees.$.email':
+				type: String
+			'attendees.$.displayName':
+				type: String
+				optional: true
+			'attendees.$.responseStatus':
+				type: String
+				optional: true
+				allowedValues: [
+					'needsAction'
+					'declined'
+					'tentative'
+					'accepted'
+				]
 		.validate event
 
 		future = new Future()
@@ -135,6 +152,8 @@ Meteor.methods
 			data.end.dateTime = event.end.dateTime
 		if event.visibility?
 			data.visibility = event.visibility
+		if event.attendees?
+			data.attendees = event.attendees
 		url = "/calendar/v3/calendars/#{_event.calendarId}/events/#{eventId}"
 
 		GoogleApi.put url, data: data,
