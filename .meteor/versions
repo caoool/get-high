@@ -89,6 +89,7 @@ mongo-livedata@1.0.12
 mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
 mrt:q@1.0.1
+mrt:twilio-meteor@1.1.0
 npm-bcrypt@0.8.7
 npm-mongo@1.4.44_1
 oauth@1.1.11

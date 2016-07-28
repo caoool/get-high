@@ -269,6 +269,16 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #inviteWithSMSButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'invitations.sms',
+			$('#inviteWithSMSPhoneNumber').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #tagsDefineButton': (e) ->
 		e.preventDefault()
 		tags = [

@@ -20,6 +20,8 @@ template(name='apiPlayground')
 				li
 					a(href='#attendees') Attendees
 				li
+					a(href='#invitations') Invitations
+				li
 					a(href='#tags') Tags
 				li
 					a(href='#likes') Likes
@@ -629,7 +631,7 @@ template(name='apiPlayground')
 
 			.cat#attendees
 				h2
-					span.label.label-default Attendees & Invitations
+					span.label.label-default Attendees
 				hr
 
 				.subcat
@@ -762,6 +764,38 @@ template(name='apiPlayground')
 						input.form-control#removeAttendeesEmails(placeholder='Emails')
 						button.btn.btn-default#removeAttendees Remove Attendees
 					em For testing purpose with this API Playground, seperate emails by ',' in the above input, no space.
+
+			.cat#invitations
+				h2
+					span.label.label-default Invitations
+				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Invite with SMS
+						.panel-body
+							p Invite user to join our app by sending SMS messages using Twilio services.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code invitations.sms
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Phone Number
+								tr
+									th Return
+									td
+										code {Object}
+									td JSON object
+					form.form-inline
+						input.form-control#inviteWithSMSPhoneNumber(placeholder='Phone Number')
+						button.btn.btn-default#inviteWithSMSButton Invite with SMS
 
 			.cat#tags
 				h2
