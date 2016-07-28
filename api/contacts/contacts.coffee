@@ -21,6 +21,9 @@ Contacts.schema = new SimpleSchema
 	email:
 		type: String
 		optional: true
+	phoneNumber:
+		type: String
+		optional: true
 	photo:
 		type: String
 		optional: true
@@ -62,11 +65,13 @@ Contacts.init = (createdBy, content) ->
 		photo = contact.link[1].$.href
 		user = UsersList.findOne 'googleEmail': email
 		if user?
-			userId = user.userId 
+			userId = user.userId
+			phoneNumber = user.phoneNumber 
 			photo = user.picture
 		Contacts.insert
 			userId: userId
 			title: title
 			email: email
+			phoneNumber: phoneNumber
 			photo: photo
 	return contacts
