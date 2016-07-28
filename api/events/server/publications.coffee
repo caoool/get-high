@@ -27,7 +27,7 @@ Meteor.publish 'events.feeds', ->
 		$and: [
 			school: user.profile.school
 			tags: $in: user.profile.tags
-			visibility: $in: ['public', 'default']
+			visibility: $in: ['public']
 		]},
 		$sort: start: -1
 

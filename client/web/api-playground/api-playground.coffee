@@ -71,7 +71,7 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #setphoneNumberButton': (e) ->
+	'click #setPhoneNumberButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'users.setPhoneNumber',
 			$('#phoneNumber').val(),
