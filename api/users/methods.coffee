@@ -84,3 +84,13 @@ Meteor.methods
 		throwError credentialError if !@userId?
 
 		Meteor.users.update @userId, $pull: 'profile.likes': eventId if @userId
+
+	'users.setPhoneNumber': (phoneNumber) ->
+		new SimpleSchema
+			phoneNumber: type: String
+		.validate
+			phoneNumber: phoneNumber
+
+		throwError credentialError if !@userId?
+
+		Meteor.users.update @userId, $set: 'profile.phoneNumber': phoneNumber if @userId

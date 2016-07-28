@@ -186,6 +186,37 @@ template(name='apiPlayground')
 						input.form-control#schoolName(placeholder='School name')
 						button.btn.btn-default#setSchoolNameButton Set School
 
+			.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set user's phone number
+						.panel-body
+							p Set user's phone number, save to profile.phoneNumber
+							ul
+								li !!! CLIENTS MUST VERIFY THE INTEGRITY OF USER'S PHONE NUMBER BEFORE CALLING THIS METHOD !!!
+								li Phone number will be used to identify whether the user has our app or not.
+								li A verified phone number may be used to grant the user abilities to do some sensetive actions.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setPhoneNumber
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Phone Number
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#phoneNumber(placeholder='Phone Number')
+						button.btn.btn-default#setphoneNumberButton Set Phone Number
+
 			.cat#contacts
 				h2
 					span.label.label-default Contacts
