@@ -289,10 +289,10 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #attendeesRejectButton': (e) ->
+	'click #attendeesDeclineButton': (e) ->
 		e.preventDefault()
-		Meteor.call 'attendees.reject',
-			$('#attendeesRejectEventId').val(),
+		Meteor.call 'attendees.decline',
+			$('#attendeesDeclineEventId').val(),
 			(error, result) ->
 				if error
 					console.log error

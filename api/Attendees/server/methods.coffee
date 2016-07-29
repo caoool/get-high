@@ -145,7 +145,7 @@ Meteor.methods
 	# PARAMETERS
 	# 	{String} Event ID
 	# 	
-	'attendees.reject': (eventId) ->
+	'attendees.decline': (eventId) ->
 
 		new SimpleSchema
 			eventId: type: String
@@ -168,8 +168,8 @@ Meteor.methods
 		user = UsersList.findOne userId: @userId
 		for attendee, index in data.attendees
 			if attendee.email == user.googleEmail
-				if attendee.responseStatus != 'rejected'
-					data.attendees[index].responseStatus = 'rejected'
+				if attendee.responseStatus != 'declined'
+					data.attendees[index].responseStatus = 'declined'
 					needToUpdate = true
 
 		Meteor.call 'events.update', eventId, data if needToUpdate

@@ -825,7 +825,7 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
-							h3.panel-title Reject Event
+							h3.panel-title Declined Event
 						.panel-body
 							p Reject an event as a attendee.
 						table.table
@@ -833,7 +833,7 @@ template(name='apiPlayground')
 								tr
 									th Method
 									td
-										code attendees.reject
+										code attendees.decline
 									td
 								tr
 									th Params
@@ -846,8 +846,8 @@ template(name='apiPlayground')
 										code {Object}
 									td Does not matter
 					form.form-inline
-						input.form-control#attendeesRejectEventId(placeholder='Event ID')
-						button.btn.btn-default#attendeesRejectButton Reject Event
+						input.form-control#attendeesDeclineEventId(placeholder='Event ID')
+						button.btn.btn-default#attendeesDeclineButton Decline Event
 
 			.cat#invitations
 				h2
