@@ -64,7 +64,7 @@ Calendars.schema = new SimpleSchema
 					@userId
 				else
 					@insert
-			else @insert
+			else @unset()
 	createdAt:
 		type: Date
 		autoValue: ->

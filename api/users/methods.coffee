@@ -93,4 +93,5 @@ Meteor.methods
 
 		throwError credentialError if !@userId?
 
-		Meteor.users.update @userId, $set: 'profile.phoneNumber': phoneNumber if @userId
+		UsersList.update {userId: @userId}, $set: phoneNumber: phoneNumber
+		Meteor.users.update @userId, $set: 'profile.phoneNumber': phoneNumber

@@ -84,7 +84,7 @@ Events.schema = new SimpleSchema
 					@userId
 				else
 					@insert
-			else @insert
+			else @unset()
 	createdAt:
 		type: Date
 		autoValue: ->
@@ -115,6 +115,7 @@ Events.init = (calendar, items) ->
 		item.club = calendar.club
 		item.tags = calendar.tags
 		item = Events.parse item
+		continue if item.creator.email != Meteor.user().services.google.email
 		Events.insert item
 
 Events.sync = (calendarId, items) ->

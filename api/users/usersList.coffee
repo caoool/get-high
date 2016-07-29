@@ -13,6 +13,9 @@ UsersList.schema = new SimpleSchema
 	picture:
 		type: String
 		optional: true
+	phoneNumber:
+		type: String
+		optional: true
 	googleEmail:
 		type: String
 	createdAt:

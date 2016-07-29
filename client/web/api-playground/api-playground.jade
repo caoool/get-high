@@ -252,6 +252,36 @@ template(name='apiPlayground')
 									td Does not matter
 					button.btn.btn-default#retrieveContactsButton Retrieve Contacts
 
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Check phone numbers
+						.panel-body
+							p Check if the user's local phone book contacts has registered our app or not.
+							ul
+								li The results being returned from this methods is simply an array of Booleans, indicate whether the user is vz or not, corresponding to the parameter [String] index of phone number inputs.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code contacts.checkPhoneNumbers
+									td
+								tr
+									th Params
+									td 
+										code {[String]}
+									td Phone numbers
+								tr
+									th Return
+									td
+										code {[Boolean]}
+									td VZ user indication
+					form.form-inline
+						input.form-control#phoneNumbers(placeholder='Phone Numbers')
+						button.btn.btn-default#checkPhoneNumbersButton Check Contacts
+					em For testing purpose with this API Playground, seperate phone numbers by ',' in the above input, no space.
+
 			.cat#calendars
 				h2
 					span.label.label-default Calendars
@@ -764,6 +794,60 @@ template(name='apiPlayground')
 						input.form-control#removeAttendeesEmails(placeholder='Emails')
 						button.btn.btn-default#removeAttendees Remove Attendees
 					em For testing purpose with this API Playground, seperate emails by ',' in the above input, no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Accept Event
+						.panel-body
+							p Accept an event as a attendee.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.accept
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#attendeesAcceptEventId(placeholder='Event ID')
+						button.btn.btn-default#attendeesAcceptButton Accept Event
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Reject Event
+						.panel-body
+							p Reject an event as a attendee.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.reject
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#attendeesRejectEventId(placeholder='Event ID')
+						button.btn.btn-default#attendeesRejectButton Reject Event
 
 			.cat#invitations
 				h2

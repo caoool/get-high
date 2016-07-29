@@ -155,8 +155,10 @@ Meteor.methods
 		if event.attendees?
 			data.attendees = event.attendees
 		url = "/calendar/v3/calendars/#{_event.calendarId}/events/#{eventId}"
+		options = data: data
+		options.user = Meteor.users.findOne _event.createdBy
 
-		GoogleApi.put url, data: data,
+		GoogleApi.put url, options,
 			(error, result) ->
 				if error
 					future.throw parseError error

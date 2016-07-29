@@ -110,6 +110,16 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #checkPhoneNumbersButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'contacts.checkPhoneNumbers',
+			$('#phoneNumbers').val().split(','),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #getCalendarListButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'calendars.list',
@@ -263,6 +273,26 @@ Template.apiPlayground.events
 		Meteor.call 'attendees.remove',
 			$('#removeAttendeesEventId').val(),
 			attendees,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #attendeesAcceptButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.accept',
+			$('#attendeesAcceptEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #attendeesRejectButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.reject',
+			$('#attendeesRejectEventId').val(),
 			(error, result) ->
 				if error
 					console.log error

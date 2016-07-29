@@ -105,3 +105,71 @@ Meteor.methods
 			data.attendees.push _attendee if !found
 
 		Meteor.call 'events.update', eventId, data
+
+	# DESCRIPTION
+	# 	Accept an event as a attendee.
+	# PARAMETERS
+	# 	{String} Event ID
+	# 	
+	'attendees.accept': (eventId) ->
+
+		new SimpleSchema
+			eventId: type: String
+		.validate
+			eventId: eventId
+
+		throwError credentialError if !@userId?
+
+		_event = Events.findOne id: eventId
+		throwError notFoundError if !_event?
+
+		return if !_event.attendees?
+
+		data =
+			start: dateTime: _event.start.toISOString()
+			end: dateTime: _event.end.toISOString()
+		data.attendees = _event.attendees
+		
+		needToUpdate = false
+		user = UsersList.findOne userId: @userId
+		for attendee, index in data.attendees
+			if attendee.email == user.googleEmail
+				if attendee.responseStatus != 'accepted'
+					data.attendees[index].responseStatus = 'accepted'
+					needToUpdate = true
+
+		Meteor.call 'events.update', eventId, data if needToUpdate
+
+	# DESCRIPTION
+	# 	Reject an event as a attendee.
+	# PARAMETERS
+	# 	{String} Event ID
+	# 	
+	'attendees.reject': (eventId) ->
+
+		new SimpleSchema
+			eventId: type: String
+		.validate
+			eventId: eventId
+
+		throwError credentialError if !@userId?
+
+		_event = Events.findOne id: eventId
+		throwError notFoundError if !_event?
+
+		return if !_event.attendees?
+
+		data =
+			start: dateTime: _event.start.toISOString()
+			end: dateTime: _event.end.toISOString()
+		data.attendees = _event.attendees
+		
+		needToUpdate = false
+		user = UsersList.findOne userId: @userId
+		for attendee, index in data.attendees
+			if attendee.email == user.googleEmail
+				if attendee.responseStatus != 'rejected'
+					data.attendees[index].responseStatus = 'rejected'
+					needToUpdate = true
+
+		Meteor.call 'events.update', eventId, data if needToUpdate
