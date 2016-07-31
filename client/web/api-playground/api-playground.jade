@@ -849,6 +849,132 @@ template(name='apiPlayground')
 						input.form-control#attendeesDeclineEventId(placeholder='Event ID')
 						button.btn.btn-default#attendeesDeclineButton Decline Event
 
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Add Local Attendees
+						.panel-body
+							p Add a local attendee with phone number to a given Event Id.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.localAdd
+									td
+								tr
+									th(rowspan='2')  Params
+									td
+										code {String}
+									td Event ID
+								tr
+									td
+										code {Object}
+									td Attendee
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					pre
+						code.
+							{
+								phoneNumber: {String},
+								displayName: {String}?,
+								// default is set to needsAction
+								responseStatus: {String}?
+							}
+					form.form-inline
+						input.form-control#dbAttendeesAddEventId(placeholder='Event Id')
+						input.form-control#dbAttendeesPhoneNumber(placeholder='Phone Number')
+						button.btn.btn-default#dbAttendeesAddButton Add Local Attendee
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Remove Local Attendees
+						.panel-body
+							p Remove a local attendee with phone number to a given Event Id.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.localRemove
+									td
+								tr
+									th(rowspan='2')  Params
+									td
+										code {String}
+									td Event ID
+								tr
+									td
+										code {Object}
+									td Phone Number
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#dbAttendeesRemoveEventId(placeholder='Event Id')
+						input.form-control#dbAttendeesRemovePhoneNumber(placeholder='Phone Number')
+						button.btn.btn-default#dbAttendeesRemoveButton Remove Local Attendee
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Local Accept Event
+						.panel-body
+							p Let local user with a phone number to accept an event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.localAccept
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#dbAttendeesAcceptEventId(placeholder='Event Id')
+						button.btn.btn-default#dbAttendeesAcceptButton Accept Event
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Local Decline Event
+						.panel-body
+							p Let local user with a phone number to decline an event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.localDecline
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#dbAttendeesDeclineEventId(placeholder='Event Id')
+						button.btn.btn-default#dbAttendeesDeclineButton Decline Event
+
 			.cat#invitations
 				h2
 					span.label.label-default Invitations

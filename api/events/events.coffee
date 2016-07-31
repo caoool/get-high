@@ -55,6 +55,30 @@ Events.schema = new SimpleSchema
 			'tentative'
 			'accepted'
 		]
+	# DESCRIPTION
+	# 	localAttendees is used to save local attendees.
+	# 	That means not from google but resides on our
+	# 	own database.
+	localAttendees:
+		type: [Object]
+		optional: true
+	'localAttendees.$.phoneNumber':
+		type: String
+	'localAttendees.$.displayName':
+		type: String
+		optional: true
+	'localAttendees.$.responseStatus':
+		type: String
+		allowedValues: [
+			'needsAction'
+			'declined'
+			'tentative'
+			'accepted'
+		]
+		defaultValue: 'needsAction'
+	'localAttendees.$.userId':
+		type: String
+		optional: true
 	# DESCRIPTION:
 	# 	Visibiilty is used to decide whether or
 	# 	not this event will go public. It has 4

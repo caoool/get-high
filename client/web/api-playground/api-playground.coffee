@@ -299,6 +299,50 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #dbAttendeesAddButton': (e) ->
+		e.preventDefault()
+		attendee =
+			phoneNumber: $('#dbAttendeesPhoneNumber').val()
+		Meteor.call 'attendees.localAdd',
+			$('#dbAttendeesAddEventId').val(),
+			attendee,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #dbAttendeesRemoveButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.localRemove',
+			$('#dbAttendeesRemoveEventId').val(),
+			$('#dbAttendeesRemovePhoneNumber').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #dbAttendeesAcceptButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.localAccept',
+			$('#dbAttendeesAcceptEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #dbAttendeesDeclineButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.localDecline',
+			$('#dbAttendeesDeclineEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #inviteWithSMSButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'invitations.sms',
