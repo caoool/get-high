@@ -22,7 +22,7 @@ Meteor.methods
 				if user?
 					event.attendees[index].userId = user.userId
 					event.attendees[index].picture = user.picture
-			event.attendees
+			event.attendees.concat event.localAttendees
 
 	# DESCRIPTION
 	# 	Add a dbAttendee with phone number to a given Event
@@ -114,4 +114,37 @@ Meteor.methods
 			, $set:
 				'localAttendees.$.responseStatus': 'declined'
 
+	# DESCRIPTION
+	# 	Update local attendees to re check each attendee's 
+	# 	VZ profile.
+	# REVIEW
+	# 	Should later be called in events sync or calendar
+	# 	sync methods, or somewhere related like when insert
+	# 	new item to UsersList. Should be transparent later
+	# 	to the clients.
+	'attendees.localUpdate': (eventId) ->
+		new SimpleSchema
+			eventId: type: String
+		.validate
+			eventId: eventId
 
+		throwError credentialError if !@userId?
+
+		event = Events.findOne id: eventId
+
+		if event? and event.localAttendees?
+			for attendee in event.localAttendees
+				user = UsersList.findOne phoneNumber: attendee.phoneNumber
+				if user?
+					Events.update
+						id: eventId
+						'localAttendees.phoneNumber': user.phoneNumber
+					, $set:
+						'localAttendees.$.userId': user.userId
+				else
+					Events.update
+						id: eventId
+						'localAttendees.phoneNumber': attendee.phoneNumber
+					, $unset:
+						'localAttendees.$.userId': 1
+						'localAttendees.$.displayName': 1

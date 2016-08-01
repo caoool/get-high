@@ -343,6 +343,16 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #dbAttendeesUpdateButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'attendees.localUpdate',
+			$('#dbAttendeesUpdateEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #inviteWithSMSButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'invitations.sms',

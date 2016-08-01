@@ -975,6 +975,34 @@ template(name='apiPlayground')
 						input.form-control#dbAttendeesDeclineEventId(placeholder='Event Id')
 						button.btn.btn-default#dbAttendeesDeclineButton Decline Event
 
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Update Local Attendees
+						.panel-body
+							p Update local attendees to re check each attendee's VZ profile.
+							em Should later be called in events sync or calendar sync methods, or somewhere related like when insert new item to UsersList. Should be transparent later to the clients.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code attendees.localUpdate
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Event ID
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#dbAttendeesUpdateEventId(placeholder='Event Id')
+						button.btn.btn-default#dbAttendeesUpdateButton Update Attendees
+
 			.cat#invitations
 				h2
 					span.label.label-default Invitations
