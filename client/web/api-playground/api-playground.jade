@@ -1019,7 +1019,7 @@ template(name='apiPlayground')
 								tr
 									th Method
 									td
-										code invitations.sms
+										code invitations.app.sms
 									td
 								tr
 									th Params
@@ -1034,6 +1034,38 @@ template(name='apiPlayground')
 					form.form-inline
 						input.form-control#inviteWithSMSPhoneNumber(placeholder='Phone Number')
 						button.btn.btn-default#inviteWithSMSButton Invite with SMS
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Event Invitation with SMS
+						.panel-body
+							p Invite user to an event by sending SMS messages using Twilio services.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code invitations.event.sms
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Event ID
+								tr
+									td
+										code {Stirng}
+									td Phone Number
+								tr
+									th Return
+									td
+										code {Object}
+									td JSON object
+					form.form-inline
+						input.form-control#inviteEventWithSMSEventId(placeholder='Event ID')
+						input.form-control#inviteEventWithSMSPhoneNumber(placeholder='Phone Number')
+						button.btn.btn-default#inviteEventWithSMSButton Invite
 
 			.cat#tags
 				h2
