@@ -244,6 +244,8 @@ template(name='apiPlayground')
 					form.form-inline
 						input.form-control#setName(placeholder='Name')
 						button.btn.btn-default#setNameButton Set Name
+						div
+							strong #{currentUser.profile.name}
 
 			.subcat
 					.panel.panel-default
@@ -278,7 +280,8 @@ template(name='apiPlayground')
 							input#setPicture(type='file', style='display: none;', onchange="$('#upload-file-info').html($(this).val());")
 						button.btn.btn-default#setPictureButton Set Picture
 						span.label.label-info#upload-file-info
-						img(src="#{currentUser.profile.picture}")
+						div
+							img(src="#{currentUser.profile.picture}")
 						
 			.subcat
 					.panel.panel-default
