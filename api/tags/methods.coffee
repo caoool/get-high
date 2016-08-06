@@ -76,5 +76,16 @@ Meteor.methods
 		user = Meteor.users.findOne @userId
 		Tags.findOne school: user.profile.school
 
-	
 
+	# DESCRIPTION
+	# 	Return the list of all schools.
+	# RETURN
+	# 	{[String]} schools
+	# 	
+	'tags.schools': ->
+
+		schools = []
+		tags = Tags.find({}, {school: 1, _id: 0}).fetch()
+		for tag in tags
+			schools.push tag.school
+		schools
