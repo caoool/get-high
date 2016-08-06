@@ -162,6 +162,32 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Get School List
+						.panel-body
+							p Get a list of all schools.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code tags.schools
+									td
+								tr
+									th Params
+									td
+										code 
+									td None
+								tr
+									th Return
+									td
+										code {[String]}
+									td Array of schools
+					form.form-inline
+						button.btn.btn-default#schoolsListButton Get Schools
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Set user school
 						.panel-body
 							p After use first register, that sould come after the login or register phase when the user get to choose a school name.
@@ -191,9 +217,75 @@ template(name='apiPlayground')
 			.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Set user's name
+						.panel-body
+							p Set user's name, save to profile.name.
+							ul
+								li On user creation, it is aquired automatically by google login.
+								li User can always change it later.
+								li Does not have to be unique.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setName
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Name
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						input.form-control#setName(placeholder='Name')
+						button.btn.btn-default#setNameButton Set Name
+
+			.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Set user's picture
+						.panel-body
+							p Set user's picture, base64.
+							ul
+								li Size limit 16mb.
+								li However you should limit or compress the image size to under 100kb when sending.
+								li Convert image to array buffer base64 first then send pass the result string as parameter.
+								li Convert image to jpg please.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code users.setPicture
+									td
+								tr
+									th Params
+									td
+										code {String}
+									td Picture buffer
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					form.form-inline
+						label.btn.btn-default.btn-file Browse
+							input#setPicture(type='file', style='display: none;', onchange="$('#upload-file-info').html($(this).val());")
+						button.btn.btn-default#setPictureButton Set Picture
+						span.label.label-info#upload-file-info
+						img(src="#{currentUser.profile.picture}")
+						
+			.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Set user's phone number
 						.panel-body
-							p Set user's phone number, save to profile.phoneNumber
+							p Set user's phone number, save to profile.phoneNumber.
 							ul
 								li !!! CLIENTS MUST VERIFY THE INTEGRITY OF USER'S PHONE NUMBER BEFORE CALLING THIS METHOD !!!
 								li Phone number will be used to identify whether the user has our app or not.

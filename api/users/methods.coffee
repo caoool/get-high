@@ -30,6 +30,40 @@ Meteor.methods
 		Meteor.users.update @userId, $set: 'profile.school': school if @userId
 
 
+	'users.setName': (name) ->
+
+		new SimpleSchema
+			name: type: String
+		.validate
+			name: name
+
+		throwError credentialError if !@userId?
+
+		UsersList.update {userId: @userId}, $set: name: name
+		Meteor.users.update @userId, $set: 'profile.name': name
+
+
+	'users.setPicture': (picture) ->
+
+		throwError credentialError if !@userId?
+
+		UsersList.update {userId: @userId}, $set: picture: picture
+		Meteor.users.update @userId, $set: 'profile.picture': picture
+
+
+	'users.setPhoneNumber': (phoneNumber) ->
+
+		new SimpleSchema
+			phoneNumber: type: String
+		.validate
+			phoneNumber: phoneNumber
+
+		throwError credentialError if !@userId?
+
+		UsersList.update {userId: @userId}, $set: phoneNumber: phoneNumber
+		Meteor.users.update @userId, $set: 'profile.phoneNumber': phoneNumber
+
+
 	###*
 	 * Default following all clubs, only clubs in the list are excluded.
 	 * Calendar ID passed instead of actuall club name because that is
@@ -84,14 +118,3 @@ Meteor.methods
 		throwError credentialError if !@userId?
 
 		Meteor.users.update @userId, $pull: 'profile.likes': eventId if @userId
-
-	'users.setPhoneNumber': (phoneNumber) ->
-		new SimpleSchema
-			phoneNumber: type: String
-		.validate
-			phoneNumber: phoneNumber
-
-		throwError credentialError if !@userId?
-
-		UsersList.update {userId: @userId}, $set: phoneNumber: phoneNumber
-		Meteor.users.update @userId, $set: 'profile.phoneNumber': phoneNumber

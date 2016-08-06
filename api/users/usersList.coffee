@@ -10,6 +10,9 @@ UsersList.deny
 UsersList.schema = new SimpleSchema
 	userId:
 		type: String
+	name:
+		type: String
+		optional: true
 	picture:
 		type: String
 		optional: true

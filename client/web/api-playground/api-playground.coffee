@@ -61,6 +61,15 @@ Template.apiPlayground.events
 				else
 					console.log 'DDP connected'
 
+	'click #schoolsListButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'tags.schools',
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #setSchoolNameButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'users.setSchool',
@@ -70,6 +79,32 @@ Template.apiPlayground.events
 					console.log error
 				else
 					console.log result
+
+	'click #setNameButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'users.setName',
+			$('#setName').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #setPictureButton': (e) ->
+		e.preventDefault()
+		file = $('#setPicture')[0].files[0]
+		reader = new FileReader()
+		reader.onerror = ->
+			console.log 'Error reading file'
+		reader.onload = (event) ->
+			picture = event.target.result
+			Meteor.call 'users.setPicture', picture,
+				(error, result) ->
+					if error
+						console.log error
+					else
+						console.log result
+		reader.readAsDataURL file
 
 	'click #setPhoneNumberButton': (e) ->
 		e.preventDefault()
