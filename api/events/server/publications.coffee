@@ -38,14 +38,6 @@ Meteor.publishComposite 'events.feeds', ->
 			find: (event) ->
 				UsersList.find userId: event.createdBy
 		]
-	
-	# Events.find {
-	# 	$and: [
-	# 		school: user.profile.school
-	# 		tags: $in: user.profile.tags
-	# 		visibility: $in: ['public']
-	# 	]},
-	# 	$sort: start: -1
 
 # DESCRIPTION
 # 	Return only user liked events.

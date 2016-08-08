@@ -1173,6 +1173,8 @@ template(name='apiPlayground')
 							h3.panel-title Get School Tag List
 						.panel-body
 							p Get the tag list of a certain school that contains all categories and tags.
+							strong Update
+							em Not parameter is optional, if no school is specified it will just return the user's school.
 							ul
 								li One school on tag list.
 								li Can not and should not be modified by clients.
@@ -1186,7 +1188,7 @@ template(name='apiPlayground')
 								tr
 									th Params
 									td
-										code {Stirng}
+										code {Stirng}?
 									td School name
 								tr
 									th Return
@@ -1194,16 +1196,16 @@ template(name='apiPlayground')
 										code {Object}
 									td The actual Tag list as a JSON/JS object
 					form.form-inline
-						button.btn.btn-default#tagsDefineButton Define Tags
 						input.form-control#tagsSchoolName(placeholder='School Name')
 						button.btn.btn-default#tagsSchoolButton Get Tags
 
 				.subcat
 					.panel.panel-default
 						.panel-heading
-							h3.panel-title Get User's School Tag List
+							h3.panel-title Get User's Tags
 						.panel-body
-							p Get the tag list that belongs to the school of the current logged in user.
+							p Get the tags that the user is subscribed to, in the same JSON format as
+							code tags.school
 						table.table
 							tbody
 								tr
@@ -1220,7 +1222,7 @@ template(name='apiPlayground')
 									th Return
 									td
 										code {Object}
-									td The actual Tag list as a JSON/JS object
+									td Tags as a JSON/JS object
 					form.form-inline
 						button.btn.btn-default#tagsUserButton Get Tags
 

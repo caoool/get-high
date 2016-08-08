@@ -40,8 +40,10 @@ Meteor.methods
 	# DESCRIPTION
 	# 	Get the tag list that is defined for
 	# 	a given school as a JSON object.
+	# 	If no school is specified it will just
+	# 	return the user's school.
 	# PARAMETERS
-	# 	{String} school
+	# 	{String}? school
 	# RETURN
 	# 	{Object} tag
 	# 		{String} school
@@ -49,14 +51,18 @@ Meteor.methods
 	# 			{String} category
 	# 			{[String]} tags
 	# 			
-	'tags.school': (school) ->
+	'tags.school': (school=null) ->
 
 		new SimpleSchema
 			school: type: String
 		.validate
 			school: school
 
-		Tags.findOne school: school
+		if school?
+			Tags.findOne school: school
+		else
+			throwError credentialError if !@userId?
+			Tags.findOne school: Meteor.user().profile.school
 
 
 	# DESCRIPTION
@@ -73,8 +79,26 @@ Meteor.methods
 		
 		throwError credentialError if !@userId?
 
-		user = Meteor.users.findOne @userId
-		Tags.findOne school: user.profile.school
+		tags = Tags.findOne school: Meteor.user().profile.school
+		userTags = Meteor.user().profile.tags
+		# client only, to omit returning error on client
+
+		ret =
+			school: Meteor.user().profile.school
+			tags: []
+		if tags? and userTags?
+			for category in tags.tags
+				_category =
+					category: ''
+					tags: []
+				for tag in category.tags
+					if tag in userTags
+						_category.tags.push tag
+				if _category.tags.length > 0
+					_category.category = category.category
+					ret.tags.push _category
+
+			ret
 
 
 	# DESCRIPTION
