@@ -1468,9 +1468,26 @@ template(name='apiPlayground')
 							h3.panel-title Events for user
 						.panel-body
 							p Get the events from calendars followed by user and with matching tags.
+							em Now becomes a composite pub / sub, will also include owner's information.
+							ol
+								li More than one collection is passed to clients, that includes both the Events collection and UsersList collection.
+								li Events collection behaves just like before, UsersList is used to store owner's information including name, picture, phone number and etc.
+								li
+									em Subscription does not allow preprocessed collection or we will lose reactivity, so the returned data set will not be like a complete object with both events and owner info in it. Clients needs to do both 
+									code UsersList.find()
+									code Events.find()
+									em and do string matching of
+									code userId (UsersList)
+									code  createdBy (Events) 
+									em on the client side to figure out who owns what event.
 							ul
+								li Following events base on tags, feeds algorithm ->
+									ol
+										li Match user's school and events' school
+										li Match tags of events and user (intersect)
+										li Check events' visibility -> public
 								li Event feeds are sorted by starting date in descending order.
-								li Feeds can be configured by the above tags and excluded clubs list.
+								li Feeds can be configured by the editing user's tags and excluded clubs list.
 							code events.feeds
 					em Demo - 
 						a(href="{{pathFor 'eventsFeeds'}}", target='_blank') List Events Feeds
@@ -1491,7 +1508,4 @@ template(name='apiPlayground')
 						.panel-body
 							p Get all contacts belong to a user
 							code contacts.owner
-				
-			//- button#watchCalendarButton Watch Calendar
-			//- button#stopWatchCalendarButton Stop Watch Calendar
 			
