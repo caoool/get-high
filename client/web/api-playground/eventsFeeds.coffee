@@ -4,3 +4,5 @@ Template.eventsFeeds.onCreated ->
 Template.eventsFeeds.helpers
 	events: ->
 		Events.find()
+	users: ->
+		UsersList.find()

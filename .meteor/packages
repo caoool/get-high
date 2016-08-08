@@ -51,3 +51,4 @@ percolate:google-api
 peerlibrary:xml2js
 mrt:twilio-meteor
 momentjs:moment
+reywood:publish-composite

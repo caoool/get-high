@@ -7,3 +7,8 @@ template(name='eventsFeeds')
 		p {{visibility}}
 		p {{start}}
 		p {{end}}
+	h1 Event owners
+	each users
+		h2 {{name}}
+		p {{userId}}
+		img(src='{{picture}}')

@@ -20,16 +20,32 @@ Meteor.publish 'events.school', ->
 # REVIEW
 #   'default' visibility can be hidden by default
 #   due to future requirements.
-Meteor.publish 'events.feeds', ->
+Meteor.publishComposite 'events.feeds', ->
 	return @ready() if !@userId?
 	user = Meteor.users.findOne @userId
-	Events.find {
-		$and: [
-			school: user.profile.school
-			tags: $in: user.profile.tags
-			visibility: $in: ['public']
-		]},
-		$sort: start: -1
+	ret =
+		find: ->
+			query =
+				$and: [
+					school: user.profile.school
+					tags: $in: user.profile.tags
+					visibility: $in: ['public']
+				]
+			options =
+				$sort: start: -1
+			Events.find query
+		children: [
+			find: (event) ->
+				UsersList.find userId: event.createdBy
+		]
+	
+	# Events.find {
+	# 	$and: [
+	# 		school: user.profile.school
+	# 		tags: $in: user.profile.tags
+	# 		visibility: $in: ['public']
+	# 	]},
+	# 	$sort: start: -1
 
 # DESCRIPTION
 # 	Return only user liked events.
