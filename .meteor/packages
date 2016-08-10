@@ -52,3 +52,4 @@ peerlibrary:xml2js
 mrt:twilio-meteor
 momentjs:moment
 reywood:publish-composite
+npm-bcrypt

@@ -1452,6 +1452,15 @@ template(name='apiPlayground')
 							h3.panel-title All events by school
 						.panel-body
 							p Get all events withing school's scope
+							ul
+								li Will public all events start from yesterday (subject to change).
+								li School name parameter is optional, if not specified, will take the user's school.
+							table
+								tr
+									th Parameters
+									td
+										code {String}?
+									td School name
 							code events.school
 
 				.subcat
@@ -1474,6 +1483,7 @@ template(name='apiPlayground')
 							ol
 								li More than one collection is passed to clients, that includes both the Events collection and UsersList collection.
 								li Events collection behaves just like before, UsersList is used to store owner's information including name, picture, phone number and etc.
+								li Will public all events start from yesterday (subject to change).
 								li
 									em Subscription does not allow preprocessed collection or we will lose reactivity, so the returned data set will not be like a complete object with both events and owner info in it. Clients needs to do both 
 									code UsersList.find()

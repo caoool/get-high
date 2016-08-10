@@ -3,14 +3,25 @@ Meteor.publish 'events.admin', ->
 
 Meteor.publish 'events.owner', ->
 	return @ready() if !@userId?
-	Events.find createdBy: @userId
+	Events.find
+		createdBy: @userId
+		end:
+			$gte: fromDate()
 
 # DESCRIPTION
 #   Return all events within user's school scope.
-Meteor.publish 'events.school', ->
-	return @ready() if !@userId?
-	user = Meteor.users.findOne @userId
-	Events.find school: user.profile.school
+Meteor.publish 'events.school', (school=null) ->
+	if !school?
+		return @ready() if !@userId?
+		Events.find
+			school: Meteor.user().profile.school
+			end:
+				$gt: fromDate()
+	else
+		Events.find
+			school: school
+			end:
+				$gte: fromDate()
 
 # DESCRIPTION
 #   Return only events that intersect the user's
@@ -30,6 +41,8 @@ Meteor.publishComposite 'events.feeds', ->
 					school: user.profile.school
 					tags: $in: user.profile.tags
 					visibility: $in: ['public']
+					end:
+						$gte: fromDate()
 				]
 			options =
 				$sort: start: -1
