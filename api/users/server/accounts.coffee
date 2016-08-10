@@ -1,3 +1,5 @@
+{ request } = require 'meteor/froatsnook:request'
+
 Accounts.onLogin ->
 	# Logs.log Meteor.user().services.google.accessToken
 
@@ -11,8 +13,8 @@ Accounts.onLogin ->
 # 	
 Accounts.onCreateUser (options, user) ->
 
-	pictureRequest = HTTP.get user.services.google.picture
-	buffer = new Buffer pictureRequest.content, 'binary'
+	pictureRequest = request.getSync user.services.google.picture, encoding: null
+	buffer = new Buffer pictureRequest.body
 	picture = 'data:image/jpeg;base64,' + buffer.toString 'base64'
 
 	user.profile =
