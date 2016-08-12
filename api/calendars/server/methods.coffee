@@ -49,7 +49,17 @@ Meteor.methods
 				if error
 					future.throw parseError error
 				else
-					future.return Calendars.filter result.items
+					calendars = []
+					results = Calendars.filter result.items
+					for item in results
+						calendar = Calendars.findOne id: item.id
+						if calendar?
+							calendar.imported = true
+							calendars.push calendar
+						else
+							item.imported = false
+							calendars.push item
+					future.return calendars
 
 		future.wait()
 

@@ -392,6 +392,7 @@ template(name='apiPlayground')
 								li Only calendars owned by user will be returned, that is no editor or other types.
 								li In returned objects, id is the one used to identify calendar by google, we will use this id as our unique id in our database.
 								li !!! DO NOT USE ID 'primary' ANY TIME BECAUSE IT WILL RUIN OTHER CALENDAR SINCE IT IS NOT UNIQUE !!!
+							em Update -> Now also includes a field named imported indicating whether the user has imported the calendar or not. If yes, calendar's local information will also be returned.
 						table.table
 							tbody
 								tr
@@ -408,7 +409,7 @@ template(name='apiPlayground')
 									th Return
 									td
 										code {[Object]}
-									td An array of calendars with id and other information returned from google
+									td An array of calendars with id and other information returned from google or from local db
 					button.btn.btn-default#getCalendarListButton Get Calendar List
 
 				.subcat
