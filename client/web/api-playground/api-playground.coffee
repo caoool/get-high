@@ -428,6 +428,17 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #inviteEventWithPNButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'invitations.event.pn',
+			$('#inviteEventWithPNEventId').val(),
+			$('#inviteEventWithPNUserId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #tagsDefineButton': (e) ->
 		e.preventDefault()
 		tags = [

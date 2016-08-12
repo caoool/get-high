@@ -813,6 +813,8 @@ template(name='apiPlayground')
 							p Add attendees to an event.
 							ul
 								li Method will preprcess attendees to avoid duplication.
+								li !! This is raw level api being used in another method call, to add attendee with push notification, call 'invitations.event.pn' instead.
+								li Can be used to invite google calendar user by providing email address only.
 						table.table
 							tbody
 								tr
@@ -951,6 +953,7 @@ template(name='apiPlayground')
 							h3.panel-title Add Local Attendees
 						.panel-body
 							p Add a local attendee with phone number to a given Event Id.
+							li !! This is raw level api being used in another method call, to add attendee with push notification, call 'invitations.event.sms' instead.
 						table.table
 							tbody
 								tr
@@ -1157,6 +1160,42 @@ template(name='apiPlayground')
 									td JSON object
 					form.form-inline
 						button.btn.btn-default#sendTestNotificationButton Send
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Event Invitation with PN
+						.panel-body
+							p Invite a VZ user to an event by sending push notification.
+							ul
+								li !!! TARGET USER MUST HAVE CALLED 'notifications.updateToken' TO UPDATE ITS DEVICE TOKEN ALREADY !!!
+								li Invited user will be added to that event as a google attendee.
+								li Invited user has 'needsAction' responseStatus in the event.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code invitations.event.sms
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Event ID
+								tr
+									td
+										code {Stirng}
+									td User ID
+								tr
+									th Return
+									td
+										code {Object}
+									td JSON object
+					form.form-inline
+						input.form-control#inviteEventWithPNEventId(placeholder='Event ID')
+						input.form-control#inviteEventWithPNUserId(placeholder='User ID')
+						button.btn.btn-default#inviteEventWithPNButton Invite
 
 				.subcat
 					.panel.panel-default
