@@ -397,6 +397,25 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #updateDeviceTokenButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'notifications.updateToken',
+			$('#updateDeviceToken').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #sendTestNotificationButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'notifications.test',
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #inviteWithSMSButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'invitations.app.sms',

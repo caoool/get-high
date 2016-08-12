@@ -1131,6 +1131,60 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Update Device Token
+						.panel-body
+							p !!! CLIENTS MUST CALL THIS METHOD IN ORDER TO RECEIVE NOTIFICATIONS !!!
+							p A logged in user is required to perform this task.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code notifications.updateToken
+									td
+								tr
+									th Params
+									td
+										code {Stirng}
+									td Token
+								tr
+									th Return
+									td
+										code {Object}
+									td JSON object
+					form.form-inline
+						input.form-control#updateDeviceToken(placeholder='Token')
+						button.btn.btn-default#updateDeviceTokenButton Update Token
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Send Test Notification
+						.panel-body
+							p A logged in user is required to perform this task.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code notifications.test
+									td
+								tr
+									th Params
+									td
+										code None
+									td 
+								tr
+									th Return
+									td
+										code {Object}
+									td JSON object
+					form.form-inline
+						button.btn.btn-default#sendTestNotificationButton Send
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Invite with SMS
 						.panel-body
 							p Invite user to join our app by sending SMS messages using Twilio services.

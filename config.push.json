@@ -1,0 +1,21 @@
+{
+  "apn": {
+    "passphrase": "880919Lu",
+    "key": "ApsKey.pem",
+    "cert": "ApsCert.pem"
+  },
+  "apn-dev": {
+    "passphrase": "880919Lu",
+    "key": "ApsDevKey.pem",
+    "cert": "ApsDevCert.pem"
+  },
+  // "gcm": {
+  //   "apiKey": "Your long Google API key",
+  //   "projectNumber": // Optional Project number
+  // },
+  "production": false,
+  "badge": true,
+  "sound": true,
+  "alert": true,
+  "vibrate": true
+}
