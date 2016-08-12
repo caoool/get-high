@@ -1,15 +1,6 @@
 Meteor.methods
 
 
-	'calendars.imported': ->
-		
-		throwError credentialError if !@userId?
-
-		Calendars.find
-			createdBy: @userId
-		.fetch()
-
-
 	'calendars.setTags': (calendarId, tags) ->
 
 		new SimpleSchema

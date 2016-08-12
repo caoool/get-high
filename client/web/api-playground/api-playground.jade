@@ -414,31 +414,6 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
-							h3.panel-title Get imported calendars
-						.panel-body
-							p Get a list of all imported calendars of the current user.
-						table.table
-							tbody
-								tr
-									th Method
-									td
-										code calendars.imported
-									td
-								tr
-									th Params
-									td
-										code
-									td None
-								tr
-									th Return
-									td
-										code {[Object]}
-									td An array of imported calendars
-					button.btn.btn-default#getImportedCalendarsButton Get Calendars
-
-				.subcat
-					.panel.panel-default
-						.panel-heading
 							h3.panel-title Init calendar
 						.panel-body
 							p Init will wipe the current calendar stored in our database and clear all the events belongs to it. Then it will initialize a full request to Google Calendar API to receive and insert the calendar itself and associated events.

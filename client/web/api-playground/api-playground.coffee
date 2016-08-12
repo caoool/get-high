@@ -164,15 +164,6 @@ Template.apiPlayground.events
 				else
 					console.log result
 
-	'click #getImportedCalendarsButton': (e) ->
-		e.preventDefault()
-		Meteor.call 'calendars.imported',
-			(error, result) ->
-				if error
-					console.log error
-				else
-					console.log result
-
 	'click #initCalendarButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'calendars.init',
