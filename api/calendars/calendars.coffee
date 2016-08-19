@@ -43,6 +43,13 @@ Calendars.schema = new SimpleSchema
 		type: String
 		optional: true
 	# From us
+	source:
+		type: String
+		allowedValues: [
+			'ShoutOut'
+			'Google'
+			'Facebook'
+		]
 	school:
 		type: String
 	###*

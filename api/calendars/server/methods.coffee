@@ -106,6 +106,7 @@ Meteor.methods
 				if error
 					future.throw parseError error
 				else
+					result.source = 'Google'
 					result.id = calendarId
 					result.school = Meteor.user().profile.school
 					result.club = result.summary

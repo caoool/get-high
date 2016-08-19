@@ -637,6 +637,58 @@ template(name='apiPlayground')
 				.subcat
 					.panel.panel-default
 						.panel-heading
+							h3.panel-title Insert Local Event
+						.panel-body
+							p Insert a event to local db (regardless to google or facebook).
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.insert.local
+									td
+								tr
+									th Params
+									td
+										code {Object}
+									td event
+								tr
+									th Return
+									td
+										code {Integer}
+									td 0 or 1
+					pre
+						code.
+							{
+								summary: {String},
+								description: {String}?,
+								start: {String} # format RFC3399
+								end: {String} # format RFC3399
+								location: {String}?,
+								visibility: {String}? # 'private' or 'public'
+								school: {String}
+								club: {String}
+								tags: {[String]}?
+								localAttendees: {[Object]}?
+									phoneNumber: {String}
+									displayName: {String}?
+									responseStatus: {String}?
+									userId: {String}?
+							}
+					form.form-inline
+						input.form-control#insertLocalEventSummary(placeholder='Summary')
+						input.form-control#insertLocalEventStart(placeholder='Start')
+						input.form-control#insertLocalEventEnd(placeholder='End')
+						input.form-control#insertLocalEventSchool(placeholder='School')
+						input.form-control#insertLocalEventClub(placeholder='Club')
+						input.form-control#insertLocalEventTags(placeholder='Tags')
+						button.btn.btn-default#insertLocalEventButton Insert Local Event
+					em In client methods calls, please provide more attributes of the event object.
+					em For demostration on this page, seperate tags with ',', no space.
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
 							h3.panel-title Update event
 						.panel-body
 							p Update an event on google server with its id.

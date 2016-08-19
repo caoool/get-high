@@ -234,6 +234,23 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #insertLocalEventButton': (e) ->
+		e.preventDefault()
+		event =
+			summary: $('#insertLocalEventSummary').val()
+			start: $('#insertLocalEventStart').val()
+			end: $('#insertLocalEventEnd').val()
+			school: $('#insertLocalEventSchool').val()
+			club: $('#insertLocalEventClub').val()
+			tags: $('#insertLocalEventTags').val().split(',')
+		Meteor.call 'events.insert.local',
+			event,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #updateEventButton': (e) ->
 		e.preventDefault()
 		event = {}

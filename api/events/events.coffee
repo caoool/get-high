@@ -20,8 +20,10 @@ Events.schema = new SimpleSchema
 	# From Google
 	id:
 		type: String
+		optional: true
 	etag:
 		type: String
+		optional: true
 	summary:
 		type: String
 		optional: true
@@ -91,8 +93,16 @@ Events.schema = new SimpleSchema
 		type: String
 		defaultValue: 'default'
 	# From us
+	source:
+		type: String
+		allowedValues: [
+			'ShoutOut'
+			'Google'
+			'Facebook'
+		]
 	calendarId:
 		type: String
+		optional: true
 	school:
 		type: String
 	club:
@@ -135,6 +145,7 @@ Events.init = (calendar, items) ->
 	Events.remove calendarId: calendar.id
 	for item in items
 		item.calendarId = calendar.id
+		item.source = calendar.source
 		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
