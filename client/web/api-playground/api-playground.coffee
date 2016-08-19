@@ -270,10 +270,38 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #editLocalEventButton': (e) ->
+		e.preventDefault()
+		event =
+			summary: $('#editLocalEventSummary').val()
+			start: $('#editLocalEventStart').val()
+			end: $('#editLocalEventEnd').val()
+			school: $('#editLocalEventSchool').val()
+			club: $('#editLocalEventClub').val()
+			tags: $('#editLocalEventTags').val().split(',')
+		Meteor.call 'events.update.local',
+			$('#editLocalEventId').val(),
+			event,
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #deleteEventButton': (e) ->
 		e.preventDefault()
 		Meteor.call 'events.delete',
 			$('#deleteEventId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #deleteLocalEventButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'events.delete.local',
+			$('#deleteLocalEventId').val(),
 			(error, result) ->
 				if error
 					console.log error
@@ -285,6 +313,17 @@ Template.apiPlayground.events
 		Meteor.call 'events.setVisibility',
 			$('#setEventVisibilityId').val(),
 			$('#setEventVisibilityType').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #setLocalEventVisibilityButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'events.setVisibility.local',
+			$('#setLocalEventVisibilityId').val(),
+			$('#setLocalEventVisibilityType').val(),
 			(error, result) ->
 				if error
 					console.log error
