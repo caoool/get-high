@@ -394,7 +394,7 @@ Template.apiPlayground.events
 		e.preventDefault()
 		attendee =
 			phoneNumber: $('#dbAttendeesPhoneNumber').val()
-		Meteor.call 'attendees.localAdd',
+		Meteor.call 'attendees.add.local',
 			$('#dbAttendeesAddEventId').val(),
 			attendee,
 			(error, result) ->
@@ -405,7 +405,7 @@ Template.apiPlayground.events
 
 	'click #dbAttendeesRemoveButton': (e) ->
 		e.preventDefault()
-		Meteor.call 'attendees.localRemove',
+		Meteor.call 'attendees.remove.local',
 			$('#dbAttendeesRemoveEventId').val(),
 			$('#dbAttendeesRemovePhoneNumber').val(),
 			(error, result) ->
@@ -416,7 +416,7 @@ Template.apiPlayground.events
 
 	'click #dbAttendeesAcceptButton': (e) ->
 		e.preventDefault()
-		Meteor.call 'attendees.localAccept',
+		Meteor.call 'attendees.accept.local',
 			$('#dbAttendeesAcceptEventId').val(),
 			(error, result) ->
 				if error
@@ -426,7 +426,7 @@ Template.apiPlayground.events
 
 	'click #dbAttendeesDeclineButton': (e) ->
 		e.preventDefault()
-		Meteor.call 'attendees.localDecline',
+		Meteor.call 'attendees.decline.local',
 			$('#dbAttendeesDeclineEventId').val(),
 			(error, result) ->
 				if error
@@ -436,7 +436,7 @@ Template.apiPlayground.events
 
 	'click #dbAttendeesUpdateButton': (e) ->
 		e.preventDefault()
-		Meteor.call 'attendees.localUpdate',
+		Meteor.call 'attendees.update.local',
 			$('#dbAttendeesUpdateEventId').val(),
 			(error, result) ->
 				if error

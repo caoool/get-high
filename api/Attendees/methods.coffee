@@ -15,14 +15,17 @@ Meteor.methods
 
 		throwError credentialError if !@userId?
 
-		event = Events.findOne id: eventId
+		event = Events.findOne _id: eventId
 		if event? and event.attendees?
 			for attendee, index in event.attendees
 				user = UsersList.findOne googleEmail: attendee.email
 				if user?
 					event.attendees[index].userId = user.userId
 					event.attendees[index].picture = user.picture
-			event.attendees.concat event.localAttendees
+			if event.localAttendees? and event.localAttendees.length > 0
+				event.attendees.concat event.localAttendees
+			else
+				event.attendees
 
 	# DESCRIPTION
 	# 	Add a dbAttendee with phone number to a given Event
@@ -32,7 +35,7 @@ Meteor.methods
 	# 	both clients and server. That's why it locates outside
 	# 	of server folder.
 	# 	
-	'attendees.localAdd': (eventId, attendee) ->
+	'attendees.add.local': (eventId, attendee) ->
 
 		new SimpleSchema
 			phoneNumber: type: String
@@ -47,10 +50,10 @@ Meteor.methods
 		throwError credentialError if !@userId?
 
 		user = UsersList.findOne phoneNumber: attendee.phoneNumber
-		attendee.userId = user.userId if user?
+		attendee.userId = user.userId if user? and user.userId?
 		attendee.responseStatus = 'needsAction' if !attendee.responseStatus?
 
-		Events.update {id: eventId}, $push: localAttendees: attendee
+		Events.update eventId, $push: localAttendees: attendee
 
 	# DESCRIPTION
 	# 	Remove a local attendee with phone number to a given Event
@@ -60,7 +63,7 @@ Meteor.methods
 	# 	both clients and server. That's why it locates outside
 	# 	of server folder.
 	# 	
-	'attendees.localRemove': (eventId, phoneNumber) ->
+	'attendees.remove.local': (eventId, phoneNumber) ->
 
 		new SimpleSchema
 			eventId: type: String
@@ -71,14 +74,14 @@ Meteor.methods
 
 		throwError credentialError if !@userId?
 
-		Events.update {id: eventId},
+		Events.update eventId,
 			$pull: localAttendees: phoneNumber: phoneNumber
 
 	# DESCRIPTION
 	# 	Let local user with a phone number to accept an
 	# 	event.
 	# 	
-	'attendees.localAccept': (eventId) ->
+	'attendees.accept.local': (eventId) ->
 		new SimpleSchema
 			eventId: type: String
 		.validate
@@ -89,7 +92,7 @@ Meteor.methods
 		user = UsersList.findOne userId: @userId
 		if user? and user.phoneNumber?
 			Events.update
-				id: eventId
+				_id: eventId
 				'localAttendees.phoneNumber': user.phoneNumber
 			, $set:
 				'localAttendees.$.responseStatus': 'accepted'
@@ -98,7 +101,7 @@ Meteor.methods
 	# 	Let local user with a phone number to decline an
 	# 	event.
 	# 	
-	'attendees.localDecline': (eventId) ->
+	'attendees.decline.local': (eventId) ->
 		new SimpleSchema
 			eventId: type: String
 		.validate
@@ -109,7 +112,7 @@ Meteor.methods
 		user = UsersList.findOne userId: @userId
 		if user? and user.phoneNumber?
 			Events.update
-				id: eventId
+				_id: eventId
 				'localAttendees.phoneNumber': user.phoneNumber
 			, $set:
 				'localAttendees.$.responseStatus': 'declined'
@@ -122,7 +125,7 @@ Meteor.methods
 	# 	sync methods, or somewhere related like when insert
 	# 	new item to UsersList. Should be transparent later
 	# 	to the clients.
-	'attendees.localUpdate': (eventId) ->
+	'attendees.update.local': (eventId) ->
 		new SimpleSchema
 			eventId: type: String
 		.validate
@@ -130,20 +133,20 @@ Meteor.methods
 
 		throwError credentialError if !@userId?
 
-		event = Events.findOne id: eventId
+		event = Events.findOne _id: eventId
 
 		if event? and event.localAttendees?
 			for attendee in event.localAttendees
 				user = UsersList.findOne phoneNumber: attendee.phoneNumber
 				if user?
 					Events.update
-						id: eventId
+						_id: eventId
 						'localAttendees.phoneNumber': user.phoneNumber
 					, $set:
 						'localAttendees.$.userId': user.userId
 				else
 					Events.update
-						id: eventId
+						_id: eventId
 						'localAttendees.phoneNumber': attendee.phoneNumber
 					, $unset:
 						'localAttendees.$.userId': 1

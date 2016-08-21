@@ -170,7 +170,7 @@ template(name='apiPlayground')
 								tr
 									th Method
 									td
-										code tags.schools
+										code schools.list
 									td
 								tr
 									th Params
@@ -939,6 +939,7 @@ template(name='apiPlayground')
 						.panel-body
 							p Get attendees of a certain event.
 							ul
+								li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 								li Preprcess attendees result.
 								li Will indicate response status.
 								li Will indicate whether the user has registered with our app.
@@ -953,12 +954,12 @@ template(name='apiPlayground')
 									th Params
 									td
 										code {Stirng}
-									td Event ID
+									td Event ID (_id)
 								tr
 									th Return
 									td
 										code {Object}
-									td The actual Tag list as a JSON/JS object
+									td Attendees as a JSON/JS object
 					pre
 						code.
 							{
@@ -1124,6 +1125,7 @@ template(name='apiPlayground')
 						.panel-heading
 							h3.panel-title Add Local Attendees
 						.panel-body
+							li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 							p Add a local attendee with phone number to a given Event Id.
 							li !! This is raw level api being used in another method call, to add attendee with push notification, call 'invitations.event.sms' instead.
 						table.table
@@ -1131,13 +1133,13 @@ template(name='apiPlayground')
 								tr
 									th Method
 									td
-										code attendees.localAdd
+										code attendees.add.local
 									td
 								tr
 									th(rowspan='2')  Params
 									td
 										code {String}
-									td Event ID
+									td Event ID (_id)
 								tr
 									td
 										code {Object}
@@ -1165,13 +1167,14 @@ template(name='apiPlayground')
 						.panel-heading
 							h3.panel-title Remove Local Attendees
 						.panel-body
+							li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 							p Remove a local attendee with phone number to a given Event Id.
 						table.table
 							tbody
 								tr
 									th Method
 									td
-										code attendees.localRemove
+										code attendees.remove.local
 									td
 								tr
 									th(rowspan='2')  Params
@@ -1197,13 +1200,14 @@ template(name='apiPlayground')
 						.panel-heading
 							h3.panel-title Local Accept Event
 						.panel-body
+							li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 							p Let local user with a phone number to accept an event.
 						table.table
 							tbody
 								tr
 									th Method
 									td
-										code attendees.localAccept
+										code attendees.accept.local
 									td
 								tr
 									th Params
@@ -1224,13 +1228,14 @@ template(name='apiPlayground')
 						.panel-heading
 							h3.panel-title Local Decline Event
 						.panel-body
+							li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 							p Let local user with a phone number to decline an event.
 						table.table
 							tbody
 								tr
 									th Method
 									td
-										code attendees.localDecline
+										code attendees.decline.local
 									td
 								tr
 									th Params
@@ -1251,6 +1256,7 @@ template(name='apiPlayground')
 						.panel-heading
 							h3.panel-title Update Local Attendees
 						.panel-body
+							li !!! Events' _id (unique mongo id) is passed as parameter, not events' id !!!
 							p Update local attendees to re check each attendee's VZ profile.
 							em Should later be called in events sync or calendar sync methods, or somewhere related like when insert new item to UsersList. Should be transparent later to the clients.
 						table.table
@@ -1258,7 +1264,7 @@ template(name='apiPlayground')
 								tr
 									th Method
 									td
-										code attendees.localUpdate
+										code attendees.update.local
 									td
 								tr
 									th Params

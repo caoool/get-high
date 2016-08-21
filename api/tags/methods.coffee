@@ -106,7 +106,7 @@ Meteor.methods
 	# RETURN
 	# 	{[String]} schools
 	# 	
-	'tags.schools': ->
+	'schools.list': ->
 
 		schools = []
 		tags = Tags.find({}, {school: 1, _id: 0}).fetch()
