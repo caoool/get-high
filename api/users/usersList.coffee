@@ -21,6 +21,10 @@ UsersList.schema = new SimpleSchema
 		optional: true
 	googleEmail:
 		type: String
+		optional: true
+	facebookEmail:
+		type: String
+		optional: true
 	createdAt:
 		type: Date
 		autoValue: ->

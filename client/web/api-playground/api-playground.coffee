@@ -34,6 +34,17 @@ Template.apiPlayground.events
 			else
 				console.log result
 
+	'click #facebook-login': (e) ->
+		e.preventDefault()
+		Meteor.loginWithFacebook
+			forceApprovalPrompt: true
+			requestOfflineToken: true
+		, (error, result) ->
+			if error
+				console.log error
+			else
+				console.log result
+
 	'click #loginWithTokenButton': (e) ->
 		e.preventDefault()
 		Meteor.loginWithToken $('#token').val(),

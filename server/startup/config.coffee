@@ -1,6 +1,9 @@
 GOOGLE_CLIENT_ID = '22026107675-jfeoijhr5qlpvds0v0dtlvpsv8njsioq.apps.googleusercontent.com'
 GOOGLE_SECRET = 'NNu4EBP2d7zJO28D8rmQR5uH'
 
+FACEBOOK_APP_ID = '135485893564483'
+FACEBOOK_SECRET = '3f7c76f01bd8a53dc30e5ae4a54a1145'
+
 KADIRA_APP_ID = 'WjerWJuJ9dn7Atjb4' 
 KADIRA_APP_SECRET = '4fcbf34a-75ea-411b-a039-710d2a810756'
 
@@ -16,6 +19,12 @@ Meteor.startup ->
 		service: 'google'
 		clientId: GOOGLE_CLIENT_ID
 		secret: GOOGLE_SECRET
+		loginStyle: 'redirect'
+	Accounts.loginServiceConfiguration.remove service: 'facebook'
+	Accounts.loginServiceConfiguration.insert
+		service: 'facebook'
+		appId: FACEBOOK_APP_ID
+		secret: FACEBOOK_SECRET
 		loginStyle: 'redirect'
 
 	Temps.insert summary: '123'

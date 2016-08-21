@@ -96,11 +96,38 @@ template(name='apiPlayground')
 									td See results below
 					img(src="#{currentUser.services.google.picture}")
 					if currentUser
-						span #{currentUser.services.google.given_name}
+						span #{currentUser.services.google.name}
 						br
 						button.btn.btn-default#logout Logout
 					else
 						button.btn.btn-default#google-login Login with Google
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Login with facebook
+						.panel-body
+							p Login user with facebook accounts. Clients should have specific login methods with Facebook servises comes from DDP library.
+							ul
+								li Client_id for backend is used here
+						table.table
+							tbody
+								tr
+									th Method
+									td Depending on clients
+								tr
+									th Params
+									td Depending on clients
+								tr
+									th Return
+									td See results below
+					//- img(src="#{currentUser.services.google.picture}")
+					if currentUser
+						span #{currentUser.services.facebook.name}
+						br
+						button.btn.btn-default#logout Logout
+					else
+						button.btn.btn-default#facebook-login Login with Facebook
 
 				.subcat
 					.panel.panel-default
