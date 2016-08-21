@@ -52,10 +52,10 @@ Meteor.methods
 		future = new Future()
 		future.throw credentialError if !@userId?
 
-		event = Events.findOne id: eventId
+		event = Events.findOne _id: eventId
 		future.throw notFoundError if !event?
 
-		content = "#{Meteor.user().services.google.name} invites you to join this event #{event.summary} on ViteZite."
+		content = "#{Meteor.user().services.google.name} invites you to join this event #{event.summary} on ShoutOut."
 
 		twilio.sendSms
 			to: phoneNumber
@@ -94,7 +94,7 @@ Meteor.methods
 		owner = UsersList.findOne userId: @userId
 
 		notification =
-			from: 'ShoutIt'
+			from: 'ShoutOut'
 			title: 'New Invitation'
 			text: "#{owner.name} wants to invite you to event #{event.summary}."
 			query: userId: user.userId
