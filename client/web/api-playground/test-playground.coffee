@@ -7,4 +7,4 @@ Template.testPlayground.events
 		e.preventDefault()
 		console.log 'clicked'
 		console.log Meteor.user().services.google.picture
-		Meteor.call 'getGoogelPicture'
+		Meteor.call 'testGraph'
