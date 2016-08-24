@@ -6,3 +6,4 @@ Meteor.publish 'users.current', (user_id) ->
 			'services.google.picture': 1
 			'services.google.accessToken': 1
 			'services.facebook.name': 1
+			'services.facebook.picture': 1

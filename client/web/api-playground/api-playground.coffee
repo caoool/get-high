@@ -38,6 +38,9 @@ Template.apiPlayground.events
 		e.preventDefault()
 		Meteor.loginWithFacebook
 			forceApprovalPrompt: true
+			requestPermissions: [
+				'user_events'
+			]
 			requestOfflineToken: true
 		, (error, result) ->
 			if error
@@ -222,6 +225,17 @@ Template.apiPlayground.events
 		Meteor.call 'channels.unwatch',
 			$('#channelId').val(),
 			$('#resourceId').val(),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
+	'click #importEventsFromFacebookButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'events.import.facebook',
+			$('#importEventsFromFacebookClub').val(),
+			$('#importEventsFromFacebookTags').val().split(','),
 			(error, result) ->
 				if error
 					console.log error

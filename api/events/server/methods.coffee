@@ -1,6 +1,38 @@
 Meteor.methods
 
 
+	'events.import.facebook': (club=null, tags=null) ->
+
+		new SimpleSchema
+			club:
+				type: String
+				optional: true
+			tags:
+				type: [String]
+				optional: true
+		.validate
+			club: club
+			tags: tags
+
+		future = new Future()
+		future.throw credentialError if !@userId?
+		future.throw credentialError if !Meteor.user().services.facebook?
+
+		id = Meteor.user().services.facebook.id
+		token = Meteor.user().services.facebook.accessToken
+		requestUrl = "#{id}/events?fields=cover,id,end_time,description,name,is_viewer_admin,place,start_time,type"
+
+		FBGraph.setAccessToken(token).get requestUrl,
+			Meteor.bindEnvironment (error, result) ->
+				if error
+					future.throw error
+				else
+					Events.import.facebook result.data, club, tags
+					future.return result.data
+
+		future.wait()
+
+
 	# DESCRIPTION
 	# 	Insert a event to selected calendar and sync
 	# 	after success.

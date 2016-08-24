@@ -23,7 +23,7 @@ Accounts.onCreateUser (options, user) ->
 			Meteor.users.update Meteor.userId(),
 				$set:
 					'services.google': user.services.google
-		return
+		return null
 
 	user.profile =
 			tags: []
@@ -43,14 +43,16 @@ Accounts.onCreateUser (options, user) ->
 		usersListEntry.googleEmail = user.services.google.email
 
 	if user.services.facebook?
-		FBGraph.setAccessToken user.services.facebook.accessToken
-		wrap = Meteor.wrapAsync FBGraph.get
-		wrapResult = wrap 'me?fields=picture'
+		fb_id = user.services.facebook.id
+		fb_token = user.services.facebook.accessToken
+		wrap = Meteor.wrapAsync FBGraph.setAccessToken(fb_token).get
+		wrapResult = wrap "#{fb_id}?fields=picture"
 		pictureUrl = wrapResult.picture.data.url
 		pictureRequest = request.getSync pictureUrl, encoding: null
 		buffer = new Buffer pictureRequest.body
 		picture = 'data:image/jpeg;base64,' + buffer.toString 'base64'
 
+		user.services.facebook.picture = pictureUrl
 		user.profile.name = user.services.facebook.name
 		user.profile.picture = picture
 		usersListEntry.name = user.services.facebook.name

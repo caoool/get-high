@@ -107,6 +107,7 @@ Events.schema = new SimpleSchema
 		type: String
 	club:
 		type: String
+		optional: true
 	tags:
 		type: [String]
 		optional: true
@@ -170,3 +171,23 @@ Events.sync = (calendarId, items) ->
 				if !item.attendees?
 					Events.update {id: item.id}, $unset: attendees: 1
 			else Events.insert item
+
+Events.parse.facebook = (item) ->
+	item.summary = item.name
+	item.start = item.start_time
+	item.end = item.end_time
+	item.visibility = item.type
+	item.location = item.place.name if item.place? and item.place.name?
+	item
+
+Events.import = {}
+Events.import.facebook = (items, club=null, tags=null) ->
+	items = items.filter (item) -> item.is_viewer_admin?
+	for item in items
+		item.source = 'Facebook'
+		item.school = Meteor.user().profile.school
+		item.club = club if club?
+		item.tags = tags if tags?
+		item = Events.parse.facebook item
+		Events.insert item
+

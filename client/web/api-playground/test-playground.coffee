@@ -5,6 +5,9 @@ Template.testPlayground.events
 
 	'click #test': (e) ->
 		e.preventDefault()
-		console.log 'clicked'
-		console.log Meteor.user().services.google.picture
-		Meteor.call 'testGraph'
+		Meteor.call 'testGraph',
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result

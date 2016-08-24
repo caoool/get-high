@@ -95,7 +95,7 @@ template(name='apiPlayground')
 									th Return
 									td See results below
 					img(src="#{currentUser.services.google.picture}")
-					if currentUser
+					if currentUser.services.google
 						span #{currentUser.services.google.name}
 						br
 						button.btn.btn-default#logout Logout
@@ -121,8 +121,8 @@ template(name='apiPlayground')
 								tr
 									th Return
 									td See results below
-					//- img(src="#{currentUser.services.google.picture}")
-					if currentUser
+					img(src="#{currentUser.services.facebook.picture}")
+					if currentUser.services.facebook
 						span #{currentUser.services.facebook.name}
 						br
 						button.btn.btn-default#logout Logout
@@ -609,6 +609,46 @@ template(name='apiPlayground')
 				h2
 					span.label.label-default Events
 				hr
+
+				.subcat
+					.panel.panel-default
+						.panel-heading
+							h3.panel-title Import events from Facebook
+						.panel-body
+							p Import events from Facebook to our local db.
+							ul
+								li Functions like 'calendar.init', except from Facebook.
+								li !!! USER MUST HAVE LOGGED IN FROM FACEBOOK (DIRECTLY OR LINKED) !!!
+								li Clients needs to have 'user_events' permission from Facebook.
+								li Facebook events does not have a calendar like Google.
+								li Facebook does not allow creation or edition to the events.
+								li Events will be saved to local db just like other type of events.
+						table.table
+							tbody
+								tr
+									th Method
+									td
+										code events.import.facebook
+									td
+								tr
+									th(rowspan='2') Params
+									td
+										code {Stirng}
+									td Club name
+								tr
+									td
+										code {[String]}
+									td Tags (Apply to all events)
+								tr
+									th Return
+									td
+										code {Object}
+									td Does not matter
+					form.form-inline
+						input.form-control#importEventsFromFacebookClub(placeholder='Club')
+						input.form-control#importEventsFromFacebookTags(placeholder='Tags')
+						button.btn.btn-default#importEventsFromFacebookButton Import Event
+					em For demostration on this page, seperate tags with ',', no space.
 
 				.subcat
 					.panel.panel-default
