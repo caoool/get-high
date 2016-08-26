@@ -1,5 +1,12 @@
+bodyParser = require 'body-parser'
+Picker.middleware bodyParser.json()
+Picker.middleware bodyParser.urlencoded extended: false
+
 postRoutes = Picker.filter (req, res) ->
 	req.method == 'POST'
+
+getRoutes = Picker.filter (req, res) ->
+	req.method == 'GET'
 
 # DESCRIPTION
 # 	Sync calendar when receive update notification
@@ -36,3 +43,22 @@ postRoutes.route '/notifications',
 		else
 			res.writeHead 200, 'Content-Type': 'Text/plain'
 			res.end '...PICKER...POST:: /notifications >> Not from google notification channels'
+
+postRoutes.route '/hooks/facebook/events',
+	(params, req, res, next) ->
+		console.log 'received from facebook post'
+		items = req.body.entry
+		for item in items
+			console.log item
+			console.log item.changed_fields
+		res.writeHead 200, 'Content-Type': 'Text/plain'
+		res.end 'ok'
+
+getRoutes.route '/hooks/facebook/events',
+	(params, req, res, next) ->
+		console.log 'received from facebook get'
+		console.log params
+		console.log params.query
+		console.log params.query['hub.challenge']
+		res.writeHead 200, 'Content-Type': 'Text/plain'
+		res.end params.query['hub.challenge']

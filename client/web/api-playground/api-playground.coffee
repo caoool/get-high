@@ -242,6 +242,17 @@ Template.apiPlayground.events
 				else
 					console.log result
 
+	'click #syncEventsFromFacebookButton': (e) ->
+		e.preventDefault()
+		Meteor.call 'events.sync.facebook',
+			$('#syncEventsFromFacebookClub').val(),
+			$('#syncEventsFromFacebookTags').val().split(','),
+			(error, result) ->
+				if error
+					console.log error
+				else
+					console.log result
+
 	'click #insertEventButton': (e) ->
 		e.preventDefault()
 		event =

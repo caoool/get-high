@@ -158,6 +158,7 @@ Events.sync = (calendarId, items) ->
 	for item in items
 		item.calendarId = calendarId
 		calendar = Calendars.findOne id: calendarId
+		item.source = 'Google'
 		item.school = calendar.school
 		item.club = calendar.club
 		item.tags = calendar.tags
@@ -182,6 +183,9 @@ Events.parse.facebook = (item) ->
 
 Events.import = {}
 Events.import.facebook = (items, club=null, tags=null) ->
+	Events.remove
+		source: 'Facebook'
+		createdBy: Meteor.userId()
 	items = items.filter (item) -> item.is_viewer_admin?
 	for item in items
 		item.source = 'Facebook'
@@ -190,4 +194,15 @@ Events.import.facebook = (items, club=null, tags=null) ->
 		item.tags = tags if tags?
 		item = Events.parse.facebook item
 		Events.insert item
+
+Events.sync.facebook = (items, club=null, tags=null) ->
+	items = items.filter (item) -> item.is_viewer_admin?
+	for item in items
+		item.source = 'Facebook'
+		item.school = Meteor.user().profile.school
+		item.club = club if club?
+		item.tags = tags if tags?
+		item = Events.parse.facebook item
+		_event = Events.findOne id: item.id
+		Events.insert item if !_event?
 
